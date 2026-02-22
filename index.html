@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>GridPulse</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,100;0,300;1,100&display=swap" rel="stylesheet">
 <style>
@@ -643,7 +643,7 @@
     #session-panel {
       position: fixed !important;
       left: 0; right: 0;
-      bottom: 106px;       /* above ad + tabs */
+      bottom: calc(106px + env(safe-area-inset-bottom, 0px)); /* above ad + tabs + safe area */
       width: 100% !important;
       height: 0;
       max-height: 33vh;
@@ -674,6 +674,7 @@
       background: var(--surface);
       border-top: 1px solid var(--border);
       z-index: 200;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     /* Mobile ad banner */
@@ -695,7 +696,7 @@
     #mobile-race-list {
       position: fixed;
       left: 0; right: 0;
-      bottom: 106px;
+      bottom: calc(106px + env(safe-area-inset-bottom, 0px));
       background: var(--surface);
       z-index: 150;
       flex-direction: column;
@@ -708,7 +709,7 @@
     #mobile-news {
       position: fixed;
       left: 0; right: 0;
-      bottom: 106px;
+      bottom: calc(106px + env(safe-area-inset-bottom, 0px));
       background: var(--surface);
       z-index: 150;
       flex-direction: column;
