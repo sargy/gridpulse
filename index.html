@@ -16,11 +16,13 @@
     --muted: rgba(232,232,240,0.4);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { height: 100%; }
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'DM Mono', monospace;
-    height: 100vh;
+    height: 100vh;        /* fallback for older browsers */
+    height: 100dvh;       /* dynamic viewport height — excludes iOS Safari browser chrome */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -632,8 +634,12 @@
     .ad-skyscraper  { display: none; }
     .ad-above-globe { display: none; }
 
-    /* Globe fills available space */
-    #globe-container { flex: 1; min-height: 0; }
+    /* Globe fills available space, padded for fixed bottom bars */
+    #globe-container {
+      flex: 1;
+      min-height: 0;
+      padding-bottom: calc(106px + env(safe-area-inset-bottom, 0px));
+    }
 
     /* Hide desktop tooltip on mobile — session panel replaces it */
     #tooltip { display: none !important; }
@@ -669,6 +675,9 @@
 
     /* Mobile tab bar */
     #mobile-tabs {
+      position: fixed;
+      bottom: 0;
+      left: 0; right: 0;
       display: flex;
       flex-shrink: 0;
       background: var(--surface);
@@ -679,6 +688,9 @@
 
     /* Mobile ad banner */
     #mobile-ad {
+      position: fixed;
+      bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+      left: 0; right: 0;
       display: flex;
       flex-shrink: 0;
       height: 50px;
