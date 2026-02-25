@@ -37,7 +37,14 @@
     flex-shrink: 0;
     z-index: 100;
     background: var(--bg);
-    overflow-x: auto;
+    overflow: hidden;
+  }
+
+  /* Header rotation fade */
+  header.hdr-fading .hdr-race-block,
+  header.hdr-fading .header-countdown {
+    opacity: 0;
+    transition: opacity 0.3s;
   }
 
   h1 {
@@ -63,7 +70,7 @@
     cursor: pointer;
     padding: 0.3rem 0.5rem;
     border-radius: 4px;
-    transition: background 0.15s;
+    transition: background 0.15s, opacity 0.3s;
     flex-shrink: 0;
   }
   .hdr-race-block:hover { background: rgba(255,255,255,0.05); }
@@ -315,6 +322,7 @@
     flex-direction: column;
     overflow: hidden;
     background: var(--bg);
+    position: relative;
   }
 
   /* Banner row above the canvas — in normal flow so it pushes canvas down */
@@ -641,6 +649,38 @@
       padding-bottom: calc(106px + env(safe-area-inset-bottom, 0px));
     }
 
+    /* Mobile filter bar — floating top-left over globe */
+    #mobile-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      z-index: 50;
+      pointer-events: all;
+    }
+    .mob-filter-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.48rem;
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(7,7,15,0.75);
+      color: rgba(232,232,240,0.6);
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      backdrop-filter: blur(4px);
+    }
+    .mob-filter-btn.active { color: #fff; }
+    .mob-filter-btn.all.active  { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); }
+    .mob-filter-btn.f1.active   { background: rgba(230,0,0,0.25);     border-color: rgba(230,0,0,0.7);   color:#ff6060; }
+    .mob-filter-btn.f2.active   { background: rgba(0,180,255,0.2);    border-color: rgba(0,180,255,0.7); color:#00b4ff; }
+    .mob-filter-btn.f3.active   { background: rgba(0,220,120,0.2);    border-color: rgba(0,220,120,0.7); color:#00dc78; }
+    .mob-filter-btn.f1a.active  { background: rgba(255,150,0,0.2);    border-color: rgba(255,150,0,0.7); color:#ff9600; }
+    .mob-filter-btn.fe.active   { background: rgba(140,0,255,0.2);    border-color: rgba(140,0,255,0.7); color:#bb80ff; }
+    .mob-filter-btn.indy.active { background: rgba(255,200,0,0.2);    border-color: rgba(255,200,0,0.7); color:#ffe040; }
+
     /* Hide desktop tooltip on mobile — session panel replaces it */
     #tooltip { display: none !important; }
 
@@ -861,19 +901,234 @@
   .sidebar.collapsed #sidebar-collapse-btn { left: -20px; }
   .sidebar { overflow: visible; }
   .sidebar.collapsed { width: 0 !important; }
+
+  /* Pre-init: on mobile hide all header cards except F1 until JS rotation starts */
+  @media (max-width: 700px) {
+    header.hdr-init .hdr-race-block:not(#hdr-f1-block),
+    header.hdr-init .header-countdown:not(.hdr-f1-countdown-static),
+    header.hdr-init .header-divider:not(#hdr-h1-div),
+    header.hdr-init .hdr-sub { display: none !important; }
+  }
+  @media (min-width: 701px) {
+    #mobile-filter-bar { display: none; }
+  }
+
+  /* Tour play button */
+  #tour-play-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 50;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(7,7,15,0.75);
+    color: rgba(232,232,240,0.6);
+    font-size: 0.9rem;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    padding-left: 2px; /* optical centre for ▶ */
+  }
+  @media (max-width: 700px) {
+    #tour-play-btn {
+      bottom: auto;
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+  #tour-play-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  #tour-play-btn.tour-running {
+    border-color: rgba(255,80,80,0.5);
+    color: rgba(255,80,80,0.8);
+  }
+  #tour-play-btn.tour-running:hover {
+    border-color: #ff5050;
+    color: #ff5050;
+  }
+
+  /* INFO PANEL */
+  #info-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+  }
+  #info-overlay.open { display: flex; }
+  #info-panel {
+    position: relative;
+    width: 70%;
+    height: 70%;
+    background: #0d0d1a;
+    border: 1px solid rgba(200,255,0,0.18);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(200,255,0,0.05), 0 24px 80px rgba(0,0,0,0.7);
+  }
+  #info-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.6rem 0;
+    flex-shrink: 0;
+  }
+  #info-panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  #info-close {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.85rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    font-family: 'DM Mono', monospace;
+    line-height: 1;
+  }
+  #info-close:hover { border-color: var(--accent); color: var(--accent); }
+  #info-tabs {
+    display: flex;
+    padding: 1rem 1.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+    gap: 0;
+  }
+  .info-tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: rgba(232,232,240,0.35);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+  }
+  .info-tab:hover { color: rgba(232,232,240,0.7); }
+  .info-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  #info-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.8rem 2rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(200,255,0,0.2) transparent;
+  }
+  .info-pane { display: none; }
+  .info-pane.active { display: block; }
+  .info-pane h2 {
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #e8e8f0;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .info-pane h2 em { color: var(--accent); font-style: normal; }
+  .info-pane h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.7;
+    margin: 1.4rem 0 0.5rem;
+  }
+  .info-pane p {
+    font-size: 0.65rem;
+    line-height: 1.8;
+    color: rgba(232,232,240,0.65);
+    margin-bottom: 0.8rem;
+  }
+  .info-pane ul { list-style: none; margin-bottom: 0.8rem; }
+  .info-pane ul li {
+    font-size: 0.65rem;
+    line-height: 1.8;
+    color: rgba(232,232,240,0.65);
+    padding-left: 1rem;
+    position: relative;
+  }
+  .info-pane ul li::before { content: '·'; position: absolute; left: 0; color: var(--accent); opacity: 0.6; }
+  .info-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem; }
+  .info-contact-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    background: rgba(255,255,255,0.02);
+  }
+  .info-contact-card .label { font-size: 0.45rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); opacity: 0.55; margin-bottom: 0.25rem; font-family: 'DM Mono', monospace; }
+  .info-contact-card .value { font-size: 0.62rem; color: rgba(232,232,240,0.7); font-family: 'DM Mono', monospace; }
+  .info-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 1.2rem 0; }
+  @media (max-width: 700px) {
+    #info-panel { width: 92%; height: 85%; }
+    #info-content { padding: 1.2rem; }
+    .info-contact-grid { grid-template-columns: 1fr; }
+    #info-tabs { padding: 0.8rem 1rem 0; }
+    .info-tab { padding: 0.4rem 0.7rem; font-size: 0.5rem; }
+  }
+
+  /* Info button — sits after hint, vertically centred by flexbox */
+  #info-btn {
+    flex-shrink: 0;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(232,232,240,0.45);
+    font-size: 1rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    z-index: 200;
+    line-height: 1;
+    font-family: serif;
+  }
+  #info-btn:hover { border-color: var(--accent); color: var(--accent); }
+  @media (max-width: 700px) {
+    #info-btn { font-size: 0.9rem; width: 1.6rem; height: 1.6rem; margin-left: auto; }
+  }
 </style>
 </head>
 <body>
 
-<header>
+<header class="hdr-init">
   <div>
     <h1>Grid<em>Pulse</em></h1>
   </div>
-  <div class="header-divider"></div>
+  <div class="header-divider" id="hdr-h1-div"></div>
 
   <!-- F1 next race -->
   <div class="hdr-race-block" id="hdr-f1-block">
-    <div class="next-race-label" style="color:rgba(255,96,96,0.7)">🏎 Next F1</div>
+    <div class="next-race-label" id="hdr-f1-label" style="color:rgba(255,96,96,0.7)">🏎 Next F1</div>
     <div class="next-race-name" id="hdr-f1-name">—</div>
     <div class="next-race-location" id="hdr-f1-loc">—</div>
   </div>
@@ -882,7 +1137,43 @@
     <div class="header-countdown-value" id="hdr-f1-countdown" style="color:#ff6060">--:--:--</div>
   </div>
 
-  <div class="header-divider"></div>
+  <!-- F2 standalone next race (hidden when F2 supports next F1) -->
+  <div class="header-divider hdr-sub" id="hdr-f2-div" style="display:none"></div>
+  <div class="hdr-race-block hdr-sub" id="hdr-f2-block" style="display:none">
+    <div class="next-race-label" style="color:rgba(255,160,50,0.8)">🏎 Next F2</div>
+    <div class="next-race-name" id="hdr-f2-name">—</div>
+    <div class="next-race-location" id="hdr-f2-loc">—</div>
+  </div>
+  <div class="header-countdown hdr-sub" id="hdr-f2-countdown-wrap" style="display:none">
+    <div class="header-countdown-label" style="color:rgba(255,160,50,0.8)">Starts in</div>
+    <div class="header-countdown-value" id="hdr-f2-countdown" style="color:#ffa032">--:--:--</div>
+  </div>
+
+  <!-- F3 standalone next race (hidden when F3 supports next F1) -->
+  <div class="header-divider hdr-sub" id="hdr-f3-div" style="display:none"></div>
+  <div class="hdr-race-block hdr-sub" id="hdr-f3-block" style="display:none">
+    <div class="next-race-label" style="color:rgba(50,200,255,0.8)">🏎 Next F3</div>
+    <div class="next-race-name" id="hdr-f3-name">—</div>
+    <div class="next-race-location" id="hdr-f3-loc">—</div>
+  </div>
+  <div class="header-countdown hdr-sub" id="hdr-f3-countdown-wrap" style="display:none">
+    <div class="header-countdown-label" style="color:rgba(50,200,255,0.8)">Starts in</div>
+    <div class="header-countdown-value" id="hdr-f3-countdown" style="color:#32c8ff">--:--:--</div>
+  </div>
+
+  <!-- F1 Academy standalone next race (hidden when F1A supports next F1) -->
+  <div class="header-divider hdr-sub" id="hdr-f1a-div" style="display:none"></div>
+  <div class="hdr-race-block hdr-sub" id="hdr-f1a-block" style="display:none">
+    <div class="next-race-label" style="color:rgba(255,100,200,0.8)">🏎 Next F1 Academy</div>
+    <div class="next-race-name" id="hdr-f1a-name">—</div>
+    <div class="next-race-location" id="hdr-f1a-loc">—</div>
+  </div>
+  <div class="header-countdown hdr-sub" id="hdr-f1a-countdown-wrap" style="display:none">
+    <div class="header-countdown-label" style="color:rgba(255,100,200,0.8)">Starts in</div>
+    <div class="header-countdown-value" id="hdr-f1a-countdown" style="color:#ff64c8">--:--:--</div>
+  </div>
+
+  <div class="header-divider" id="hdr-fe-pre-div"></div>
 
   <!-- Formula E next race -->
   <div class="hdr-race-block hdr-fe-indy" id="hdr-fe-block">
@@ -895,7 +1186,7 @@
     <div class="header-countdown-value" id="hdr-fe-countdown" style="color:#bb80ff">--:--:--</div>
   </div>
 
-  <div class="header-divider hdr-fe-indy"></div>
+  <div class="header-divider hdr-fe-indy" id="hdr-indy-pre-div"></div>
 
   <!-- IndyCar next race -->
   <div class="hdr-race-block hdr-fe-indy" id="hdr-indy-block">
@@ -908,8 +1199,9 @@
     <div class="header-countdown-value" id="hdr-indy-countdown" style="color:#ffe040">--:--:--</div>
   </div>
 
-  <div class="header-divider hdr-fe-indy"></div>
+  <div class="header-divider hdr-fe-indy" id="hdr-hint-div"></div>
   <span class="hint">Drag · Scroll to zoom</span>
+  <button id="info-btn" title="About GridPulse">&#x24D8;</button>
 </header>
 
 <!-- News toggle button — always visible, contains ticker when closed -->
@@ -951,6 +1243,20 @@
   </div>
 
   <div id="globe-container">
+
+    <!-- Tour play button — shown when tour is stopped -->
+    <button id="tour-play-btn" title="Start tour"><span id="tour-btn-icon">&#9654;</span></button>
+
+    <!-- Mobile filter bar — floating top-left over globe -->
+    <div id="mobile-filter-bar">
+      <button class="mob-filter-btn all active" data-filter="all">All</button>
+      <button class="mob-filter-btn f1"  data-filter="f1">F1</button>
+      <button class="mob-filter-btn f2"  data-filter="f2">F2</button>
+      <button class="mob-filter-btn f3"  data-filter="f3">F3</button>
+      <button class="mob-filter-btn f1a" data-filter="f1a">F1A</button>
+      <button class="mob-filter-btn fe"  data-filter="fe">FE</button>
+      <button class="mob-filter-btn indy" data-filter="indy">Indy</button>
+    </div>
 
     <!-- AD SLOT — Above globe, centred (728×90) -->
     <div class="ad-above-globe">
@@ -1061,6 +1367,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 window.onerror = function(msg, src, line, col, err) {
+  // Ignore uninformative cross-origin errors from CDN scripts
+  if (msg === 'Script error.' || msg === 'Script error') return true;
   document.body.style.background = '#1a0000';
   var d = document.createElement('div');
   d.style.cssText = 'position:fixed;top:20px;left:20px;right:20px;padding:20px;background:#300;color:#f88;font-family:monospace;font-size:13px;z-index:99999;border-radius:8px;white-space:pre-wrap;border:1px solid #f44';
@@ -1609,6 +1917,8 @@ container.addEventListener('mousemove', e => {
 container.addEventListener('mouseup', e => {
   if (!isDragging) return;
   isDragging = false;
+  // Always hide tooltip on click
+  hideTooltip();
   // Click detection — only fire if mouse barely moved (not a drag)
   const rect = container.getBoundingClientRect();
   mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -1617,11 +1927,11 @@ container.addEventListener('mouseup', e => {
   const hits = raycaster.intersectObjects(cityMeshes);
   if (hits.length > 0) {
     const idx = hits[0].object.userData.cityIndex;
-    showTooltip(idx, e.clientX - rect.left, e.clientY - rect.top);
     highlightSidebar(idx);
     openSessionPanel(idx);
   }
 });
+
 
 container.addEventListener('mouseleave', () => { isDragging = false; });
 
@@ -1643,7 +1953,32 @@ container.addEventListener('touchmove', e => {
   globe.rotation.y += rotVel.y;
   lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
 }, { passive: false });
-container.addEventListener('touchend', () => { isDragging = false; });
+container.addEventListener('touchend', e => {
+  isDragging = false;
+  if (!lastTouch) return;
+  // Tap detection — only fire if finger barely moved (not a drag)
+  const touch = e.changedTouches[0];
+  const dx = touch.clientX - lastTouch.x;
+  const dy = touch.clientY - lastTouch.y;
+  if (Math.abs(dx) > 10 || Math.abs(dy) > 10) return; // was a drag, not a tap
+  const rect = container.getBoundingClientRect();
+  mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(cityMeshes);
+  if (hits.length > 0) {
+    const idx = hits[0].object.userData.cityIndex;
+    // If this city's panel is already open, close it; otherwise open the new one
+    if (activePanelCity === idx && sessionPanel.classList.contains('open')) {
+      closeSessionPanel();
+    } else {
+      highlightSidebar(idx);
+      openSessionPanel(idx);
+    }
+  } else if (sessionPanel.classList.contains('open')) {
+    closeSessionPanel();
+  }
+});
 
 // Scroll to zoom
 container.addEventListener('wheel', e => {
@@ -1740,13 +2075,39 @@ initHeader();
 // ─── FILTERING ────────────────────────────────────────────────────────────────
 let activeFilter = 'all';
 
+function setActiveFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  document.querySelectorAll('.mob-filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  applyFilter();
+
+  // If no city is currently selected, or selected city isn't in this filter,
+  // spin to the next upcoming race for the selected series
+  if (f === 'all' || tourActive) return;
+  const currentOk = activePanelCity >= 0 && cities[activePanelCity].series.includes(f);
+  if (!currentOk) {
+    const next = f === 'fe' || f === 'indy' ? getNextOf(f)
+               : f === 'f2' || f === 'f3' || f === 'f1a' ? getNextOfSub(f)
+               : getNextOf(f);
+    if (!next) return;
+    const idx = cityIndexOf(next);
+    if (idx < 0) return;
+    highlightSidebar(idx);
+    setSelectedCity(idx);
+    spinToCity(idx);
+  }
+}
+
 document.getElementById('filter-bar').addEventListener('click', e => {
   const btn = e.target.closest('.filter-btn');
   if (!btn) return;
-  const f = btn.dataset.filter;
-  activeFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
-  applyFilter();
+  setActiveFilter(btn.dataset.filter);
+});
+
+document.getElementById('mobile-filter-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.mob-filter-btn');
+  if (!btn) return;
+  setActiveFilter(btn.dataset.filter);
 });
 
 function applyFilter() {
@@ -1758,6 +2119,14 @@ function applyFilter() {
     // Update globe dot visibility
     if (cityMeshes[i]) cityMeshes[i].visible = show;
     if (show) visible++;
+    else {
+      // If this city was highlighted or had its panel open, clear it
+      if (activeCity === i) hideTooltip();
+      if (activePanelCity === i) closeSessionPanel();
+      // Remove sidebar active highlight
+      const item2 = document.getElementById(`ci-${i}`);
+      if (item2) item2.classList.remove('active');
+    }
   });
   document.getElementById('sidebar-count').textContent = visible;
 }
@@ -2014,20 +2383,14 @@ function setSelectedCity(idx) {
 
 // Auto-switch filter to match the selected race's primary series, make its dot visible
 function switchFilterToCity(idx) {
+  if (tourActive) return; // tour manages its own filter
   const c = cities[idx];
-  // Determine the primary series to switch to
   const primarySeries = c.series.includes('f1') ? 'f1'
     : c.series.includes('fe') ? 'fe'
     : c.series.includes('indy') ? 'indy'
     : c.series[0];
-  // Only switch if current filter hides this city
   if (activeFilter !== 'all' && !c.series.includes(activeFilter)) {
-    activeFilter = primarySeries;
-    document.querySelectorAll('.filter-btn').forEach(b =>
-      b.classList.toggle('active', b.dataset.filter === activeFilter)
-    );
-    applyFilter();
-    // Scroll sidebar item into view after filter update
+    setActiveFilter(primarySeries);
     const el = document.getElementById(`ci-${idx}`);
     if (el) el.scrollIntoView({ behavior:'smooth', block:'nearest' });
   }
@@ -2136,8 +2499,348 @@ function animate() {
 animate();
 
 // ─── TICK ─────────────────────────────────────────────────────────────────────
+// ─── HEADER ROTATION ──────────────────────────────────────────────────────────
+// Strategy: use a ResizeObserver on the header. On every resize (and on init),
+// measure whether all 3 blocks fit. If not, start rotating. If they do, stop.
+
+let headerRotateTimer  = null;
+let headerRotateIndex  = 0;
+// HDR_SERIES is computed dynamically so it includes standalone sub-series cards
+const HDR_SERIES_BASE = ['f1', 'f2', 'f3', 'f1a', 'fe', 'indy'];
+
+// Which sub-series currently have standalone cards (not supporting next F1)?
+function getStandaloneSubSeries() {
+  const nrF1 = getNextOf('f1');
+  return ['f2', 'f3', 'f1a'].filter(key => !(nrF1 && nrF1.series.includes(key)));
+}
+
+function getActiveHdrSeries() {
+  const standalone = getStandaloneSubSeries();
+  // Always include all series — on mobile we rotate through them one at a time
+  return ['f1', ...standalone, 'fe', 'indy'];
+}
+
+const HDR_BLOCKS = {
+  f1:   { blockId: 'hdr-f1-block',   wrapId: null,                    cdId: 'hdr-f1-countdown'   },
+  f2:   { blockId: 'hdr-f2-block',   wrapId: 'hdr-f2-countdown-wrap',  cdId: 'hdr-f2-countdown'   },
+  f3:   { blockId: 'hdr-f3-block',   wrapId: 'hdr-f3-countdown-wrap',  cdId: 'hdr-f3-countdown'   },
+  f1a:  { blockId: 'hdr-f1a-block',  wrapId: 'hdr-f1a-countdown-wrap', cdId: 'hdr-f1a-countdown'  },
+  fe:   { blockId: 'hdr-fe-block',   wrapId: 'hdr-fe-countdown-wrap',  cdId: 'hdr-fe-countdown'   },
+  indy: { blockId: 'hdr-indy-block', wrapId: 'hdr-indy-countdown-wrap', cdId: 'hdr-indy-countdown' },
+};
+
+// ─── DEBUG ────────────────────────────────────────────────────────────────────
+// Show ALL currently-active blocks (respects which sub-series are standalone)
+function hdrShowAll() {
+  const hdr = document.querySelector('header');
+  if (!hdr) return;
+  // Show all blocks and their specific dividers
+  const allKeys = getActiveHdrSeries();
+  const divMap = {
+    f1:'hdr-h1-div', f2:'hdr-f2-div', f3:'hdr-f3-div',
+    f1a:'hdr-f1a-div', fe:'hdr-fe-pre-div', indy:'hdr-indy-pre-div'
+  };
+  // Hide all dividers first
+  Object.values(divMap).concat(['hdr-hint-div']).forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
+  allKeys.forEach(k => {
+    const b = HDR_BLOCKS[k];
+    if (!b) return;
+    const block = document.getElementById(b.blockId);
+    if (block) block.style.display = 'flex';
+    if (b.wrapId) {
+      const wrap = document.getElementById(b.wrapId);
+      if (wrap) wrap.style.display = 'flex';
+    } else {
+      const f1wrap = hdr.querySelector('.header-countdown:not([id])');
+      if (f1wrap) f1wrap.style.display = 'flex';
+    }
+    const divEl = document.getElementById(divMap[k]);
+    if (divEl) divEl.style.display = '';
+  });
+  updateF1Label();
+}
+
+// Show ONE series, hide the others
+function hdrShowOne(key) {
+  const hdr = document.querySelector('header');
+  if (!hdr) return;
+  hdr.querySelectorAll('.hdr-race-block').forEach(el => el.style.display = 'none');
+  hdr.querySelectorAll('.header-countdown').forEach(el => el.style.display = 'none');
+  // Hide all dividers, show only the one preceding this card
+  const divMap = {f1:'hdr-h1-div',f2:'hdr-f2-div',f3:'hdr-f3-div',f1a:'hdr-f1a-div',fe:'hdr-fe-pre-div',indy:'hdr-indy-pre-div'};
+  ['hdr-h1-div','hdr-f2-div','hdr-f3-div','hdr-f1a-div','hdr-fe-pre-div','hdr-indy-pre-div','hdr-hint-div'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
+  const showDiv = document.getElementById(divMap[key]);
+  if (showDiv) showDiv.style.display = '';
+  const b = HDR_BLOCKS[key];
+  if (!b) return;
+  const block = document.getElementById(b.blockId);
+  if (block) block.style.display = 'flex';
+  if (b.wrapId) {
+    const wrap = document.getElementById(b.wrapId);
+    if (wrap) wrap.style.display = 'flex';
+  } else {
+    const f1wrap = hdr.querySelector('.header-countdown:not([id])');
+    if (f1wrap) f1wrap.style.display = 'flex';
+  }
+  if (key === 'f1') updateF1Label();
+  let nr, raceMs;
+  if (key === 'f2' || key === 'f3' || key === 'f1a') {
+    nr = getNextOfSub(key); raceMs = nr ? getSubRaceDate(nr, key) - Date.now() : 0;
+  } else {
+    nr = getNextOf(key); raceMs = nr ? new Date(nr.sessions.race) - Date.now() : 0;
+  }
+  const nameLocIds = {
+    f1:{nameId:'hdr-f1-name',locId:'hdr-f1-loc'},f2:{nameId:'hdr-f2-name',locId:'hdr-f2-loc'},
+    f3:{nameId:'hdr-f3-name',locId:'hdr-f3-loc'},f1a:{nameId:'hdr-f1a-name',locId:'hdr-f1a-loc'},
+    fe:{nameId:'hdr-fe-name',locId:'hdr-fe-loc'},indy:{nameId:'hdr-indy-name',locId:'hdr-indy-loc'},
+  };
+  const ids = nameLocIds[key];
+  if (nr && ids) {
+    const nameEl = document.getElementById(ids.nameId);
+    const locEl  = document.getElementById(ids.locId);
+    if (nameEl) nameEl.textContent = nr.region;
+    if (locEl)  locEl.textContent  = nr.city + ' · ' + nr.country;
+  }
+  const cdEl = document.getElementById(b.cdId);
+  if (cdEl) cdEl.textContent = raceMs > 0 ? formatCountdown(raceMs, isMobile()) : 'On now!';
+}
+
+
+function stopHeaderRotation() {
+  if (headerRotateTimer) { clearInterval(headerRotateTimer); headerRotateTimer = null; }
+}
+
+function startHeaderRotation() {
+  startHeaderRotationGroups(getActiveHdrSeries(), 1);
+}
+
+function startHeaderRotationGroups(allSeries, groupSize) {
+  if (headerRotateTimer) return;
+  headerRotateIndex = 0;
+  const numGroups = Math.ceil(allSeries.length / groupSize);
+  const doShow = (groupIdx) => {
+    const start = (groupIdx % numGroups) * groupSize;
+    const group = allSeries.slice(start, start + groupSize);
+    if (groupSize === 1) {
+      hdrShowOne(group[0]);
+    } else {
+      hdrShowSet(group);
+      group.forEach(k => {
+        let nr, ms;
+        if (k === 'f2' || k === 'f3' || k === 'f1a') {
+          nr = getNextOfSub(k); ms = nr ? getSubRaceDate(nr, k) - Date.now() : 0;
+        } else {
+          nr = getNextOf(k); ms = nr ? new Date(nr.sessions.race) - Date.now() : 0;
+        }
+        const b = HDR_BLOCKS[k];
+        if (b && nr) {
+          const cdEl = document.getElementById(b.cdId);
+          if (cdEl) cdEl.textContent = ms > 0 ? formatCountdown(ms, false) : 'On now!';
+        }
+      });
+    }
+  };
+  doShow(0);
+  headerRotateTimer = setInterval(() => {
+    headerRotateIndex = (headerRotateIndex + 1) % numGroups;
+    const hdr = document.querySelector('header');
+    if (hdr) hdr.classList.add('hdr-fading');
+    setTimeout(() => {
+      doShow(headerRotateIndex);
+      if (hdr) hdr.classList.remove('hdr-fading');
+    }, 300);
+  }, 20000);
+}
+
+// Check header fit — called once on load and on every resize
+function hdrShowSet(keys) {
+  const hdr = document.querySelector('header');
+  if (!hdr) return;
+  const allKeys = ['f1', 'f2', 'f3', 'f1a', 'fe', 'indy'];
+  // Map each key to its preceding divider id
+  const divMap = {
+    f1:'hdr-h1-div', f2:'hdr-f2-div', f3:'hdr-f3-div',
+    f1a:'hdr-f1a-div', fe:'hdr-fe-pre-div', indy:'hdr-indy-pre-div'
+  };
+  allKeys.forEach(k => {
+    const show = keys.includes(k);
+    const b = HDR_BLOCKS[k];
+    if (!b) return;
+    // Show/hide block
+    const block = document.getElementById(b.blockId);
+    if (block) block.style.display = show ? 'flex' : 'none';
+    // Show/hide countdown wrap
+    if (b.wrapId) {
+      const wrap = document.getElementById(b.wrapId);
+      if (wrap) wrap.style.display = show ? 'flex' : 'none';
+    } else {
+      // F1 countdown wrap has no id
+      const f1wrap = hdr.querySelector('.header-countdown:not([id])');
+      if (f1wrap) f1wrap.style.display = show ? 'flex' : 'none';
+    }
+    // Show/hide this card's preceding divider
+    const divEl = document.getElementById(divMap[k]);
+    if (divEl) divEl.style.display = show ? '' : 'none';
+  });
+  // Always hide the post-indy and hint dividers during rotation
+  ['hdr-indy-pre-div','hdr-hint-div'].forEach(id => {
+    // hdr-indy-pre-div is BEFORE indy (handled above), hdr-hint-div is after indy
+    const el = document.getElementById('hdr-hint-div');
+    if (el) el.style.display = 'none';
+  });
+  // If indy is shown, show its preceding divider (already handled), but not hint-div
+  if (keys.includes('f1')) updateF1Label();
+}
+
+
+function checkHeaderFit() {
+  const hdr = document.querySelector('header');
+  if (!hdr) return;
+
+  stopHeaderRotation();
+
+  // On mobile: always rotate one at a time through all series
+  if (isMobile()) {
+    document.querySelector('header').classList.remove('hdr-init');
+    startHeaderRotationGroups(getActiveHdrSeries(), 1);
+    return;
+  }
+
+  // Desktop: greedy — try showing all, then drop one at a time until it fits
+  const allSeries = getActiveHdrSeries(); // ordered list of all active cards
+  
+  // Try showing all
+  hdrShowAll();
+  void hdr.offsetWidth;
+  if (hdr.scrollWidth <= hdr.clientWidth + 4) return; // all fit!
+
+  // Try progressively fewer cards from the end, keeping the most important ones
+  for (let count = allSeries.length - 1; count >= 2; count--) {
+    // Try showing first 'count' series
+    // But rotate through all groups of 'count' every 20s
+    break; // use rotation approach for 2+ but not all
+  }
+
+  // Try showing just 2: try each adjacent pair
+  // Find the largest N where N consecutive cards fit, then rotate through groups of N
+  let maxFit = 1;
+  for (let n = allSeries.length; n >= 2; n--) {
+    // Try showing the first n cards
+    hdrShowSet(allSeries.slice(0, n));
+    void hdr.offsetWidth;
+    if (hdr.scrollWidth <= hdr.clientWidth + 4) {
+      maxFit = n;
+      break;
+    }
+  }
+
+  if (maxFit >= allSeries.length) {
+    hdrShowAll();
+    return; // all fit
+  }
+
+  // maxFit cards fit at a time — rotate through them in groups
+  hdrShowSet(allSeries.slice(0, maxFit)); // show first group immediately
+  window._hdrMaxFit = maxFit;
+  startHeaderRotationGroups(allSeries, maxFit);
+}
+
+// On mobile, immediately hide all cards except F1 to prevent flash before rotation starts
+if (isMobile()) {
+  hdrShowOne('f1');
+}
+
+// Initial header fit check after fonts settle
+setTimeout(checkHeaderFit, 800);
+
+window.addEventListener('resize', () => {
+  stopHeaderRotation();
+  hdrShowAll();
+  setTimeout(checkHeaderFit, 100);
+});
+
+// Get next race for f2/f3/f1a — uses their specific session dates
+function getNextOfSub(key) {
+  const now = Date.now();
+  const venues = cities.filter(c => c.series.includes(key));
+  const getDate = c => {
+    if (key === 'f2' && c.f2Sessions) return new Date(c.f2Sessions.feature || c.f2Sessions.race || c.sessions.race);
+    if (key === 'f3' && c.f3Sessions) return new Date(c.f3Sessions.feature || c.f3Sessions.race || c.sessions.race);
+    if (key === 'f1a' && c.f1aSessions) return new Date(c.f1aSessions.race2 || c.f1aSessions.race1 || c.sessions.race);
+    return new Date(c.sessions.race);
+  };
+  const sorted = [...venues].sort((a, b) => getDate(a) - getDate(b));
+  return sorted.find(c => getDate(c).getTime() > now) || sorted[sorted.length - 1];
+}
+
+function getSubRaceDate(city, key) {
+  if (key === 'f2' && city.f2Sessions) return new Date(city.f2Sessions.feature || city.f2Sessions.race || city.sessions.race);
+  if (key === 'f3' && city.f3Sessions) return new Date(city.f3Sessions.feature || city.f3Sessions.race || city.sessions.race);
+  if (key === 'f1a' && city.f1aSessions) return new Date(city.f1aSessions.race2 || city.f1aSessions.race1 || city.sessions.race);
+  return new Date(city.sessions.race);
+}
+
+function updateF1Label() {
+  const nrF1 = getNextOf('f1');
+  const labelEl = document.getElementById('hdr-f1-label');
+
+  const subs = [
+    { key: 'f2',  blockId: 'hdr-f2-block',  wrapId: 'hdr-f2-countdown-wrap',  cdId: 'hdr-f2-countdown',  nameId: 'hdr-f2-name',  locId: 'hdr-f2-loc',  divId: 'hdr-f2-div',  label: 'F2'  },
+    { key: 'f3',  blockId: 'hdr-f3-block',  wrapId: 'hdr-f3-countdown-wrap',  cdId: 'hdr-f3-countdown',  nameId: 'hdr-f3-name',  locId: 'hdr-f3-loc',  divId: 'hdr-f3-div',  label: 'F3'  },
+    { key: 'f1a', blockId: 'hdr-f1a-block', wrapId: 'hdr-f1a-countdown-wrap', cdId: 'hdr-f1a-countdown', nameId: 'hdr-f1a-name', locId: 'hdr-f1a-loc', divId: 'hdr-f1a-div', label: 'F1A' },
+  ];
+
+  const supporting = [];
+
+  subs.forEach(({ key, blockId, wrapId, cdId, nameId, locId, divId, label }) => {
+    const withF1 = nrF1 && nrF1.series.includes(key);
+    if (withF1) {
+      supporting.push(label);
+      // Only touch display when rotation is NOT running (rotation manages visibility itself)
+      if (!headerRotateTimer) {
+        [blockId, wrapId, divId].forEach(id => {
+          const e = document.getElementById(id); if (e) e.style.display = 'none';
+        });
+      }
+    } else {
+      const nr = getNextOfSub(key);
+      if (!nr) return;
+      // Always update text content
+      const nameEl = document.getElementById(nameId);
+      const locEl  = document.getElementById(locId);
+      const cdEl   = document.getElementById(cdId);
+      if (nameEl) nameEl.textContent = nr.region;
+      if (locEl)  locEl.textContent  = nr.city + ' · ' + nr.country;
+      if (cdEl) {
+        const ms = getSubRaceDate(nr, key) - Date.now();
+        cdEl.textContent = ms > 0 ? formatCountdown(ms, isMobile()) : 'On now!';
+      }
+      // Only touch display when rotation is NOT running AND not on mobile pre-init
+      if (!headerRotateTimer && !isMobile()) {
+        const blockEl = document.getElementById(blockId);
+        const wrapEl  = document.getElementById(wrapId);
+        const divEl   = document.getElementById(divId);
+        if (blockEl) blockEl.style.display = 'flex';
+        if (wrapEl)  wrapEl.style.display  = 'flex';
+        if (divEl)   divEl.style.display   = '';
+      }
+    }
+  });
+
+  if (labelEl) {
+    labelEl.textContent = supporting.length
+      ? '🏎 Next F1  ·  ' + supporting.join(' · ')
+      : '🏎 Next F1';
+  }
+}
+
 function tick() {
   const now = new Date();
+  updateF1Label(); // update F1 header label with supporting series
 
   // Update all three header countdowns
   const series = [
@@ -2158,65 +2861,6 @@ function tick() {
       el.textContent = 'On now!';
     }
   });
-  // After all countdowns set, check if header overflows — if so shorten to days only
-  requestAnimationFrame(() => {
-    const hdr = document.querySelector('header');
-    if (!hdr) return;
-    // On mobile the countdown is already short-form — skip desktop overflow logic
-    if (isMobile && isMobile()) return;
-    // First restore all blocks in case viewport grew
-    ['hdr-indy-block','hdr-fe-block','hdr-indy-countdown-wrap','hdr-fe-countdown-wrap',
-     document.querySelector('.header-divider:last-of-type')].forEach(el => {
-      if (typeof el === 'string') { const e = document.getElementById(el); if (e) e.style.display = ''; }
-      else if (el) el.style.display = '';
-    });
-    // Shorten all countdowns to days+h+m first
-    [
-      { id: 'hdr-f1-countdown',   key: 'f1'   },
-      { id: 'hdr-fe-countdown',   key: 'fe'   },
-      { id: 'hdr-indy-countdown', key: 'indy' },
-    ].forEach(({ id, key }) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const nr2 = getNextOf(key);
-      if (!nr2) return;
-      const ms2 = new Date(nr2.sessions.race) - Date.now();
-      if (ms2 > 0) el.textContent = formatCountdown(ms2, false);
-    });
-    // If still overflowing, hide IndyCar block
-    if (hdr.scrollWidth > hdr.clientWidth + 4) {
-      ['hdr-indy-block','hdr-indy-countdown-wrap'].forEach(id => {
-        const e = document.getElementById(id); if (e) e.style.display = 'none';
-      });
-      // Hide the divider before IndyCar too
-      const dividers = hdr.querySelectorAll('.header-divider');
-      if (dividers.length >= 2) dividers[dividers.length - 1].style.display = 'none';
-    }
-    // If still overflowing, hide FE block too
-    if (hdr.scrollWidth > hdr.clientWidth + 4) {
-      ['hdr-fe-block','hdr-fe-countdown-wrap'].forEach(id => {
-        const e = document.getElementById(id); if (e) e.style.display = 'none';
-      });
-      const dividers = hdr.querySelectorAll('.header-divider:not([style*="none"])');
-      if (dividers.length >= 1) dividers[dividers.length - 1].style.display = 'none';
-    }
-    // If still overflowing, shorten all to days only
-    if (hdr.scrollWidth > hdr.clientWidth + 4) {
-      [
-        { id: 'hdr-f1-countdown', key: 'f1' },
-        { id: 'hdr-fe-countdown', key: 'fe' },
-        { id: 'hdr-indy-countdown', key: 'indy' },
-      ].forEach(({ id, key }) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const nr2 = getNextOf(key);
-        if (!nr2) return;
-        const ms2 = new Date(nr2.sessions.race) - Date.now();
-        if (ms2 > 0) el.textContent = formatCountdown(ms2, true);
-      });
-    }
-  });
-
   // Sidebar days until race
   cities.forEach((c, i) => {
     const phase = getPhase(c.tz);
@@ -2335,20 +2979,17 @@ function clearArc() {
 function tourStep() {
   if (!tourActive) return;
 
-  const city    = f1Tour[tourIdx];
-  const prevIdx = tourIdx - 1; // -1 means we just wrapped to first race
-  const isWrap  = prevIdx < 0;
-  const prev    = isWrap ? null : f1Tour[prevIdx];
+  const tour    = buildTourForSeries(_tourSeries);
+  const city    = tour[tourIdx % tour.length];
+  const prevIdx = tourIdx - 1;
+  const prev    = prevIdx >= 0 ? tour[prevIdx % tour.length] : null;
 
   clearArc();
 
-  // Only draw arc when NOT wrapping from last race back to first
-  if (!isWrap && prev) {
+  if (prev) {
     const arc = buildArc(prev, city);
     globe.add(arc);
     arcMesh = arc;
-
-    // Fade arc in
     arcMesh.material.opacity = 0;
     let fadeIn = 0;
     const fade = setInterval(() => {
@@ -2358,40 +2999,91 @@ function tourStep() {
     }, 30);
   }
 
-  // Spin globe and update session panel
   const cityIdx = cityIndexOf(city);
   highlightSidebar(cityIdx);
+  setSelectedCity(cityIdx);
   spinToCity(cityIdx);
   openSessionPanel(cityIdx);
 
-  // Advance index — wrap back to 0 (but use -1 sentinel so next step knows it wrapped)
-  // We store the raw next index; on next call prevIdx = tourIdx - 1 detects the wrap
-  tourIdx = tourIdx + 1;
-  if (tourIdx >= f1Tour.length) tourIdx = 0;
-
-  // Schedule next step
+  tourIdx = (tourIdx + 1) % tour.length;
   tourTimer = setTimeout(tourStep, STEP_DELAY);
 }
 
 // Start the tour from the first F1 race (no arc on first step)
+// Tour ignore-stop flag — set before any listeners or tour functions
+let _tourIgnoreStop = false;
+let _tourSeries     = 'f1';
+let _tourPreFilter  = 'all';
+
+// Build a tour for any series key
+function buildTourForSeries(key) {
+  const sub = ['f2', 'f3', 'f1a'].includes(key);
+  return cities
+    .filter(c => c.series.includes(key))
+    .sort((a, b) => {
+      const getD = c => sub ? getSubRaceDate(c, key) : new Date(c.sessions.race);
+      return getD(a) - getD(b);
+    });
+}
+
+// _tourSeries and _tourPreFilter declared above
+
 function startTour() {
   if (tourActive) return;
   tourActive = true;
-  // Start at index 0; prevIdx will be -1 so no arc drawn on first step
+  _tourSeries    = (activeFilter !== 'all') ? activeFilter : 'f1';
+  _tourPreFilter = activeFilter;
+  // Apply the tour series filter so only its dots show
+  setActiveFilter(_tourSeries);
+  document.getElementById('tour-btn-icon').innerHTML = '&#9646;&#9646;';
+  document.getElementById('tour-play-btn').classList.add('tour-running');
+  document.getElementById('tour-play-btn').title = 'Stop tour';
   tourIdx = 0;
   tourStep();
 }
 
-// Stop the tour permanently
 function stopTour() {
   tourActive = false;
   clearTimeout(tourTimer);
+  clearTimeout(idleTimer);
+  idleTimer = null;
   clearArc();
+  // Restore pre-tour filter
+  if (activeFilter !== _tourPreFilter) setActiveFilter(_tourPreFilter);
+  // Update button to play icon
+  document.getElementById('tour-btn-icon').innerHTML = '&#9654;';
+  document.getElementById('tour-play-btn').classList.remove('tour-running');
+  document.getElementById('tour-play-btn').title = 'Start tour';
 }
 
-// User interacted — stop tour permanently, no restart
-['mousemove', 'mousedown', 'keydown', 'wheel', 'touchstart', 'touchmove'].forEach(evt => {
-  window.addEventListener(evt, stopTour, { passive: true });
+// Tour play button
+// Prevent play button's own mousedown from triggering the window stopTour listener
+document.getElementById('tour-play-btn').addEventListener('mousedown', e => {
+  e.stopPropagation();
+}, { capture: true });
+document.getElementById('tour-play-btn').addEventListener('touchstart', e => {
+  e.stopPropagation();
+}, { capture: true, passive: true });
+
+document.getElementById('tour-play-btn').addEventListener('click', e => {
+  if (tourActive && _tourSeries === (activeFilter === 'all' ? 'f1' : activeFilter)) {
+    stopTour();
+  } else {
+    // Stop any running tour silently (no filter restore) then start fresh
+    tourActive = false;
+    clearTimeout(tourTimer);
+    clearArc();
+    startTour();
+  }
+});
+
+// User interacted — stop tour permanently on any interaction anywhere on page
+// Only intentional interactions stop the tour — not passive mouse movement or the play button click
+['mousedown', 'keydown', 'wheel', 'touchstart', 'touchmove'].forEach(evt => {
+  window.addEventListener(evt, () => {
+    if (_tourIgnoreStop) return;
+    stopTour();
+  }, { passive: true });
 });
 
 // Start idle countdown on load — tour begins after 10s if user hasn't touched anything
@@ -2679,6 +3371,8 @@ setTimeout(() => {
 
 function mobileTab(tab) {
   if (!isMobile()) return;
+  stopTour(); // stop globe auto-tour whenever any tab is tapped
+  closeSessionPanel(); // close session panel when switching tabs
 
   document.querySelectorAll('.mob-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab)?.classList.add('active');
@@ -2703,11 +3397,7 @@ function mobileTab(tab) {
 
       raceListOverlay.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          const f = btn.dataset.filter;
-          activeFilter = f;
-          document.querySelectorAll('.filter-btn').forEach(b =>
-            b.classList.toggle('active', b.dataset.filter === f));
-          applyFilter();
+          setActiveFilter(btn.dataset.filter);
           syncMobileList();
         });
       });
@@ -2766,14 +3456,111 @@ function syncMobileList() {
   if (cloneCount && mainCount) cloneCount.textContent = mainCount.textContent;
 }
 
-// Close session panel when tapping outside it on mobile
-document.addEventListener('touchstart', e => {
-  if (!isMobile()) return;
-  const panel = document.getElementById('session-panel');
-  if (!panel.classList.contains('open')) return;
-  if (!panel.contains(e.target)) closeSessionPanel();
-}, { passive: true });
+// Close session panel when tapping outside it on mobile — handled by touchend on container
 
+
+// ─── INFO PANEL ───────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  const overlay = document.getElementById('info-overlay');
+  const closeBtn = document.getElementById('info-close');
+  if (!overlay || !closeBtn) return;
+
+  function openInfo(tab) {
+    overlay.classList.add('open');
+    if (tab) switchInfoTab(tab);
+  }
+  function closeInfo() {
+    overlay.classList.remove('open');
+  }
+  function switchInfoTab(name) {
+    document.querySelectorAll('.info-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+    document.querySelectorAll('.info-pane').forEach(p => p.classList.toggle('active', p.id === 'info-pane-' + name));
+  }
+
+  const infoBtn = document.getElementById('info-btn');
+  if (infoBtn) infoBtn.addEventListener('click', () => openInfo('about'));
+  closeBtn.addEventListener('click', closeInfo);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeInfo(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfo(); });
+  document.querySelectorAll('.info-tab').forEach(btn => {
+    btn.addEventListener('click', () => switchInfoTab(btn.dataset.tab));
+  });
+});
 </script>
-</body>
-</html>
+
+<!-- INFO PANEL -->
+<div id="info-overlay">
+  <div id="info-panel">
+    <div id="info-panel-header">
+      <span id="info-panel-title">GridPulse &middot; Info</span>
+      <button id="info-close">&#10005;</button>
+    </div>
+    <div id="info-tabs">
+      <button class="info-tab active" data-tab="about">About</button>
+      <button class="info-tab" data-tab="contact">Contact</button>
+      <button class="info-tab" data-tab="terms">Terms of Use</button>
+    </div>
+    <div id="info-content">
+
+      <div class="info-pane active" id="info-pane-about">
+        <h2>Grid<em>Pulse</em></h2>
+        <p>GridPulse is a live motorsport calendar and race tracker built for fans who want to follow the full racing season &mdash; across every series, on a single globe.</p>
+        <p>Spin the globe, explore circuits, and see exactly what is racing where and when. From Formula 1 grands prix to Formula E city circuits and IndyCar ovals, every round is plotted on an interactive 3D map with real-time countdowns to the next session.</p>
+        <h3>What is covered</h3>
+        <ul>
+          <li>Formula 1 &mdash; full season calendar with practice, qualifying and race sessions</li>
+          <li>Formula 2 &amp; Formula 3 &mdash; sprint and feature race sessions</li>
+          <li>F1 Academy &mdash; the all-female development series</li>
+          <li>Formula E &mdash; electric street racing E-Prix calendar</li>
+          <li>IndyCar &mdash; oval and road course championship calendar</li>
+        </ul>
+        <h3>How to use it</h3>
+        <ul>
+          <li>Drag the globe to rotate, scroll or pinch to zoom</li>
+          <li>Click any race dot to open the full session schedule</li>
+          <li>Use the series filter to focus on a single championship</li>
+          <li>Press &#9654; to start the automatic race tour</li>
+          <li>The header rotates through next-up races across all active series</li>
+        </ul>
+        <h3>Data &amp; updates</h3>
+        <p>Session times are sourced from official series calendars and displayed in your local time zone. News feeds are pulled live from Autosport and The Race.</p>
+        <div class="info-divider"></div>
+        <p style="font-size:0.52rem;opacity:0.35">GridPulse is an independent fan project and is not affiliated with Formula One Management, Formula E Operations, IndyCar or any team or driver.</p>
+      </div>
+
+      <div class="info-pane" id="info-pane-contact">
+        <h2>Get in <em>Touch</em></h2>
+        <p>Have a question, found a bug, or want to suggest a feature? We would love to hear from you.</p>
+        <h3>General enquiries</h3>
+        <div class="info-contact-grid">
+          <div class="info-contact-card"><div class="label">Email</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1c9c4cdcdcee1c6d3c8c5d1d4cdd2c48fc0d1d1">[email&#160;protected]</a></div></div>
+          <div class="info-contact-card"><div class="label">Response time</div><div class="value">2&ndash;3 business days</div></div>
+          <div class="info-contact-card"><div class="label">Bug reports</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5133243622113623383521243d22347f302121">[email&#160;protected]</a></div></div>
+          <div class="info-contact-card"><div class="label">Feature requests</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4224272726202321290225302b2632372e31276c233232">[email&#160;protected]</a></div></div>
+        </div>
+        <h3>Follow us</h3>
+        <div class="info-contact-grid">
+          <div class="info-contact-card"><div class="label">X / Twitter</div><div class="value">@gridpulseapp</div></div>
+          <div class="info-contact-card"><div class="label">Instagram</div><div class="value">@gridpulse</div></div>
+        </div>
+        <div class="info-divider"></div>
+        <p style="font-size:0.52rem;opacity:0.35">GridPulse &middot; 1 Racing Way &middot; London &middot; EC1A 1BB &middot; United Kingdom</p>
+      </div>
+
+      <div class="info-pane" id="info-pane-terms">
+        <h2>Terms of <em>Use</em></h2>
+        <p>Last updated: January 2026. By accessing or using GridPulse you agree to these terms.</p>
+        <h3>1. Acceptance</h3>
+        <p>These terms govern your access to GridPulse. By using the Service you confirm you are at least 13 years old and agree to be bound by these terms. If you do not agree, please do not use the Service.</p>
+        <h3>2. Permitted use</h3>
+        <p>GridPulse is provided for personal, non-commercial use only. You may not reproduce, scrape, redistribute or commercially exploit any content, data or code from the Service without prior written permission.</p>
+        <h3>3. Accuracy of information</h3>
+        <p>While we strive to keep all session times and calendar data accurate, GridPulse does not guarantee the completeness or accuracy of information displayed. Session times are subject to change by series organisers. Always verify critical information with official series sources before making travel or viewing arrangements.</p>
+        <h3>4. Third-party content</h3>
+        <p>GridPulse aggregates news from third-party sources including Autosport and The Race. We are not responsible for the content of these external sources. Links to third-party sites do not constitute endorsement.</p>
+        <h3>5. Intellectual property</h3>
+        <p>All original content, design and code within GridPulse is the property of GridPulse and its creators. Series names, logos and trademarks referenced belong to their respective owners. GridPulse is an independent project not affiliated with any racing series or governing body.</p>
+        <h3>6. Limitation of liability</h3>
+        <p>The Service is provided &ldquo;as is&rdquo; without warranties of any kind. To the fullest extent permitted by law, GridPulse shall not be liable for any direct, indirect, incidental or consequential damages arising from your use of the Service.</p>
+        <h3>7. Changes to terms</h3>
+        <p>We may update these terms from time t
