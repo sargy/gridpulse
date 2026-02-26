@@ -37,7 +37,6 @@
     flex-shrink: 0;
     z-index: 100;
     background: var(--bg);
-    overflow: hidden;
   }
 
   /* Header rotation fade */
@@ -125,7 +124,6 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     white-space: nowrap;
-    margin-left: auto;
   }
 
   /* ── News bar ──────────────────────────────────────────────────────────────── */
@@ -518,12 +516,16 @@
   .filter-btn.f1a { border-color: rgba(255,150,0,0.4); color: #ffb060; }
   .filter-btn.fe  { border-color: rgba(140,0,255,0.4); color: #bb80ff; }
   .filter-btn.indy{ border-color: rgba(255,200,0,0.4); color: #ffe040; }
+.filter-btn.wec { border-color: rgba(0,200,180,0.4); color: #00e8cc; }
+.filter-btn.wrc { border-color: rgba(255,80,40,0.4);  color: #ff6644; }
   .filter-btn.f1.active  { background: rgba(230,0,0,0.2); }
   .filter-btn.f2.active  { background: rgba(0,180,255,0.15); }
   .filter-btn.f3.active  { background: rgba(0,220,120,0.15); }
   .filter-btn.f1a.active { background: rgba(255,150,0,0.15); }
   .filter-btn.fe.active  { background: rgba(140,0,255,0.15); }
   .filter-btn.indy.active{ background: rgba(255,200,0,0.15); }
+.filter-btn.wec.active { background: rgba(0,200,180,0.15); }
+.filter-btn.wrc.active { background: rgba(255,80,40,0.15);  }
 
   .city-list { overflow-y: auto; flex: 1; width: 100%; }
   .city-list::-webkit-scrollbar { width: 3px; }
@@ -571,6 +573,8 @@
   .badge-indy{ background: rgba(255,220,0,0.2);   color: #ffe040; border: 1px solid rgba(255,200,0,0.4); }
   .badge-fe  { background: rgba(180,0,255,0.2);   color: #d070ff; border: 1px solid rgba(180,0,255,0.4); }
   .badge-indy{ background: rgba(255,220,0,0.2);   color: #ffe040; border: 1px solid rgba(255,220,0,0.4); }
+  .badge-wec { background: rgba(0,200,180,0.2);   color: #00e8cc; border: 1px solid rgba(0,200,180,0.4); }
+  .badge-wrc { background: rgba(255,80,40,0.2);    color: #ff6644; border: 1px solid rgba(255,80,40,0.4); }
 
   @keyframes pulse-ring {
     0%   { transform: scale(1);   opacity: 0.9; }
@@ -680,6 +684,8 @@
     .mob-filter-btn.f1a.active  { background: rgba(255,150,0,0.2);    border-color: rgba(255,150,0,0.7); color:#ff9600; }
     .mob-filter-btn.fe.active   { background: rgba(140,0,255,0.2);    border-color: rgba(140,0,255,0.7); color:#bb80ff; }
     .mob-filter-btn.indy.active { background: rgba(255,200,0,0.2);    border-color: rgba(255,200,0,0.7); color:#ffe040; }
+.mob-filter-btn.wec.active  { background: rgba(0,200,180,0.2);    border-color: rgba(0,200,180,0.7); color:#00e8cc; }
+.mob-filter-btn.wrc.active  { background: rgba(255,80,40,0.2);    border-color: rgba(255,80,40,0.7);  color:#ff6644; }
 
     /* Hide desktop tooltip on mobile — session panel replaces it */
     #tooltip { display: none !important; }
@@ -1114,8 +1120,155 @@
   }
   #info-btn:hover { border-color: var(--accent); color: var(--accent); }
   @media (max-width: 700px) {
-    #info-btn { font-size: 0.9rem; width: 1.6rem; height: 1.6rem; margin-left: auto; }
+    #info-btn { font-size: 0.9rem; width: 1.6rem; height: 1.6rem; }
   }
+
+  /* Language switcher */
+  #lang-btn {
+    flex-shrink: 0;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(232,232,240,0.55);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    padding: 0 0.5rem;
+    height: 1.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    position: relative;
+  }
+  #lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+  #lang-menu {
+    display: none;
+    position: fixed;
+    top: auto;
+    right: auto;
+    background: #0d0d1a;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 9999;
+    min-width: 130px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  #lang-menu.open { display: block; }
+  .lang-opt {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.9rem;
+    background: none;
+    border: none;
+    color: rgba(232,232,240,0.55);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
+  }
+  .lang-opt:hover { background: rgba(255,255,255,0.05); color: #e8e8f0; }
+  .lang-opt.active { color: var(--accent); }
+  /* Position wrapper relatively so dropdown anchors correctly */
+  #lang-wrap { position: relative; flex-shrink: 0; margin-left: auto; }
+  @media (max-width: 700px) {
+    #lang-btn { font-size: 0.45rem; height: 1.6rem; }
+  }
+
+  /* Bilingual terms */
+  .terms-en-shadow {
+    font-size: 0.52rem;
+    color: rgba(232,232,240,0.35);
+    font-style: italic;
+    margin-top: 0.25rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+  .terms-section { margin-bottom: 0.75rem; }
+  #terms-bilingual-note {
+    font-size: 0.55rem;
+    color: rgba(200,255,0,0.7);
+  }
+
+  /* ── Series Preferences Pane ──────────────────────────────────── */
+  .series-pref-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 500px) { .series-pref-grid { grid-template-columns: 1fr; } }
+  .series-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .series-toggle:hover { background: rgba(255,255,255,0.06); }
+  .series-toggle.enabled { border-color: var(--series-col, rgba(200,255,0,0.3)); background: rgba(var(--series-col-rgb,200,255,0),0.06); }
+  .series-toggle-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--series-col, #888);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px var(--series-col, #888);
+    opacity: 0.4;
+    transition: opacity 0.15s;
+  }
+  .series-toggle.enabled .series-toggle-dot { opacity: 1; }
+  .series-toggle-name {
+    flex: 1;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(232,232,240,0.6);
+    transition: color 0.15s;
+  }
+  .series-toggle.enabled .series-toggle-name { color: #e8e8f0; }
+  .series-toggle-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.04);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+    font-size: 0.65rem;
+  }
+  .series-toggle.enabled .series-toggle-check {
+    background: var(--series-col, #c8ff00);
+    border-color: var(--series-col, #c8ff00);
+    color: #000;
+  }
+  .series-pref-note {
+    margin-top: 1.2rem;
+    font-size: 0.52rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+  #series-reset-btn {
+    margin-top: 1rem;
+    padding: 0.4rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--muted);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  #series-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
 </style>
 </head>
 <body>
@@ -1128,98 +1281,135 @@
 
   <!-- F1 next race -->
   <div class="hdr-race-block" id="hdr-f1-block">
-    <div class="next-race-label" id="hdr-f1-label" style="color:rgba(255,96,96,0.7)">🏎 Next F1</div>
+    <div class="next-race-label" id="hdr-f1-label" style="color:rgba(255,96,96,0.7)" data-i18n-prefix="next_f1">🏎 Next F1</div>
     <div class="next-race-name" id="hdr-f1-name">—</div>
     <div class="next-race-location" id="hdr-f1-loc">—</div>
   </div>
   <div class="header-countdown">
-    <div class="header-countdown-label" style="color:rgba(255,96,96,0.7)">Starts in</div>
+    <div class="header-countdown-label" style="color:rgba(255,96,96,0.7)"><span data-i18n="starts_in">Starts in</span></div>
     <div class="header-countdown-value" id="hdr-f1-countdown" style="color:#ff6060">--:--:--</div>
   </div>
 
   <!-- F2 standalone next race (hidden when F2 supports next F1) -->
   <div class="header-divider hdr-sub" id="hdr-f2-div" style="display:none"></div>
   <div class="hdr-race-block hdr-sub" id="hdr-f2-block" style="display:none">
-    <div class="next-race-label" style="color:rgba(255,160,50,0.8)">🏎 Next F2</div>
+    <div class="next-race-label" style="color:rgba(255,160,50,0.8)" data-i18n-prefix="next_f2">🏎 Next F2</div>
     <div class="next-race-name" id="hdr-f2-name">—</div>
     <div class="next-race-location" id="hdr-f2-loc">—</div>
   </div>
   <div class="header-countdown hdr-sub" id="hdr-f2-countdown-wrap" style="display:none">
-    <div class="header-countdown-label" style="color:rgba(255,160,50,0.8)">Starts in</div>
+    <div class="header-countdown-label" style="color:rgba(255,160,50,0.8)"><span data-i18n="starts_in">Starts in</span></div>
     <div class="header-countdown-value" id="hdr-f2-countdown" style="color:#ffa032">--:--:--</div>
   </div>
 
   <!-- F3 standalone next race (hidden when F3 supports next F1) -->
   <div class="header-divider hdr-sub" id="hdr-f3-div" style="display:none"></div>
   <div class="hdr-race-block hdr-sub" id="hdr-f3-block" style="display:none">
-    <div class="next-race-label" style="color:rgba(50,200,255,0.8)">🏎 Next F3</div>
+    <div class="next-race-label" style="color:rgba(50,200,255,0.8)" data-i18n-prefix="next_f3">🏎 Next F3</div>
     <div class="next-race-name" id="hdr-f3-name">—</div>
     <div class="next-race-location" id="hdr-f3-loc">—</div>
   </div>
   <div class="header-countdown hdr-sub" id="hdr-f3-countdown-wrap" style="display:none">
-    <div class="header-countdown-label" style="color:rgba(50,200,255,0.8)">Starts in</div>
+    <div class="header-countdown-label" style="color:rgba(50,200,255,0.8)"><span data-i18n="starts_in">Starts in</span></div>
     <div class="header-countdown-value" id="hdr-f3-countdown" style="color:#32c8ff">--:--:--</div>
   </div>
 
   <!-- F1 Academy standalone next race (hidden when F1A supports next F1) -->
   <div class="header-divider hdr-sub" id="hdr-f1a-div" style="display:none"></div>
   <div class="hdr-race-block hdr-sub" id="hdr-f1a-block" style="display:none">
-    <div class="next-race-label" style="color:rgba(255,100,200,0.8)">🏎 Next F1 Academy</div>
+    <div class="next-race-label" style="color:rgba(255,100,200,0.8)" data-i18n-prefix="next_f1a">🏎 Next F1 Academy</div>
     <div class="next-race-name" id="hdr-f1a-name">—</div>
     <div class="next-race-location" id="hdr-f1a-loc">—</div>
   </div>
   <div class="header-countdown hdr-sub" id="hdr-f1a-countdown-wrap" style="display:none">
-    <div class="header-countdown-label" style="color:rgba(255,100,200,0.8)">Starts in</div>
+    <div class="header-countdown-label" style="color:rgba(255,100,200,0.8)"><span data-i18n="starts_in">Starts in</span></div>
     <div class="header-countdown-value" id="hdr-f1a-countdown" style="color:#ff64c8">--:--:--</div>
   </div>
 
-  <div class="header-divider" id="hdr-fe-pre-div"></div>
+  <div class="header-divider" id="hdr-fe-pre-div" style="display:none"></div>
 
   <!-- Formula E next race -->
-  <div class="hdr-race-block hdr-fe-indy" id="hdr-fe-block">
-    <div class="next-race-label" style="color:rgba(187,128,255,0.7)">⚡ Next Formula E</div>
+  <div class="hdr-race-block hdr-fe-indy" id="hdr-fe-block" style="display:none">
+    <div class="next-race-label" style="color:rgba(187,128,255,0.7)" data-i18n-prefix="next_fe">⚡ Next Formula E</div>
     <div class="next-race-name" id="hdr-fe-name">—</div>
     <div class="next-race-location" id="hdr-fe-loc">—</div>
   </div>
-  <div class="header-countdown hdr-fe-indy" id="hdr-fe-countdown-wrap">
-    <div class="header-countdown-label" style="color:rgba(187,128,255,0.7)">Starts in</div>
+  <div class="header-countdown hdr-fe-indy" id="hdr-fe-countdown-wrap" style="display:none">
+    <div class="header-countdown-label" style="color:rgba(187,128,255,0.7)"><span data-i18n="starts_in">Starts in</span></div>
     <div class="header-countdown-value" id="hdr-fe-countdown" style="color:#bb80ff">--:--:--</div>
   </div>
 
-  <div class="header-divider hdr-fe-indy" id="hdr-indy-pre-div"></div>
+  <div class="header-divider hdr-fe-indy" id="hdr-indy-pre-div" style="display:none"></div>
 
   <!-- IndyCar next race -->
-  <div class="hdr-race-block hdr-fe-indy" id="hdr-indy-block">
-    <div class="next-race-label" style="color:rgba(255,224,64,0.7)">🏁 Next IndyCar</div>
+  <div class="hdr-race-block hdr-fe-indy" id="hdr-indy-block" style="display:none">
+    <div class="next-race-label" style="color:rgba(255,224,64,0.7)" data-i18n-prefix="next_indy">🏁 Next IndyCar</div>
     <div class="next-race-name" id="hdr-indy-name">—</div>
     <div class="next-race-location" id="hdr-indy-loc">—</div>
   </div>
-  <div class="header-countdown hdr-fe-indy" id="hdr-indy-countdown-wrap">
-    <div class="header-countdown-label" style="color:rgba(255,224,64,0.7)">Starts in</div>
+  <div class="header-countdown hdr-fe-indy" id="hdr-indy-countdown-wrap" style="display:none">
+    <div class="header-countdown-label" style="color:rgba(255,224,64,0.7)"><span data-i18n="starts_in">Starts in</span></div>
     <div class="header-countdown-value" id="hdr-indy-countdown" style="color:#ffe040">--:--:--</div>
   </div>
 
+  <!-- WEC next race -->
+  <div class="header-divider" id="hdr-wec-pre-div" style="display:none"></div>
+  <div class="hdr-race-block" id="hdr-wec-block" style="display:none">
+    <div class="next-race-label" style="color:rgba(0,232,204,0.7)" data-i18n-prefix="next_wec">🏁 Next WEC</div>
+    <div class="next-race-name" id="hdr-wec-name">—</div>
+    <div class="next-race-location" id="hdr-wec-loc">—</div>
+  </div>
+  <div class="header-countdown" id="hdr-wec-countdown-wrap" style="display:none">
+    <div class="header-countdown-label" style="color:rgba(0,232,204,0.7)"><span data-i18n="starts_in">Starts in</span></div>
+    <div class="header-countdown-value" id="hdr-wec-countdown" style="color:#00e8cc">--:--:--</div>
+  </div>
+
+  <!-- WRC next round -->
+  <div class="header-divider" id="hdr-wrc-pre-div" style="display:none"></div>
+  <div class="hdr-race-block" id="hdr-wrc-block" style="display:none">
+    <div class="next-race-label" style="color:rgba(255,102,68,0.7)" data-i18n-prefix="next_wrc">🏔 Next WRC</div>
+    <div class="next-race-name" id="hdr-wrc-name">—</div>
+    <div class="next-race-location" id="hdr-wrc-loc">—</div>
+  </div>
+  <div class="header-countdown" id="hdr-wrc-countdown-wrap" style="display:none">
+    <div class="header-countdown-label" style="color:rgba(255,102,68,0.7)"><span data-i18n="starts_in">Starts in</span></div>
+    <div class="header-countdown-value" id="hdr-wrc-countdown" style="color:#ff6644">--:--:--</div>
+  </div>
+
   <div class="header-divider hdr-fe-indy" id="hdr-hint-div"></div>
-  <span class="hint">Drag · Scroll to zoom</span>
+  <span class="hint" data-i18n="hint">Drag · Scroll to zoom</span>
+  <div id="lang-wrap">
+    <button id="lang-btn">EN</button>
+    <div id="lang-menu">
+      <button class="lang-opt active" data-lang="en">🇬🇧 English</button>
+      <button class="lang-opt" data-lang="fr">🇫🇷 Français</button>
+      <button class="lang-opt" data-lang="es">🇪🇸 Español</button>
+      <button class="lang-opt" data-lang="de">🇩🇪 Deutsch</button>
+      <button class="lang-opt" data-lang="pl">🇵🇱 Polski</button>
+      <button class="lang-opt" data-lang="ja">🇯🇵 日本語</button>
+      <button class="lang-opt" data-lang="ko">🇰🇷 한국어</button>
+    </div>
+  </div>
   <button id="info-btn" title="About GridPulse">&#x24D8;</button>
+
 </header>
 
 <!-- News toggle button — always visible, contains ticker when closed -->
 <div id="news-toggle">
   <span class="nt-dot"></span>
-  <span class="nt-label">News</span>
+  <span class="nt-label" data-i18n="tab_news">News</span>
   <span class="nt-divider"></span>
   <!-- Filter buttons in ticker bar -->
   <div id="news-filter-bar">
-    <span class="news-filter-btn active" data-filter="all">All</span>
+    <span class="news-filter-btn active" data-filter="all" data-i18n="all">All</span>
     <span class="news-filter-btn" data-filter="f1">F1</span>
-    <span class="news-filter-btn" data-filter="other">Other</span>
+    <span class="news-filter-btn" data-filter="other" data-i18n="news_other">Other</span>
   </div>
   <span class="nt-divider"></span>
   <!-- Ticker scrolls when dropdown is closed -->
   <div id="news-ticker-wrap">
     <div id="news-ticker">
-      <span style="color:var(--muted);font-size:0.65rem;letter-spacing:0.05em">Loading news…</span>
+      <span id="news-loading-text" style="color:var(--muted);font-size:0.65rem;letter-spacing:0.05em">Loading news…</span>
     </div>
   </div>
   <span id="news-count" style="color:var(--muted);font-size:0.52rem;white-space:nowrap;flex-shrink:0"></span>
@@ -1249,13 +1439,15 @@
 
     <!-- Mobile filter bar — floating top-left over globe -->
     <div id="mobile-filter-bar">
-      <button class="mob-filter-btn all active" data-filter="all">All</button>
+      <button class="mob-filter-btn all active" data-filter="all" data-i18n="all">All</button>
       <button class="mob-filter-btn f1"  data-filter="f1">F1</button>
       <button class="mob-filter-btn f2"  data-filter="f2">F2</button>
       <button class="mob-filter-btn f3"  data-filter="f3">F3</button>
       <button class="mob-filter-btn f1a" data-filter="f1a">F1A</button>
       <button class="mob-filter-btn fe"  data-filter="fe">FE</button>
       <button class="mob-filter-btn indy" data-filter="indy">Indy</button>
+      <button class="mob-filter-btn wec"  data-filter="wec">WEC</button>
+      <button class="mob-filter-btn wrc"  data-filter="wrc">WRC</button>
     </div>
 
     <!-- AD SLOT — Above globe, centred (728×90) -->
@@ -1288,7 +1480,7 @@
     <div class="sp-inner" id="sp-inner">
       <div class="sp-scroll" id="sp-scroll">
         <div style="position:relative; min-height:24px;">
-          <button class="sp-close" id="sp-close" title="Close">✕</button>
+          <button class="sp-close" id="sp-close" data-i18n-title="close">✕</button>
         </div>
         <div class="sp-round" id="sp-round"></div>
         <div class="sp-name" id="sp-name"></div>
@@ -1308,17 +1500,19 @@
   <button id="sidebar-collapse-btn" title="Toggle race list">◀</button>
   <div class="sidebar">
     <div class="sidebar-header">
-      <span>2026 Calendar</span>
+      <span data-i18n="calendar_title">2026 Calendar</span>
       <span id="sidebar-count" style="color:var(--accent)">0</span>
     </div>
     <div class="filter-bar" id="filter-bar">
-      <button class="filter-btn all active" data-filter="all">All</button>
+      <button class="filter-btn all active" data-filter="all" data-i18n="all">All</button>
       <button class="filter-btn f1" data-filter="f1">F1</button>
       <button class="filter-btn f2" data-filter="f2">F2</button>
       <button class="filter-btn f3" data-filter="f3">F3</button>
       <button class="filter-btn f1a" data-filter="f1a">F1 Academy</button>
       <button class="filter-btn fe" data-filter="fe">Formula E</button>
       <button class="filter-btn indy" data-filter="indy">IndyCar</button>
+      <button class="filter-btn wec"  data-filter="wec">WEC</button>
+      <button class="filter-btn wrc"  data-filter="wrc">WRC</button>
     </div>
     <div class="city-list" id="city-list"></div>
   </div>
@@ -1334,13 +1528,13 @@
 <!-- Mobile: tab bar at bottom -->
 <div id="mobile-tabs">
   <button class="mob-tab active" id="tab-globe" onclick="mobileTab('globe')">
-    <span class="mob-tab-icon">🌍</span>Globe
+    <span class="mob-tab-icon">🌍</span><span data-i18n="tab_globe">Globe</span>
   </button>
   <button class="mob-tab" id="tab-list" onclick="mobileTab('list')">
-    <span class="mob-tab-icon">📅</span>Calendar
+    <span class="mob-tab-icon">📅</span><span data-i18n="tab_calendar">Calendar</span>
   </button>
   <button class="mob-tab" id="tab-news" onclick="mobileTab('news')">
-    <span class="mob-tab-icon">📰</span>News
+    <span class="mob-tab-icon">📰</span><span data-i18n="tab_news">News</span>
   </button>
 </div>
 
@@ -1348,13 +1542,13 @@
 <div id="mobile-news">
   <div class="mob-news-header">
     <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);flex-shrink:0"></span>
-    Motorsport News
+    <span data-i18n="tab_news">News</span>
     <span id="mob-news-count" style="color:var(--accent);margin-left:0.2rem"></span>
   </div>
   <div id="mob-news-filters" style="display:flex;gap:0.4rem;padding:0.5rem 1rem;border-bottom:1px solid var(--border);flex-shrink:0;">
-    <button class="mob-news-filter active" data-filter="all">All</button>
+    <button class="mob-news-filter active" data-filter="all" data-i18n="all">All</button>
     <button class="mob-news-filter" data-filter="f1">F1</button>
-    <button class="mob-news-filter" data-filter="other">Other</button>
+    <button class="mob-news-filter" data-filter="other" data-i18n="news_other">Other</button>
   </div>
   <div id="news-list-mobile">
     <div class="news-loading">Loading news…</div>
@@ -1379,6 +1573,1074 @@ window.onerror = function(msg, src, line, col, err) {
 window.addEventListener('unhandledrejection', function(e) {
   window.onerror('Unhandled Promise: ' + e.reason, '', 0, 0, e.reason);
 });
+
+// ─── INTERNATIONALISATION ─────────────────────────────────────────────────────
+const TRANSLATIONS = {
+  en: {
+    next_f1:        '🏎 Next F1',
+    next_f1a:       '🏎 Next F1 Academy',
+    next_fe:        '⚡ Next Formula E',
+    next_indy:      '🏁 Next IndyCar',
+    next_f2:        '🏎 Next F2',
+    next_f3:        '🏎 Next F3',
+    starts_in:      'Starts in',
+    on_now:         'On now!',
+    hint:           'Drag · Scroll to zoom',
+    calendar_title: '2026 Calendar',
+    all:            'All',
+    tab_globe:      'Globe',
+    tab_calendar:   'Calendar',
+    tab_news:       'News',
+    info_about:     'About',
+    info_contact:   'Contact',
+    info_terms:     'Terms of Use',
+    close:          'Close',
+    start_tour:     'Start tour',
+    stop_tour:      'Stop tour',
+    round:          'Round',
+    race_starts:    '🏎 F1 Race starts in',
+    eprix_starts:   '⚡ E-Prix starts in',
+    indy_starts:    '🏎 IndyCar Race starts in',
+    race_done_f1:   '🏁 F1 Race',
+    race_done_fe:   '⚡ E-Prix',
+    race_done_indy: '🏁 IndyCar Race',
+    race_completed: 'Race completed',
+    news_loading:   'Loading latest motorsport news…',
+    news_unavailable: '⚠ News unavailable — try disabling your ad blocker',
+    news_error:     '⚠ Could not load news feeds.',
+    ad_block_note:  'Ad blockers can prevent RSS proxy requests.',
+    no_stories:     'No stories in this category.',
+    stories:        'stories',
+    // Session labels
+    s_fp1: 'Practice 1', s_fp2: 'Practice 2', s_fp3: 'Practice 3',
+    s_sq: 'Sprint Quali', s_sprint: 'Sprint Race', s_quali: 'Qualifying', s_race: 'F1 Race',
+    s_fe_race: 'E-Prix', s_fe_race2: 'E-Prix 2', s_fe_quali: 'Qualifying', s_fe_fp: 'Free Practice',
+    s_indy_race: 'Race', s_indy_race2: 'Race 2', s_indy_quali: 'Qualifying', s_indy_fp: 'Practice',
+    s_f2_fp: 'Free Practice', s_f2_quali: 'Qualifying', s_f2_sprint: 'Sprint Race', s_f2_feature: 'Feature Race',
+    s_f3_fp: 'Practice', s_f3_quali: 'Qualifying', s_f3_sprint: 'Sprint Race', s_f3_feature: 'Feature Race',
+    s_f1a_quali: 'Qualifying', s_f1a_r1: 'Race 1', s_f1a_r2: 'Race 2',
+    news_loading_ticker: 'Loading news\u2026',
+    info_h_covered: "What is covered",
+    info_li_f1: "Formula 1 — full season calendar with practice, qualifying and race sessions",
+    info_li_f2f3: "Formula 2 & Formula 3 — sprint and feature race sessions",
+    info_li_f1a: "F1 Academy — the all-female development series",
+    info_li_fe: "Formula E — electric street racing E-Prix calendar",
+    info_li_indy: "IndyCar — oval and road course championship calendar",
+    info_h_how: "How to use it",
+    info_how_1: "Drag the globe to rotate, scroll or pinch to zoom",
+    info_how_2: "Click any race dot to open the full session schedule",
+    info_how_3: "Use the series filter to focus on a single championship",
+    info_how_4: "Press ▶ to start the automatic race tour",
+    info_how_5: "The header rotates through next-up races across all active series",
+    info_h_data: "Data & updates",
+    info_data_p: "Session times are sourced from official series calendars and displayed in your local time zone. News feeds are pulled live from Autosport and The Race.",
+    info_disclaimer: "GridPulse is an independent fan project and is not affiliated with Formula One Management, Formula E Operations, IndyCar or any team or driver.",
+    info_contact_intro: "Have a question, found a bug, or want to suggest a feature? We would love to hear from you.",
+    info_contact_general: "General enquiries",
+    info_email: "Email",
+    info_response: "Response time",
+    info_response_val: "2–3 business days",
+    info_bugs: "Bug reports",
+    info_feedback: "Feature requests",
+    info_follow: "Follow us",
+    terms_intro: "Last updated: January 2026. By accessing or using GridPulse you agree to these terms.",
+    terms_h1: "1. Acceptance",
+    terms_p1: "These terms govern your access to GridPulse. By using the Service you confirm you are at least 13 years old and agree to be bound by these terms. If you do not agree, please do not use the Service.",
+    terms_h2: "2. Permitted use",
+    terms_p2: "GridPulse is provided for personal, non-commercial use only. You may not reproduce, scrape, redistribute or commercially exploit any content, data or code from the Service without prior written permission.",
+    terms_h3: "3. Accuracy of information",
+    terms_p3: "While we strive to keep all session times and calendar data accurate, GridPulse does not guarantee the completeness or accuracy of information displayed. Always verify critical information with official series sources.",
+    terms_h4: "4. Third-party content",
+    terms_p4: "GridPulse aggregates news from third-party sources including Autosport and The Race. We are not responsible for the content of these external sources.",
+    terms_h5: "5. Intellectual property",
+    terms_p5: "All original content, design and code within GridPulse is the property of GridPulse and its creators. Series names, logos and trademarks referenced belong to their respective owners.",
+    terms_h6: "6. Limitation of liability",
+    terms_p6: "The Service is provided without warranties of any kind. To the fullest extent permitted by law, GridPulse shall not be liable for any direct, indirect, incidental or consequential damages from your use.",
+    terms_h7: "7. Changes to terms",
+    terms_p7: "We may update these terms from time to time. Continued use of the Service following any changes constitutes acceptance of the revised terms.",
+    terms_h8: "8. Governing law",
+    terms_p8: "These terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.",
+    info_intro1: "GridPulse is a live motorsport calendar and race tracker built for fans who want to follow the full racing season — across every series, on a single globe.",
+    info_intro2: "Spin the globe, explore circuits, and see exactly what is racing where and when. Every round is plotted on an interactive 3D map with real-time countdowns to the next session.",
+    info_contact_h2: "Get in <em>Touch</em>",
+    info_terms_h2: "Terms of <em>Use</em>",
+    terms_bilingual_note: "⚠ These terms are legally binding in English only. The translation below is provided for reference alongside the official English version.",
+    next_wec: "🏁 Next WEC",
+    next_wrc: "🏔 Next WRC",
+    wec_starts: "🏁 Race starts in",
+    wrc_starts: "🏔 Rally starts in",
+    race_done_wec: "🏁 WEC Race",
+    race_done_wrc: "🏔 WRC Rally",
+    s_wec_race: "Race Start",
+    s_wrc_ps: "Power Stage",
+    s_wrc_day1: "Day 1",
+    news_other: "Other",
+    cd_d: "d",
+    cd_h: "h",
+    cd_m: "m",
+    info_series: "Series",
+    info_series_h: "Series Settings",
+    info_series_desc: "Choose which racing series are shown on the globe, calendar, and header.",
+    info_series_note: "Your selection is saved in your browser and restored on every visit.",
+    info_series_reset: "Reset to all series",
+    race_done_short: "Done",
+    day_singular: "day",
+    day_plural: "days",
+  },
+  fr: {
+    next_f1:        '🏎 Prochain F1',
+    next_f1a:       '🏎 Prochain F1 Academy',
+    next_fe:        '⚡ Prochain Formula E',
+    next_indy:      '🏁 Prochain IndyCar',
+    next_f2:        '🏎 Prochain F2',
+    next_f3:        '🏎 Prochain F3',
+    starts_in:      'Commence dans',
+    on_now:         'En cours !',
+    hint:           'Glisser · Défiler pour zoomer',
+    calendar_title: 'Calendrier 2026',
+    all:            'Tout',
+    tab_globe:      'Globe',
+    tab_calendar:   'Calendrier',
+    tab_news:       'Actualités',
+    info_about:     'À propos',
+    info_contact:   'Contact',
+    info_terms:     "Conditions d'utilisation",
+    close:          'Fermer',
+    start_tour:     'Démarrer le tour',
+    stop_tour:      'Arrêter le tour',
+    round:          'Manche',
+    race_starts:    '🏎 Course F1 dans',
+    eprix_starts:   '⚡ E-Prix dans',
+    indy_starts:    '🏎 Course IndyCar dans',
+    race_done_f1:   '🏁 Course F1',
+    race_done_fe:   '⚡ E-Prix',
+    race_done_indy: '🏁 Course IndyCar',
+    race_completed: 'Course terminée',
+    news_loading:   'Chargement des dernières actualités…',
+    news_unavailable: '⚠ Actualités indisponibles — désactivez votre bloqueur de publicités',
+    news_error:     "⚠ Impossible de charger les flux d'actualités.",
+    ad_block_note:  'Les bloqueurs de publicités peuvent bloquer les requêtes.',
+    no_stories:     'Aucun article dans cette catégorie.',
+    stories:        'articles',
+    // Session labels
+    s_fp1: 'Essais Libres 1', s_fp2: 'Essais Libres 2', s_fp3: 'Essais Libres 3',
+    s_sq: 'Sprint Qualif.', s_sprint: 'Course Sprint', s_quali: 'Qualifications', s_race: 'Course F1',
+    s_fe_race: 'E-Prix', s_fe_race2: 'E-Prix 2', s_fe_quali: 'Qualifications', s_fe_fp: 'Essais Libres',
+    s_indy_race: 'Course', s_indy_race2: 'Course 2', s_indy_quali: 'Qualifications', s_indy_fp: 'Essais',
+    s_f2_fp: 'Essais Libres', s_f2_quali: 'Qualifications', s_f2_sprint: 'Course Sprint', s_f2_feature: 'Course Principale',
+    s_f3_fp: 'Essais', s_f3_quali: 'Qualifications', s_f3_sprint: 'Course Sprint', s_f3_feature: 'Course Principale',
+    s_f1a_quali: 'Qualifications', s_f1a_r1: 'Course 1', s_f1a_r2: 'Course 2',
+    news_loading_ticker: 'Chargement\u2026',
+    info_h_covered: "Ce qui est couvert",
+    info_li_f1: "Formule 1 — calendrier complet avec essais, qualifications et course",
+    info_li_f2f3: "Formule 2 & Formule 3 — courses sprint et course principale",
+    info_li_f1a: "F1 Academy — la série de développement féminine",
+    info_li_fe: "Formula E — calendrier des E-Prix de course électrique en ville",
+    info_li_indy: "IndyCar — calendrier du championnat sur ovals et circuits routiers",
+    info_h_how: "Comment l'utiliser",
+    info_how_1: "Faire glisser le globe pour pivoter, défiler ou pincer pour zoomer",
+    info_how_2: "Cliquer sur un point de course pour voir le programme complet",
+    info_how_3: "Utiliser le filtre pour se concentrer sur un seul championnat",
+    info_how_4: "Appuyer sur ▶ pour lancer le tour automatique",
+    info_how_5: "L'en-tête tourne entre les prochaines courses de toutes les séries",
+    info_h_data: "Données & mises à jour",
+    info_data_p: "Les horaires de session proviennent des calendriers officiels des séries et sont affichés dans votre fuseau horaire local. Les flux d'actualités sont chargés en direct depuis Autosport et The Race.",
+    info_disclaimer: "GridPulse est un projet de fan indépendant et n'est pas affilié à Formula One Management, Formula E Operations, IndyCar ou à une écurie ou un pilote.",
+    info_contact_intro: "Une question, un bug ou une suggestion ? Nous serions ravis de vous entendre.",
+    info_contact_general: "Renseignements généraux",
+    info_email: "E-mail",
+    info_response: "Délai de réponse",
+    info_response_val: "2–3 jours ouvrables",
+    info_bugs: "Signaler un bug",
+    info_feedback: "Suggestions de fonctionnalités",
+    info_follow: "Suivez-nous",
+    terms_intro: "Dernière mise à jour : janvier 2026. En accédant à GridPulse, vous acceptez ces conditions.",
+    terms_h1: "1. Acceptation",
+    terms_p1: "Ces conditions régissent votre accès à GridPulse. En utilisant le service, vous confirmez avoir au moins 13 ans.",
+    terms_h2: "2. Utilisation autorisée",
+    terms_p2: "GridPulse est fourni pour un usage personnel non commercial uniquement. Toute reproduction ou exploitation commerciale est interdite sans autorisation écrite préalable.",
+    terms_h3: "3. Exactitude des informations",
+    terms_p3: "Bien que nous nous efforcions de maintenir l'exactitude des données, GridPulse ne garantit pas l'exhaustivité des informations affichées.",
+    terms_h4: "4. Contenu tiers",
+    terms_p4: "GridPulse agrège des actualités de sources tierces. Nous ne sommes pas responsables du contenu de ces sources externes.",
+    terms_h5: "5. Propriété intellectuelle",
+    terms_p5: "Tout le contenu original, le design et le code de GridPulse appartiennent à ses créateurs. Les noms et logos des séries appartiennent à leurs propriétaires respectifs.",
+    terms_h6: "6. Limitation de responsabilité",
+    terms_p6: "Le service est fourni sans garantie. Dans toute la mesure permise par la loi, GridPulse ne saurait être tenu responsable des dommages découlant de votre utilisation.",
+    terms_h7: "7. Modifications des conditions",
+    terms_p7: "Nous pouvons mettre à jour ces conditions à tout moment. L'utilisation continue du service vaut acceptation des conditions révisées.",
+    terms_h8: "8. Droit applicable",
+    terms_p8: "Ces conditions sont régies par le droit d'Angleterre et du Pays de Galles.",
+    info_intro1: "GridPulse est un calendrier de sport automobile en direct conçu pour les fans souhaitant suivre toute la saison de course — sur toutes les séries, sur un seul globe.",
+    info_intro2: "Faites tourner le globe, explorez les circuits et voyez exactement où et quand se déroulent les courses. Chaque manche est représentée sur une carte 3D interactive avec des comptes à rebours en temps réel.",
+    info_contact_h2: "Nous <em>Contacter</em>",
+    info_terms_h2: "Conditions <em>d'utilisation</em>",
+    terms_bilingual_note: "⚠ Ces conditions sont juridiquement contraignantes en anglais uniquement. La traduction ci-dessous est fournie à titre indicatif, avec la version officielle anglaise.",
+    next_wec: "🏁 Prochain WEC",
+    next_wrc: "🏔 Prochain WRC",
+    wec_starts: "🏁 Course dans",
+    wrc_starts: "🏔 Rallye dans",
+    race_done_wec: "🏁 Course WEC",
+    race_done_wrc: "🏔 Rallye WRC",
+    s_wec_race: "Départ course",
+    s_wrc_ps: "Power Stage",
+    s_wrc_day1: "Jour 1",
+    news_other: "Autre",
+    cd_d: "j",
+    cd_h: "h",
+    cd_m: "m",
+    info_series: "Séries",
+    info_series_h: "Paramètres des Séries",
+    info_series_desc: "Choisissez les séries à afficher sur le globe, le calendrier et l'en-tête.",
+    info_series_note: "Votre sélection est sauvegardée dans votre navigateur.",
+    info_series_reset: "Réinitialiser toutes les séries",
+    race_done_short: "Terminé",
+    day_singular: "jour",
+    day_plural: "jours",
+  },
+  es: {
+    next_f1:        '🏎 Próxima F1',
+    next_f1a:       '🏎 Próxima F1 Academy',
+    next_fe:        '⚡ Próxima Formula E',
+    next_indy:      '🏁 Próxima IndyCar',
+    next_f2:        '🏎 Próxima F2',
+    next_f3:        '🏎 Próxima F3',
+    starts_in:      'Comienza en',
+    on_now:         '¡En curso!',
+    hint:           'Arrastrar · Desplazar para zoom',
+    calendar_title: 'Calendario 2026',
+    all:            'Todo',
+    tab_globe:      'Globo',
+    tab_calendar:   'Calendario',
+    tab_news:       'Noticias',
+    info_about:     'Acerca de',
+    info_contact:   'Contacto',
+    info_terms:     'Términos de uso',
+    close:          'Cerrar',
+    start_tour:     'Iniciar tour',
+    stop_tour:      'Detener tour',
+    round:          'Ronda',
+    race_starts:    '🏎 Carrera F1 en',
+    eprix_starts:   '⚡ E-Prix en',
+    indy_starts:    '🏎 Carrera IndyCar en',
+    race_done_f1:   '🏁 Carrera F1',
+    race_done_fe:   '⚡ E-Prix',
+    race_done_indy: '🏁 Carrera IndyCar',
+    race_completed: 'Carrera finalizada',
+    news_loading:   'Cargando últimas noticias…',
+    news_unavailable: '⚠ Noticias no disponibles — desactiva tu bloqueador de anuncios',
+    news_error:     '⚠ No se pudieron cargar los feeds de noticias.',
+    ad_block_note:  'Los bloqueadores de anuncios pueden impedir las solicitudes.',
+    no_stories:     'No hay artículos en esta categoría.',
+    stories:        'artículos',
+    s_fp1: 'Práctica 1', s_fp2: 'Práctica 2', s_fp3: 'Práctica 3',
+    s_sq: 'Clasif. Sprint', s_sprint: 'Carrera Sprint', s_quali: 'Clasificación', s_race: 'Carrera F1',
+    s_fe_race: 'E-Prix', s_fe_race2: 'E-Prix 2', s_fe_quali: 'Clasificación', s_fe_fp: 'Práctica Libre',
+    s_indy_race: 'Carrera', s_indy_race2: 'Carrera 2', s_indy_quali: 'Clasificación', s_indy_fp: 'Práctica',
+    s_f2_fp: 'Práctica Libre', s_f2_quali: 'Clasificación', s_f2_sprint: 'Carrera Sprint', s_f2_feature: 'Carrera Principal',
+    s_f3_fp: 'Práctica', s_f3_quali: 'Clasificación', s_f3_sprint: 'Carrera Sprint', s_f3_feature: 'Carrera Principal',
+    s_f1a_quali: 'Clasificación', s_f1a_r1: 'Carrera 1', s_f1a_r2: 'Carrera 2',
+    news_loading_ticker: 'Cargando…',
+    info_h_covered: 'Qué se cubre',
+    info_li_f1: 'Fórmula 1 — calendario completo con prácticas, clasificación y carrera',
+    info_li_f2f3: 'Fórmula 2 y Fórmula 3 — carreras sprint y carrera principal',
+    info_li_f1a: 'F1 Academy — la serie de desarrollo femenina',
+    info_li_fe: 'Formula E — calendario de E-Prix en circuitos urbanos eléctricos',
+    info_li_indy: 'IndyCar — calendario del campeonato en ovacos y circuitos',
+    info_h_how: 'Cómo usarlo',
+    info_how_1: 'Arrastra el globo para girarlo, desplázate o pellizca para hacer zoom',
+    info_how_2: 'Haz clic en cualquier punto de carrera para ver el programa completo',
+    info_how_3: 'Usa el filtro de series para centrarte en un solo campeonato',
+    info_how_4: 'Pulsa ▶ para iniciar el tour automático',
+    info_how_5: 'La cabecera rota entre las próximas carreras de todas las series activas',
+    info_h_data: 'Datos y actualizaciones',
+    info_data_p: 'Los horarios de sesión provienen de los calendarios oficiales y se muestran en tu zona horaria local.',
+    info_disclaimer: 'GridPulse es un proyecto de fan independiente y no está afiliado a Formula One Management, Formula E Operations, IndyCar ni a ningún equipo o piloto.',
+    info_contact_intro: '¿Tienes una pregunta, encontraste un error o quieres sugerir una función?',
+    info_contact_general: 'Consultas generales',
+    info_email: 'Correo electrónico', info_response: 'Tiempo de respuesta', info_response_val: '2–3 días hábiles',
+    info_bugs: 'Informar de errores', info_feedback: 'Solicitudes de funciones', info_follow: 'Síguenos',
+    terms_intro: 'Última actualización: enero de 2026. Al acceder a GridPulse, aceptas estos términos.',
+    terms_h1: '1. Aceptación', terms_p1: 'Estos términos rigen tu acceso a GridPulse. Al usar el servicio confirmas que tienes al menos 13 años.',
+    terms_h2: '2. Uso permitido', terms_p2: 'GridPulse se proporciona solo para uso personal no comercial.',
+    terms_h3: '3. Exactitud', terms_p3: 'GridPulse no garantiza la integridad de la información mostrada.',
+    terms_h4: '4. Contenido de terceros', terms_p4: 'No somos responsables del contenido de fuentes externas.',
+    terms_h5: '5. Propiedad intelectual', terms_p5: 'Todo el contenido original de GridPulse pertenece a sus creadores.',
+    terms_h6: '6. Limitación de responsabilidad', terms_p6: 'En la medida permitida por la ley, GridPulse no será responsable de los daños.',
+    terms_h7: '7. Cambios en los términos', terms_p7: 'Podemos actualizar estos términos en cualquier momento.',
+    terms_h8: '8. Legislación aplicable', terms_p8: 'Estos términos se rigen por las leyes de Inglaterra y Gales.',
+    info_intro1: "GridPulse es un calendario de motor en directo diseñado para los aficionados que quieren seguir toda la temporada — en todas las series, en un solo globo.",
+    info_intro2: "Gira el globo, explora los circuitos y ve exactamente dónde y cuándo se corre. Cada ronda está representada en un mapa 3D interactivo con cuenta regresiva en tiempo real.",
+    info_contact_h2: "<em>Contáctanos</em>",
+    info_terms_h2: "Términos de <em>Uso</em>",
+    terms_p8: "Estos términos se rigen por las leyes de Inglaterra y Gales.",
+    terms_bilingual_note: "⚠ Estos términos son legalmente vinculantes solo en inglés. La traducción se proporciona como referencia junto con la versión oficial en inglés.",
+    info_feedback: "Solicitudes de funciones",
+    info_follow: "Síguenos",
+    info_response: "Tiempo de respuesta",
+    info_response_val: "2–3 días hábiles",
+    terms_p1: "Estos términos rigen tu acceso a GridPulse. Al usar el servicio confirmas que tienes al menos 13 años.",
+    terms_p2: "GridPulse se proporciona solo para uso personal no comercial. No puedes reproducir ni explotar comercialmente ningún contenido sin permiso previo por escrito.",
+    terms_p3: "Aunque nos esforzamos por mantener la exactitud, GridPulse no garantiza la integridad de la información mostrada.",
+    terms_p4: "GridPulse agrega noticias de fuentes de terceros. No somos responsables del contenido de esas fuentes externas.",
+    terms_p5: "Todo el contenido original, diseño y código de GridPulse pertenece a sus creadores. Los nombres y logos de las series pertenecen a sus dueños respectivos.",
+    terms_p6: "El servicio se presta sin garantías. En la medida permitida por la ley, GridPulse no será responsable de los daños derivados del uso del servicio.",
+    terms_p7: "Podemos actualizar estos términos en cualquier momento. El uso continuado del servicio implica la aceptación de los términos revisados.",
+    next_wec: "🏁 Próximo WEC",
+    next_wrc: "🏔 Próximo WRC",
+    wec_starts: "🏁 Carrera en",
+    wrc_starts: "🏔 Rally en",
+    race_done_wec: "🏁 Carrera WEC",
+    race_done_wrc: "🏔 Rally WRC",
+    s_wec_race: "Salida",
+    s_wrc_ps: "Power Stage",
+    s_wrc_day1: "Día 1",
+    news_other: "Otros",
+    cd_d: "d",
+    cd_h: "h",
+    cd_m: "m",
+    info_series: "Series",
+    info_series_h: "Configuración de Series",
+    info_series_desc: "Elige qué series se muestran en el globo, el calendario y el encabezado.",
+    info_series_note: "Tu selección se guarda en tu navegador y se restaura en cada visita.",
+    info_series_reset: "Restablecer todas las series",
+    race_done_short: "Listo",
+    day_singular: "día",
+    day_plural: "días",
+  },
+    // Session labels
+    s_fp1: 'Pr\u00e1ctica 1', s_fp2: 'Pr\u00e1ctica 2', s_fp3: 'Pr\u00e1ctica 3',
+    s_sq: 'Clasif. Sprint', s_sprint: 'Carrera Sprint', s_quali: 'Clasificaci\u00f3n', s_race: 'Carrera F1',
+    s_fe_race: 'E-Prix', s_fe_race2: 'E-Prix 2', s_fe_quali: 'Clasificaci\u00f3n', s_fe_fp: 'Pr\u00e1ctica Libre',
+    s_indy_race: 'Carrera', s_indy_race2: 'Carrera 2', s_indy_quali: 'Clasificaci\u00f3n', s_indy_fp: 'Pr\u00e1ctica',
+    s_f2_fp: 'Pr\u00e1ctica Libre', s_f2_quali: 'Clasificaci\u00f3n', s_f2_sprint: 'Carrera Sprint', s_f2_feature: 'Carrera Principal',
+    s_f3_fp: 'Pr\u00e1ctica', s_f3_quali: 'Clasificaci\u00f3n', s_f3_sprint: 'Carrera Sprint', s_f3_feature: 'Carrera Principal',
+    s_f1a_quali: 'Clasificaci\u00f3n', s_f1a_r1: 'Carrera 1', s_f1a_r2: 'Carrera 2',
+    news_loading_ticker: 'Cargando\u2026',
+    info_h_covered: "Qué se cubre",
+    info_li_f1: "Fórmula 1 — calendario completo con prácticas, clasificación y carrera",
+    info_li_f2f3: "Fórmula 2 y Fórmula 3 — carreras sprint y carrera principal",
+    info_li_f1a: "F1 Academy — la serie de desarrollo femenina",
+    info_li_fe: "Formula E — calendario de E-Prix en circuitos urbanos eléctricos",
+    info_li_indy: "IndyCar — calendario del campeonato en ovacos y circuitos",
+    info_h_how: "Cómo usarlo",
+    info_how_1: "Arrastra el globo para girarlo, desplázate o pellizca para hacer zoom",
+    info_how_2: "Haz clic en cualquier punto de carrera para ver el programa completo",
+    info_how_3: "Usa el filtro de series para centrarte en un solo campeonato",
+    info_how_4: "Pulsa ▶ para iniciar el tour automático",
+    info_how_5: "La cabecera rota entre las próximas carreras de todas las series activas",
+    info_h_data: "Datos y actualizaciones",
+    info_data_p: "Los horarios de sesión provienen de los calendarios oficiales de las series y se muestran en tu zona horaria local. Las noticias se cargan en directo desde Autosport y The Race.",
+    info_disclaimer: "GridPulse es un proyecto de fan independiente y no está afiliado a Formula One Management, Formula E Operations, IndyCar ni a ningún equipo o piloto.",
+    info_contact_intro: "¿Tienes una pregunta, encontraste un error o quieres sugerir una función? Nos encantaría saber de ti.",
+    info_contact_general: "Consultas generales",
+    info_email: "Correo electrónico",
+    info_response: "Tiempo de respuesta",
+    info_response_val: "2–3 días hábiles",
+    info_bugs: "Informar de errores",
+    info_feedback: "Solicitudes de funciones",
+    info_follow: "Síguenos",
+    terms_intro: "Última actualización: enero de 2026. Al acceder a GridPulse, aceptas estos términos.",
+    terms_h1: "1. Aceptación",
+    terms_p1: "Estos términos rigen tu acceso a GridPulse. Al usar el servicio confirmas que tienes al menos 13 años.",
+    terms_h2: "2. Uso permitido",
+    terms_p2: "GridPulse se proporciona solo para uso personal no comercial. No puedes reproducir ni explotar comercialmente ningún contenido sin permiso previo por escrito.",
+    terms_h3: "3. Exactitud de la información",
+    terms_p3: "Aunque nos esforzamos por mantener la exactitud, GridPulse no garantiza la integridad de la información mostrada.",
+    terms_h4: "4. Contenido de terceros",
+    terms_p4: "GridPulse agrega noticias de fuentes de terceros. No somos responsables del contenido de esas fuentes externas.",
+    terms_h5: "5. Propiedad intelectual",
+    terms_p5: "Todo el contenido original, diseño y código de GridPulse pertenece a sus creadores. Los nombres y logos de las series pertenecen a sus dueños respectivos.",
+    terms_h6: "6. Limitación de responsabilidad",
+    terms_p6: "El servicio se presta sin garantías. En la medida permitida por la ley, GridPulse no será responsable de los daños derivados del uso del servicio.",
+    terms_h7: "7. Cambios en los términos",
+    terms_p7: "Podemos actualizar estos términos en cualquier momento. El uso continuado del servicio implica la aceptación de los términos revisados.",
+    terms_h8: "8. Legislación aplicable",
+    terms_p8: "Estos términos se rigen por las leyes de Inglaterra y Gales.",
+  de: {
+    next_f1:        '🏎 Nächste F1',
+    next_f1a:       '🏎 Nächste F1 Academy',
+    next_fe:        '⚡ Nächste Formula E',
+    next_indy:      '🏁 Nächste IndyCar',
+    next_f2:        '🏎 Nächste F2',
+    next_f3:        '🏎 Nächste F3',
+    starts_in:      'Beginnt in',
+    on_now:         'Läuft jetzt!',
+    hint:           'Ziehen · Scrollen zum Zoomen',
+    calendar_title: 'Kalender 2026',
+    all:            'Alle',
+    tab_globe:      'Globus',
+    tab_calendar:   'Kalender',
+    tab_news:       'Nachrichten',
+    info_about:     'Über uns',
+    info_contact:   'Kontakt',
+    info_terms:     'Nutzungsbedingungen',
+    close:          'Schließen',
+    start_tour:     'Tour starten',
+    stop_tour:      'Tour stoppen',
+    round:          'Runde',
+    race_starts:    '🏎 F1-Rennen beginnt in',
+    eprix_starts:   '⚡ E-Prix beginnt in',
+    indy_starts:    '🏎 IndyCar-Rennen beginnt in',
+    race_done_f1:   '🏁 F1-Rennen',
+    race_done_fe:   '⚡ E-Prix',
+    race_done_indy: '🏁 IndyCar-Rennen',
+    race_completed: 'Rennen beendet',
+    news_loading:   'Neueste Nachrichten werden geladen…',
+    news_unavailable: '⚠ Nachrichten nicht verfügbar — deaktiviere deinen Werbeblocker',
+    news_error:     '⚠ Nachrichten-Feeds konnten nicht geladen werden.',
+    ad_block_note:  'Werbeblocker können Anfragen blockieren.',
+    no_stories:     'Keine Artikel in dieser Kategorie.',
+    stories:        'Artikel',
+    // Session labels
+    s_fp1: 'Training 1', s_fp2: 'Training 2', s_fp3: 'Training 3',
+    s_sq: 'Sprint-Quali.', s_sprint: 'Sprint-Rennen', s_quali: 'Qualifikation', s_race: 'F1-Rennen',
+    s_fe_race: 'E-Prix', s_fe_race2: 'E-Prix 2', s_fe_quali: 'Qualifikation', s_fe_fp: 'Freies Training',
+    s_indy_race: 'Rennen', s_indy_race2: 'Rennen 2', s_indy_quali: 'Qualifikation', s_indy_fp: 'Training',
+    s_f2_fp: 'Freies Training', s_f2_quali: 'Qualifikation', s_f2_sprint: 'Sprint-Rennen', s_f2_feature: 'Hauptrennen',
+    s_f3_fp: 'Training', s_f3_quali: 'Qualifikation', s_f3_sprint: 'Sprint-Rennen', s_f3_feature: 'Hauptrennen',
+    s_f1a_quali: 'Qualifikation', s_f1a_r1: 'Rennen 1', s_f1a_r2: 'Rennen 2',
+    news_loading_ticker: 'Wird geladen\u2026',
+    info_h_covered: "Was abgedeckt wird",
+    info_li_f1: "Formel 1 — vollständiger Saisonkalender mit Training, Qualifying und Rennen",
+    info_li_f2f3: "Formel 2 & Formel 3 — Sprint- und Hauptrennen",
+    info_li_f1a: "F1 Academy — die rein weibliche Nachwuchsserie",
+    info_li_fe: "Formula E — E-Prix-Kalender des Elektro-Straßenrennens",
+    info_li_indy: "IndyCar — Meisterschaftskalender auf Ovalen und Straßenkursen",
+    info_h_how: "So wird es verwendet",
+    info_how_1: "Globus ziehen zum Drehen, scrollen oder zusammenkneifen zum Zoomen",
+    info_how_2: "Auf einen Renndot klicken, um den vollständigen Sitzungsplan zu öffnen",
+    info_how_3: "Serienfilter verwenden, um sich auf eine Meisterschaft zu konzentrieren",
+    info_how_4: "Drücken Sie ▶, um die automatische Tour zu starten",
+    info_how_5: "Die Kopfzeile rotiert durch die nächsten Rennen aller aktiven Serien",
+    info_h_data: "Daten & Aktualisierungen",
+    info_data_p: "Sitzungszeiten stammen aus offiziellen Serienkalendern und werden in Ihrer lokalen Zeitzone angezeigt. Nachrichtenfeeds werden live von Autosport und The Race geladen.",
+    info_disclaimer: "GridPulse ist ein unabhängiges Fan-Projekt und ist nicht mit Formula One Management, Formula E Operations, IndyCar oder einem Team oder Fahrer verbunden.",
+    info_contact_intro: "Haben Sie eine Frage, einen Fehler gefunden oder möchten Sie eine Funktion vorschlagen? Wir freuen uns von Ihnen zu hören.",
+    info_contact_general: "Allgemeine Anfragen",
+    info_email: "E-Mail",
+    info_response: "Antwortzeit",
+    info_response_val: "2–3 Werktage",
+    info_bugs: "Fehler melden",
+    info_feedback: "Funktionswunsche",
+    info_follow: "Folgen Sie uns",
+    terms_intro: "Zuletzt aktualisiert: Januar 2026. Durch den Zugriff auf GridPulse stimmen Sie diesen Bedingungen zu.",
+    terms_h1: "1. Annahme",
+    terms_p1: "Diese Bedingungen regeln Ihren Zugang zu GridPulse. Durch die Nutzung des Dienstes bestätigen Sie, mindestens 13 Jahre alt zu sein.",
+    terms_h2: "2. Erlaubte Nutzung",
+    terms_p2: "GridPulse wird nur für den persönlichen, nicht kommerziellen Gebrauch bereitgestellt. Jede Reproduktion oder kommerzielle Nutzung ist ohne schriftliche Genehmigung untersagt.",
+    terms_h3: "3. Genauigkeit der Informationen",
+    terms_p3: "Obwohl wir uns bemühen, die Genauigkeit der Daten zu gewährleisten, gibt GridPulse keine Garantie für die Vollständigkeit der angezeigten Informationen.",
+    terms_h4: "4. Inhalte Dritter",
+    terms_p4: "GridPulse aggregiert Nachrichten aus Drittquellen. Wir sind nicht verantwortlich für den Inhalt dieser externen Quellen.",
+    terms_h5: "5. Geistiges Eigentum",
+    terms_p5: "Alle Original-Inhalte, das Design und der Code von GridPulse gehören seinen Erstellern. Seriennamen und Logos gehören ihren jeweiligen Eigentümern.",
+    terms_h6: "6. Haftungsbeschränkung",
+    terms_p6: "Der Dienst wird ohne Gewährleistung bereitgestellt. Soweit gesetzlich zulässig haftet GridPulse nicht für Schäden aus der Nutzung des Dienstes.",
+    terms_h7: "7. Änderungen der Bedingungen",
+    terms_p7: "Wir können diese Bedingungen jederzeit aktualisieren. Die weitere Nutzung des Dienstes gilt als Zustimmung zu den geänderten Bedingungen.",
+    terms_h8: "8. Anwendbares Recht",
+    terms_p8: "Diese Bedingungen unterliegen dem Recht von England und Wales.",
+    info_intro1: "GridPulse ist ein Live-Motorsportkalender für Fans, die die gesamte Rennsaison — über alle Serien hinweg — auf einem einzigen Globus verfolgen möchten.",
+    info_intro2: "Drehen Sie den Globus, erkunden Sie Rennstrecken und sehen Sie genau, wo und wann gefahren wird. Jede Runde ist auf einer interaktiven 3D-Karte mit Echtzeit-Countdowns dargestellt.",
+    info_contact_h2: "<em>Kontakt</em> aufnehmen",
+    info_terms_h2: "Nutzungs<em>bedingungen</em>",
+    terms_bilingual_note: "⚠ Diese Bedingungen sind rechtlich bindend nur auf Englisch. Die Übersetzung wird als Referenz neben der offiziellen englischen Version bereitgestellt.",
+    next_wec: "🏁 Nächstes WEC",
+    next_wrc: "🏔 Nächste WRC",
+    wec_starts: "🏁 Rennen in",
+    wrc_starts: "🏔 Rallye in",
+    race_done_wec: "🏁 WEC-Rennen",
+    race_done_wrc: "🏔 WRC-Rallye",
+    s_wec_race: "Rennstart",
+    s_wrc_ps: "Power Stage",
+    s_wrc_day1: "Tag 1",
+    news_other: "Andere",
+    cd_d: "T",
+    cd_h: "Std",
+    cd_m: "Min",
+    info_series: "Serien",
+    info_series_h: "Serien-Einstellungen",
+    info_series_desc: "Wähle, welche Rennserien auf dem Globus, Kalender und Header angezeigt werden.",
+    info_series_note: "Deine Auswahl wird im Browser gespeichert und bei jedem Besuch wiederhergestellt.",
+    info_series_reset: "Alle Serien zurücksetzen",
+    race_done_short: "Fertig",
+    day_singular: "Tag",
+    day_plural: "Tage",
+  },
+
+  pl: {
+    next_f1: "🏎 Następne F1",
+    next_f1a: "🏎 Następne F1 Academy",
+    next_fe: "⚡ Następna Formula E",
+    next_indy: "🏁 Następny IndyCar",
+    next_f2: "🏎 Następne F2",
+    next_f3: "🏎 Następne F3",
+    starts_in: "Zaczyna się za",
+    on_now: "Trwa teraz!",
+    hint: "Przeciągnij · Przewiń, aby przybliżyć",
+    calendar_title: "Kalendarz 2026",
+    all: "Wszystkie",
+    tab_globe: "Globus",
+    tab_calendar: "Kalendarz",
+    tab_news: "Aktualności",
+    info_about: "O nas",
+    info_contact: "Kontakt",
+    info_terms: "Warunki użytkowania",
+    close: "Zamknij",
+    start_tour: "Rozpocznij tour",
+    stop_tour: "Zatrzymaj tour",
+    round: "Runda",
+    race_starts: "🏎 Wyścig F1 zaczyna się za",
+    eprix_starts: "⚡ E-Prix zaczyna się za",
+    indy_starts: "🏎 Wyścig IndyCar zaczyna się za",
+    race_done_f1: "🏁 Wyścig F1",
+    race_done_fe: "⚡ E-Prix",
+    race_done_indy: "🏁 Wyścig IndyCar",
+    race_completed: "Wyścig zakończony",
+    news_loading: "Ładowanie najnowszych wiadomości…",
+    news_unavailable: "⚠ Wiadomości niedostępne — wyłącz blokadę reklam",
+    news_error: "⚠ Nie można załadować kanałów wiadomości.",
+    ad_block_note: "Blokery reklam mogą uniemożliwiać żądania.",
+    no_stories: "Brak artykułów w tej kategorii.",
+    stories: "artykułów",
+    s_fp1: "Trening 1",
+    s_fp2: "Trening 2",
+    s_fp3: "Trening 3",
+    s_sq: "Kwalifikacje sprintowe",
+    s_sprint: "Sprint",
+    s_quali: "Kwalifikacje",
+    s_race: "Wyścig F1",
+    s_fe_race: "E-Prix",
+    s_fe_race2: "E-Prix 2",
+    s_fe_quali: "Kwalifikacje",
+    s_fe_fp: "Trening wolny",
+    s_indy_race: "Wyścig",
+    s_indy_race2: "Wyścig 2",
+    s_indy_quali: "Kwalifikacje",
+    s_indy_fp: "Trening",
+    s_f2_fp: "Trening wolny",
+    s_f2_quali: "Kwalifikacje",
+    s_f2_sprint: "Sprint",
+    s_f2_feature: "Wyścig główny",
+    s_f3_fp: "Trening",
+    s_f3_quali: "Kwalifikacje",
+    s_f3_sprint: "Sprint",
+    s_f3_feature: "Wyścig główny",
+    s_f1a_quali: "Kwalifikacje",
+    s_f1a_r1: "Wyścig 1",
+    s_f1a_r2: "Wyścig 2",
+    news_loading_ticker: "Ładowanie…",
+    info_intro1: "GridPulse to żywy kalendarz motorsportowy dla fanów, którzy chcą Ŝledzić cały sezon wyścigowy — we wszystkich seriach na jednym globusie.",
+    info_intro2: "Obróć globusem, eksploruj tory i see exactly where and when racing takes place. Każda runda jest na interaktywnej mapie 3D z odliczaniem czasu.",
+    info_contact_h2: "Skontaktuj <em>się</em>",
+    info_terms_h2: "Warunki <em>Użytkowania</em>",
+    info_h_covered: "Co jest uwzględnione",
+    info_li_f1: "Formuła 1 — pełny kalendarz sezonu z treningami, kwalifikacjami i wyścigiem",
+    info_li_f2f3: "Formuła 2 i Formuła 3 — sprinty i wyścigi główne",
+    info_li_f1a: "F1 Academy — seria rozwoju dla kobiet",
+    info_li_fe: "Formula E — kalendarz E-Prix elektrycznych wyścigów ulicznych",
+    info_li_indy: "IndyCar — kalendarz mistrzostwa na owalach i torach drogowych",
+    info_h_how: "Jak używać",
+    info_how_1: "Przeciągnij globus, aby go obrócić; przewiń lub zsumuj, aby przybliżyć",
+    info_how_2: "Kliknij dowolny punkt wyścigu, aby otworzyć pełny rozkład sesji",
+    info_how_3: "Użyj filtra serii, aby skupić się na jednym mistrzostwa",
+    info_how_4: "Naciśnij ▶, aby uruchomić automatyczny tour",
+    info_how_5: "Nagłówek rotuje między następnymi wyścigami wszystkich aktywnych serii",
+    info_h_data: "Dane i aktualizacje",
+    info_data_p: "Godziny sesji pochodzą z oficjalnych kalendarzy serii i są wyświetlane w lokalnej strefie czasowej. Kanały wiadomości są ładowane na żywo z Autosport i The Race.",
+    info_disclaimer: "GridPulse to niezależny projekt fanów i nie jest powiązany z Formula One Management, Formula E Operations, IndyCar ani żadną ekipą lub kierowcą.",
+    info_contact_intro: "Masz pytanie, znalazłeś błąd lub chcesz zaproponować funkcję? Chętnie się skontaktujemy.",
+    info_contact_general: "Ogólne zapytania",
+    info_email: "E-mail",
+    info_response: "Czas odpowiedzi",
+    info_response_val: "2–3 dni robocze",
+    info_bugs: "Zgłoszenia błędów",
+    info_feedback: "Prośby o funkcje",
+    info_follow: "Obserwuj nas",
+    terms_intro: "Ostatnia aktualizacja: styczeń 2026. Korzystając z GridPulse, akceptujesz niniejsze warunki.",
+    terms_h1: "1. Akceptacja",
+    terms_p1: "Niniejsze warunki regulują dostęp do GridPulse. Korzystając z usługi, potwierdzasz, że masz co najmniej 13 lat.",
+    terms_h2: "2. Dozwolone użytkowanie",
+    terms_p2: "GridPulse jest udostępniany wyłącznie do użytku osobistego, niekomercyjnego.",
+    terms_h3: "3. Dokładność informacji",
+    terms_p3: "GridPulse nie gwarantuje kompletności wyświetlanych informacji.",
+    terms_h4: "4. Treści stron trzecich",
+    terms_p4: "GridPulse agreguje wiadomości ze źródeł zewnętrznych. Nie ponosimy odpowiedzialności za treści tych źródeł.",
+    terms_h5: "5. Własność intelektualna",
+    terms_p5: "Wszelkie oryginalne treści, projekt i kod GridPulse należą do jego twórców.",
+    terms_h6: "6. Ograniczenie odpowiedzialności",
+    terms_p6: "GridPulse nie ponosi odpowiedzialności za szkody wynikające z korzystania z usługi.",
+    terms_h7: "7. Zmiany warunków",
+    terms_p7: "Możemy aktualizować niniejsze warunki w dowolnym momencie.",
+    terms_h8: "8. Prawo właściwe",
+    terms_p8: "Niniejsze warunki podlegają prawu Anglii i Walii.",
+    terms_bilingual_note: "⚠ Niniejsze warunki są prawnie wiążące tylko w języku angielskim. Tłumaczenie poniżej jest udostępnione w celach informacyjnych wraz z oficjalną wersją angielską.",
+    next_wec: "🏁 Następne WEC",
+    next_wrc: "🏔 Następne WRC",
+    wec_starts: "🏁 Wyścig za",
+    wrc_starts: "🏔 Rajd za",
+    race_done_wec: "🏁 Wyścig WEC",
+    race_done_wrc: "🏔 Rajd WRC",
+    s_wec_race: "Start wyścigu",
+    s_wrc_ps: "Power Stage",
+    s_wrc_day1: "Dzień 1",
+    news_other: "Inne",
+    cd_d: "d",
+    cd_h: "g",
+    cd_m: "min",
+    info_series: "Serie",
+    info_series_h: "Ustawienia Serii",
+    info_series_desc: "Wybierz, które serie wyścigowe są wyświetlane na globusie, kalendarzu i nagłówku.",
+    info_series_note: "Twój wybór jest zapisany w przeglądarce i przywracany przy każdej wizycie.",
+    info_series_reset: "Resetuj do wszystkich serii",
+    race_done_short: "Koniec",
+    day_singular: "dzień",
+    day_plural: "dni",
+  },
+  ja: {
+    next_f1: "🏎 次のF1",
+    next_f1a: "🏎 次のF1アカデミー",
+    next_fe: "⚡ 次のフォーミュラE",
+    next_indy: "🏁 次のインディカー",
+    next_f2: "🏎 次のF2",
+    next_f3: "🏎 次のF3",
+    starts_in: "開始まで",
+    on_now: "開催中！",
+    hint: "ドラッグで回転・スクロールでズーム",
+    calendar_title: "2026年カレンダー",
+    all: "すべて",
+    tab_globe: "グローブ",
+    tab_calendar: "カレンダー",
+    tab_news: "ニュース",
+    info_about: "概要",
+    info_contact: "お問い合わせ",
+    info_terms: "利用規約",
+    close: "閉じる",
+    start_tour: "ツアー開始",
+    stop_tour: "ツアー停止",
+    round: "ラウンド",
+    race_starts: "🏎 F1レース開始まで",
+    eprix_starts: "⚡ E-Prix開始まで",
+    indy_starts: "🏎 インディカーレース開始まで",
+    race_done_f1: "🏁 F1レース",
+    race_done_fe: "⚡ E-Prix",
+    race_done_indy: "🏁 インディカーレース",
+    race_completed: "レース終了",
+    news_loading: "最新モータースポーツニュースを読み込み中…",
+    news_unavailable: "⚠ ニュース利用不可 — 広告ブロッカーを無効にしてください",
+    news_error: "⚠ ニュースフィードを読み込めませんでした。",
+    ad_block_note: "広告ブロッカーがリクエストを妨げる場合があります。",
+    no_stories: "このカテゴリに記事はありません。",
+    stories: "件",
+    s_fp1: "フリー走行1",
+    s_fp2: "フリー走行2",
+    s_fp3: "フリー走行3",
+    s_sq: "スプリント予選",
+    s_sprint: "スプリントレース",
+    s_quali: "予選",
+    s_race: "F1レース",
+    s_fe_race: "E-Prix",
+    s_fe_race2: "E-Prix 2",
+    s_fe_quali: "予選",
+    s_fe_fp: "フリー走行",
+    s_indy_race: "レース",
+    s_indy_race2: "レース2",
+    s_indy_quali: "予選",
+    s_indy_fp: "練習走行",
+    s_f2_fp: "フリー走行",
+    s_f2_quali: "予選",
+    s_f2_sprint: "スプリント",
+    s_f2_feature: "フィーチャーレース",
+    s_f3_fp: "練習走行",
+    s_f3_quali: "予選",
+    s_f3_sprint: "スプリント",
+    s_f3_feature: "フィーチャーレース",
+    s_f1a_quali: "予選",
+    s_f1a_r1: "レース1",
+    s_f1a_r2: "レース2",
+    news_loading_ticker: "読み込み中…",
+    info_intro1: "GridPulseは、すべてのシリーズを一つの地球儀で追えるファン向けのライブモータースポーツカレンダーです。",
+    info_intro2: "地球儀を回してサーキットを探索し、どこでいつレースが行われるかをリアルタイムで確認できます。",
+    info_contact_h2: "<em>お問い合わせ</em>",
+    info_terms_h2: "利用<em>規約</em>",
+    info_h_covered: "対応シリーズ",
+    info_li_f1: "フォーミュラ1 — 練習走行・予選・決勝を含む全シーズンカレンダー",
+    info_li_f2f3: "フォーミュラ2 & フォーミュラ3 — スプリントとフィーチャーレース",
+    info_li_f1a: "F1アカデミー — 女性ドライバー育成シリーズ",
+    info_li_fe: "フォーミュラE — 電気自動車市街地レースE-Prixカレンダー",
+    info_li_indy: "インディカー — オーバルとロードコースのチャンピオンシップ",
+    info_h_how: "使い方",
+    info_how_1: "地球儀をドラッグして回転、スクロールまたはピンチでズーム",
+    info_how_2: "レースのドットをクリックしてセッションスケジュールを表示",
+    info_how_3: "シリーズフィルターで特定のチャンピオンシップに絞り込む",
+    info_how_4: "▶を押して自動ツアーを開始",
+    info_how_5: "ヘッダーは全シリーズの次のレースを順番に表示",
+    info_h_data: "データ・更新",
+    info_data_p: "セッション時刻は公式カレンダーから取得し、現地時間で表示されます。ニュースはAutosportとThe Raceからライブ配信されます。",
+    info_disclaimer: "GridPulseは独立したファンプロジェクトであり、Formula One Management・フォーミュラE・インディカー・いかなるチームやドライバーとも無関係です。",
+    info_contact_intro: "ご質問、バグ報告、機能提案はお気軽にどうぞ。",
+    info_contact_general: "一般お問い合わせ",
+    info_email: "メール",
+    info_response: "返答時間",
+    info_response_val: "2〜3営業日",
+    info_bugs: "バグ報告",
+    info_feedback: "機能リクエスト",
+    info_follow: "フォロー",
+    terms_intro: "最終更新：2026年1月。GridPulseを利用することで、本規約に同意したものとみなします。",
+    terms_h1: "1. 同意",
+    terms_p1: "本規約はGridPulseの利用を規定します。サービスを利用することにより、13歳以上であることを確認し、本規約に拘束されることに同意します。",
+    terms_h2: "2. 許可される利用",
+    terms_p2: "GridPulseは個人・非商業目的のみに提供されます。書面による事前許可なく、コンテンツの複製・商業利用は禁止されています。",
+    terms_h3: "3. 情報の正確性",
+    terms_p3: "GridPulseは表示情報の完全性を保証しません。重要な情報は公式ソースで必ず確認してください。",
+    terms_h4: "4. サードパーティコンテンツ",
+    terms_p4: "GridPulseは外部ソースのニュースを集約しています。外部コンテンツの責任は負いません。",
+    terms_h5: "5. 知的財産権",
+    terms_p5: "GridPulseのコンテンツ・デザイン・コードはその制作者に帰属します。各シリーズの名称・ロゴはそれぞれの所有者に帰属します。",
+    terms_h6: "6. 責任の制限",
+    terms_p6: "法律が認める最大限の範囲で、GridPulseはサービス利用から生じる損害について責任を負いません。",
+    terms_h7: "7. 規約の変更",
+    terms_p7: "本規約はいつでも更新される場合があります。継続利用は変更後の規約への同意とみなします。",
+    terms_h8: "8. 準拠法",
+    terms_p8: "本規約はイングランドおよびウェールズの法律に準拠します。",
+    terms_bilingual_note: "⚠ 本規約は英語版のみが法的効力を持ちます。以下の翻訳は参考目的であり、公式英語版と併記されています。",
+    next_wec: "🏁 次のWEC",
+    next_wrc: "🏔 次のWRC",
+    wec_starts: "🏁 レース開始まで",
+    wrc_starts: "🏔 ラリー開始まで",
+    race_done_wec: "🏁 WECレース",
+    race_done_wrc: "🏔 WRCラリー",
+    s_wec_race: "レーススタート",
+    s_wrc_ps: "パワーステージ",
+    s_wrc_day1: "デイ1",
+    news_other: "その他",
+    cd_d: "日",
+    cd_h: "時",
+    cd_m: "分",
+    info_series: "シリーズ",
+    info_series_h: "シリーズ設定",
+    info_series_desc: "地球儀・カレンダー・ヘッダーに表示するレースシリーズを選択してください。",
+    info_series_note: "選択内容はブラウザに保存され、次回訪問時に復元されます。",
+    info_series_reset: "すべてのシリーズにリセット",
+    race_done_short: "終了",
+    day_singular: "日",
+    day_plural: "日",
+  },
+  ko: {
+    next_f1: "🏎 다음 F1",
+    next_f1a: "🏎 다음 F1 아카데미",
+    next_fe: "⚡ 다음 포뮬러 E",
+    next_indy: "🏁 다음 인디카",
+    next_f2: "🏎 다음 F2",
+    next_f3: "🏎 다음 F3",
+    starts_in: "시작까지",
+    on_now: "진행 중!",
+    hint: "드래그로 회전 · 스크롤로 확대",
+    calendar_title: "2026 캘린더",
+    all: "전체",
+    tab_globe: "지구본",
+    tab_calendar: "캘린더",
+    tab_news: "뉴스",
+    info_about: "소개",
+    info_contact: "문의",
+    info_terms: "이용 약관",
+    close: "닫기",
+    start_tour: "투어 시작",
+    stop_tour: "투어 중지",
+    round: "라운드",
+    race_starts: "🏎 F1 레이스 시작까지",
+    eprix_starts: "⚡ E-Prix 시작까지",
+    indy_starts: "🏎 인디카 레이스 시작까지",
+    race_done_f1: "🏁 F1 레이스",
+    race_done_fe: "⚡ E-Prix",
+    race_done_indy: "🏁 인디카 레이스",
+    race_completed: "레이스 종료",
+    news_loading: "최신 모터스포츠 뉴스 불러오는 중…",
+    news_unavailable: "⚠ 뉴스를 사용할 수 없음 — 광고 차단기를 비활성화하세요",
+    news_error: "⚠ 뉴스 피드를 불러올 수 없습니다.",
+    ad_block_note: "광고 차단기가 요청을 방해할 수 있습니다.",
+    no_stories: "이 카테고리에 기사가 없습니다.",
+    stories: "건",
+    s_fp1: "자유 연습 1",
+    s_fp2: "자유 연습 2",
+    s_fp3: "자유 연습 3",
+    s_sq: "스프린트 예선",
+    s_sprint: "스프린트 레이스",
+    s_quali: "예선",
+    s_race: "F1 레이스",
+    s_fe_race: "E-Prix",
+    s_fe_race2: "E-Prix 2",
+    s_fe_quali: "예선",
+    s_fe_fp: "자유 연습",
+    s_indy_race: "레이스",
+    s_indy_race2: "레이스 2",
+    s_indy_quali: "예선",
+    s_indy_fp: "연습",
+    s_f2_fp: "자유 연습",
+    s_f2_quali: "예선",
+    s_f2_sprint: "스프린트",
+    s_f2_feature: "피처 레이스",
+    s_f3_fp: "연습",
+    s_f3_quali: "예선",
+    s_f3_sprint: "스프린트",
+    s_f3_feature: "피처 레이스",
+    s_f1a_quali: "예선",
+    s_f1a_r1: "레이스 1",
+    s_f1a_r2: "레이스 2",
+    news_loading_ticker: "불러오는 중…",
+    info_intro1: "GridPulse는 모든 시리즈를 하나의 지구본에서 따라갈 수 있는 팬을 위한 라이브 모터스포츠 캘린더입니다.",
+    info_intro2: "지구본을 돌려 서킷을 탐색하고, 어디서 언제 레이스가 열리는지 실시간으로 확인하세요.",
+    info_contact_h2: "<em>문의하기</em>",
+    info_terms_h2: "이용 <em>약관</em>",
+    info_h_covered: "다루는 시리즈",
+    info_li_f1: "포뮬러 1 — 연습·예선·결승을 포함한 전체 시즌 캘린더",
+    info_li_f2f3: "포뮬러 2 & 포뮬러 3 — 스프린트 및 피처 레이스",
+    info_li_f1a: "F1 아카데미 — 여성 드라이버 육성 시리즈",
+    info_li_fe: "포뮬러 E — 전기 도심 레이스 E-Prix 캘린더",
+    info_li_indy: "인디카 — 오벌과 로드 코스 챔피언십 캘린더",
+    info_h_how: "사용 방법",
+    info_how_1: "지구본을 드래그하여 회전, 스크롤 또는 핀치로 확대/축소",
+    info_how_2: "레이스 점을 클릭하여 전체 세션 일정 보기",
+    info_how_3: "시리즈 필터로 특정 챔피언십에 집중",
+    info_how_4: "▶를 눌러 자동 투어 시작",
+    info_how_5: "헤더가 모든 활성 시리즈의 다음 레이스를 순환 표시",
+    info_h_data: "데이터 및 업데이트",
+    info_data_p: "세션 시각은 공식 캘린더에서 가져오며 현지 시간대로 표시됩니다. 뉴스는 Autosport와 The Race에서 실시간으로 제공됩니다.",
+    info_disclaimer: "GridPulse는 독립적인 팬 프로젝트이며 Formula One Management, Formula E Operations, IndyCar 또는 어떤 팀이나 드라이버와도 무관합니다.",
+    info_contact_intro: "질문, 버그 신고 또는 기능 제안이 있으시면 편하게 문의해 주세요.",
+    info_contact_general: "일반 문의",
+    info_email: "이메일",
+    info_response: "응답 시간",
+    info_response_val: "2~3 영업일",
+    info_bugs: "버그 신고",
+    info_feedback: "기능 요청",
+    info_follow: "팔로우",
+    terms_intro: "최종 업데이트: 2026년 1월. GridPulse를 이용함으로써 본 약관에 동의합니다.",
+    terms_h1: "1. 동의",
+    terms_p1: "본 약관은 GridPulse 이용을 규정합니다. 서비스를 이용함으로써 만 13세 이상임을 확인하고 본 약관에 동의합니다.",
+    terms_h2: "2. 허용 사용",
+    terms_p2: "GridPulse는 개인적·비상업적 목적으로만 제공됩니다. 사전 서면 허가 없이 콘텐츠의 복제·상업적 이용은 금지됩니다.",
+    terms_h3: "3. 정보의 정확성",
+    terms_p3: "GridPulse는 표시 정보의 완전성을 보장하지 않습니다. 중요한 정보는 공식 출처에서 반드시 확인하세요.",
+    terms_h4: "4. 제3자 콘텐츠",
+    terms_p4: "GridPulse는 외부 출처의 뉴스를 집계합니다. 외부 콘텐츠에 대한 책임은 지지 않습니다.",
+    terms_h5: "5. 지적 재산권",
+    terms_p5: "GridPulse의 콘텐츠·디자인·코드는 제작자에게 귀속됩니다. 각 시리즈의 명칭과 로고는 해당 소유자에게 귀속됩니다.",
+    terms_h6: "6. 책임 제한",
+    terms_p6: "법이 허용하는 최대한의 범위에서 GridPulse는 서비스 이용으로 발생하는 손해에 대해 책임을 지지 않습니다.",
+    terms_h7: "7. 약관 변경",
+    terms_p7: "본 약관은 언제든지 업데이트될 수 있습니다. 계속 이용함으로써 변경된 약관에 동의한 것으로 간주됩니다.",
+    terms_h8: "8. 준거법",
+    terms_p8: "본 약관은 잉글랜드 및 웨일즈 법률의 적용을 받습니다.",
+    terms_bilingual_note: "⚠ 본 약관은 영어 버전만 법적 효력을 가집니다. 아래 번역은 공식 영어 버전과 함께 참고 목적으로 제공됩니다.",
+    next_wec: "🏁 다음 WEC",
+    next_wrc: "🏔 다음 WRC",
+    wec_starts: "🏁 레이스 시작까지",
+    wrc_starts: "🏔 랠리 시작까지",
+    race_done_wec: "🏁 WEC 레이스",
+    race_done_wrc: "🏔 WRC 랠리",
+    s_wec_race: "레이스 스타트",
+    s_wrc_ps: "파워 스테이지",
+    s_wrc_day1: "데이 1",
+    news_other: "기타",
+    cd_d: "일",
+    cd_h: "시",
+    cd_m: "분",
+    info_series: "시리즈",
+    info_series_h: "시리즈 설정",
+    info_series_desc: "지구본, 캘린더, 헤더에 표시할 레이스 시리즈를 선택하세요.",
+    info_series_note: "선택 항목은 브라우저에 저장되어 매번 방문 시 복원됩니다.",
+    info_series_reset: "모든 시리즈로 초기화",
+    race_done_short: "완료",
+    day_singular: "일",
+    day_plural: "일",
+  },
+};
+
+let currentLang = 'en';
+const LANG_LOCALE = { en:'en-GB', fr:'fr-FR', es:'es-ES', de:'de-DE', pl:'pl-PL', ja:'ja-JP', ko:'ko-KR' };
+function uiLocale() { return LANG_LOCALE[currentLang] || 'en-GB'; }
+
+const COUNTRY_ISO = {
+  'Australia':'AU','Austria':'AT','Azerbaijan':'AZ','Bahrain':'BH',
+  'Belgium':'BE','Brazil':'BR','Canada':'CA','Chile':'CL','China':'CN',
+  'Croatia':'HR','Estonia':'EE','Finland':'FI','France':'FR','Germany':'DE',
+  'Greece':'GR','Hungary':'HU','Italy':'IT','Japan':'JP','Kenya':'KE',
+  'Mexico':'MX','Monaco':'MC','Netherlands':'NL','Poland':'PL','Portugal':'PT',
+  'Qatar':'QA','Saudi Arabia':'SA','Singapore':'SG','Spain':'ES','Sweden':'SE',
+  'UAE':'AE','USA':'US','United Kingdom':'GB'
+};
+function localiseCountry(name) {
+  const code = COUNTRY_ISO[name];
+  if (!code) return name;
+  try {
+    return new Intl.DisplayNames([uiLocale()], { type:'region' }).of(code) || name;
+  } catch(e) { return name; }
+}
+
+
+function t(key) {
+  return (TRANSLATIONS[currentLang] || TRANSLATIONS.en)[key] || TRANSLATIONS.en[key] || key;
+}
+
+function applyTranslations() {
+  const lang = currentLang;
+
+  // 1. Static elements with data-i18n (textContent — no child HTML tags)
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+
+  // 1b. Elements with data-i18n-html (may contain child tags like <em>)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.dataset.i18nHtml);
+  });
+
+  // 2. Title attributes
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    el.title = t(el.dataset.i18nTitle);
+  });
+
+  // 2b. Bilingual terms — show English shadow paragraphs when not English
+  const isEnglish = lang === 'en';
+  const termsNote = document.getElementById('terms-bilingual-note');
+  if (termsNote) {
+    if (isEnglish) {
+      termsNote.style.display = 'none';
+    } else {
+      termsNote.style.display = 'block';
+      termsNote.textContent = t('terms_bilingual_note');
+    }
+  }
+  document.querySelectorAll('.terms-en-shadow').forEach(el => {
+    if (isEnglish) {
+      el.style.display = 'none';
+    } else {
+      el.style.display = 'block';
+      el.textContent = TRANSLATIONS.en[el.dataset.enKey] || '';
+    }
+  });
+
+  // 3. Header series labels
+  const f1label = document.getElementById('hdr-f1-label');
+  if (f1label && !f1label.textContent.includes('·')) f1label.textContent = t('next_f1');
+  ['f2','f3','f1a','fe','indy','wec','wrc'].forEach(k => {
+    const el = document.querySelector('[data-i18n-prefix="next_' + k + '"]');
+    if (el) el.textContent = t('next_' + k);
+  });
+
+  // 4. Header "Starts in" spans (set by tick but have data-i18n — refresh now)
+  document.querySelectorAll('.header-countdown-label span[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+
+  // 5. Session panel countdown label (if panel is open)
+  if (activePanelCity >= 0) {
+    const cdLabel = document.querySelector('.sp-countdown-label');
+    if (cdLabel) {
+      const c = cities[activePanelCity];
+      const primaryS = c.series.includes('f1') ? 'f1' : c.series.includes('fe') ? 'fe' : c.series.includes('wec') ? 'wec' : c.series.includes('wrc') ? 'wrc' : 'indy';
+      const raceMs = new Date(c.sessions.race) - Date.now();
+      cdLabel.textContent = raceMs > 0
+        ? { f1: t('race_starts'), fe: t('eprix_starts'), indy: t('indy_starts') }[primaryS]
+        : { f1: t('race_done_f1'), fe: t('race_done_fe'), indy: t('race_done_indy') }[primaryS];
+    }
+  }
+
+  // 6. Rebuild news ticker and dropdown with new language strings
+  if (typeof buildTicker === 'function' && typeof getFilteredNews === 'function') {
+    buildTicker(getFilteredNews());
+    buildDropdown(getFilteredNews());
+  }
+  if (typeof populateMobileNews === 'function') {
+    populateMobileNews();
+  }
+
+  // 7. Sidebar count (already a number, no translation needed)
+  // But re-run applyFilter to update the count label text if needed
+  // applyFilter just sets a number so nothing to translate
+
+  // 8. Tour button title
+  const tourBtn = document.getElementById('tour-play-btn');
+  if (tourBtn) tourBtn.title = tourActive ? t('stop_tour') : t('start_tour');
+
+  // 9. Language button label + active state
+  const langBtnEl = document.getElementById('lang-btn');
+  if (langBtnEl) langBtnEl.textContent = lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+
+  // 10. News loading placeholder text
+  const newsLoadingEl = document.getElementById('news-loading-text');
+  if (newsLoadingEl) newsLoadingEl.textContent = t('news_loading_ticker');
+
+  // 10a. Sidebar city dates and country names — reformat with current locale
+  document.querySelectorAll('.ci-country-name[data-country]').forEach(el => {
+    el.textContent = localiseCountry(el.dataset.country);
+  });
+  document.querySelectorAll('.ci-date[data-race-date]').forEach(el => {
+    const d = new Date(el.dataset.raceDate);
+    el.textContent = new Intl.DateTimeFormat(uiLocale(), { day:'numeric', month:'short' }).format(d);
+  });
+
+  // 10b. News story count (re-render with translated 'stories' word)
+  const newsCountEl = document.getElementById('news-count');
+  if (newsCountEl && typeof allNewsItems !== 'undefined' && allNewsItems.length > 0) {
+    newsCountEl.textContent = `${allNewsItems.length} ${t('stories')}`;
+  }
+  // Also update mobile news count
+  const mobNewsCountEl = document.getElementById('mob-news-count');
+  if (mobNewsCountEl && typeof allNewsItems !== 'undefined' && allNewsItems.length > 0) {
+    const mobItems = typeof mobNewsFilter !== 'undefined' && mobNewsFilter === 'f1'
+      ? allNewsItems.filter(i => i.badge === 'f1')
+      : typeof mobNewsFilter !== 'undefined' && mobNewsFilter === 'other'
+      ? allNewsItems.filter(i => i.badge !== 'f1')
+      : allNewsItems;
+    mobNewsCountEl.textContent = `· ${mobItems.length} ${t('stories')}`;
+  }
+
+  // 11. Session panel: re-render round label + session rows if panel is open
+  if (activePanelCity >= 0 && typeof openSessionPanel === 'function') {
+    openSessionPanel(activePanelCity);
+  }
+
+  // 12. Force tick() to re-render countdowns immediately
+  if (typeof tick === 'function') tick();
+}
+
+// Language switcher wiring
+document.addEventListener('DOMContentLoaded', function() {
+  const langBtn  = document.getElementById('lang-btn');
+  const langMenu = document.getElementById('lang-menu');
+
+  langBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = langMenu.classList.toggle('open');
+    if (isOpen) {
+      const r = langBtn.getBoundingClientRect();
+      langMenu.style.top  = (r.bottom + 4) + 'px';
+      langMenu.style.left = (r.right - langMenu.offsetWidth || r.left) + 'px';
+      // Re-measure after display:block
+      requestAnimationFrame(() => {
+        langMenu.style.left = (r.right - langMenu.offsetWidth) + 'px';
+      });
+    }
+  });
+  document.addEventListener('click', () => langMenu.classList.remove('open'));
+
+  document.querySelectorAll('.lang-opt').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      currentLang = btn.dataset.lang;
+      langMenu.classList.remove('open');
+      applyTranslations();
+    });
+  });
+
+  // Apply default language on load
+  applyTranslations();
+});
+
 
 // F1 2026 Season — 24 rounds with all series session times (UTC ISO strings)
 // F1 sessions confirmed from The Race; F2/F3 from official FIA sites; F1A from f1academy.com
@@ -1625,6 +2887,102 @@ const cities = [
   // R17 Laguna Seca – Sun 6 Sep, 14:30 ET (PDT UTC-7) = 21:30Z
   { city: 'WeatherTech Raceway Laguna Seca', country: 'USA', region: 'Firestone Grand Prix of Monterey', round:'IC-17', series:['indy'], tz:'America/Los_Angeles', lat:36.58, lng:-121.75,
     sessions:{ race:'2026-09-06T21:30Z' } },
+
+  // ── WEC 2026 FIA WORLD ENDURANCE CHAMPIONSHIP ───────────────────────────────
+  // 8 rounds. Race start UTC times (approximate from official schedule).
+  // Qatar 1812km – Jan 2026 / Sebring 1000 Miles – Mar / Portimão 6h – Apr /
+  // Spa 6h – May / Le Mans 24h – Jun / Monza 6h – Jul /
+  // São Paulo 6h – Sep / Bahrain 8h – Nov
+
+  // R1 WEC Qatar – 24 Jan 2026 ~16:00 AST (UTC+3) = 13:00Z (1812 km)
+  { city: 'Lusail International Circuit', country: 'Qatar', region: 'Qatar 1812km', round:'WEC-1', series:['wec'], tz:'Asia/Qatar', lat:25.49, lng:51.45,
+    sessions:{ race:'2026-01-24T13:00Z' } },
+
+  // R2 WEC Sebring – 14 Mar 2026 ~12:00 EDT (UTC-4) = 16:00Z (1000 Miles)
+  { city: 'Sebring International Raceway', country: 'USA', region: 'Sebring 1000 Miles', round:'WEC-2', series:['wec'], tz:'America/New_York', lat:27.45, lng:-81.35,
+    sessions:{ race:'2026-03-14T16:00Z' } },
+
+  // R3 WEC Portimão – 12 Apr 2026 ~12:00 WEST (UTC+1) = 11:00Z (6 Hours)
+  { city: 'Algarve International Circuit', country: 'Portugal', region: 'Portimão 6 Hours', round:'WEC-3', series:['wec'], tz:'Europe/Lisbon', lat:37.23, lng:-8.63,
+    sessions:{ race:'2026-04-12T11:00Z' } },
+
+  // R4 WEC Spa – 2 May 2026 ~14:00 CEST (UTC+2) = 12:00Z (6 Hours)
+  { city: 'Circuit de Spa-Francorchamps', country: 'Belgium', region: 'Spa 6 Hours', round:'WEC-4', series:['wec'], tz:'Europe/Brussels', lat:50.44, lng:5.97,
+    sessions:{ race:'2026-05-02T12:00Z' } },
+
+  // R5 WEC Le Mans – 13 Jun 2026 ~16:00 CEST (UTC+2) = 14:00Z (24 Hours — finishes Sun 15 Jun)
+  { city: 'Circuit de la Sarthe', country: 'France', region: 'Le Mans 24 Hours', round:'WEC-5', series:['wec'], tz:'Europe/Paris', lat:47.95, lng:0.21,
+    sessions:{ race:'2026-06-13T14:00Z' } },
+
+  // R6 WEC Monza – 12 Jul 2026 ~12:00 CEST (UTC+2) = 10:00Z (6 Hours)
+  { city: 'Autodromo Nazionale Monza', country: 'Italy', region: 'Monza 6 Hours', round:'WEC-6', series:['wec'], tz:'Europe/Rome', lat:45.62, lng:9.28,
+    sessions:{ race:'2026-07-12T10:00Z' } },
+
+  // R7 WEC São Paulo – 13 Sep 2026 ~13:00 BRT (UTC-3) = 16:00Z (6 Hours)
+  { city: 'Autódromo José Carlos Pace', country: 'Brazil', region: 'São Paulo 6 Hours', round:'WEC-7', series:['wec'], tz:'America/Sao_Paulo', lat:-23.70, lng:-46.70,
+    sessions:{ race:'2026-09-13T16:00Z' } },
+
+  // R8 WEC Bahrain – 14 Nov 2026 ~17:00 AST (UTC+3) = 14:00Z (8 Hours)
+  { city: 'Bahrain International Circuit', country: 'Bahrain', region: 'Bahrain 8 Hours', round:'WEC-8', series:['wec'], tz:'Asia/Bahrain', lat:26.03, lng:50.51,
+    sessions:{ race:'2026-11-14T14:00Z' } },
+
+  // ── WRC 2026 FIA WORLD RALLY CHAMPIONSHIP ───────────────────────────────────
+  // 13 rounds. "race" = Power Stage Sunday (final competitive stage).
+  // Times are approximate SS start times converted to UTC.
+  // Sources: WRC official 2026 calendar
+
+  // R1 WRC Monte Carlo – 22-25 Jan 2026. Power Stage Sun 25 Jan ~13:00 CET (UTC+1) = 12:00Z
+  { city: 'Monte Carlo', country: 'Monaco', region: 'Rally Monte Carlo', round:'WRC-1', series:['wrc'], tz:'Europe/Monaco', lat:43.74, lng:7.43,
+    sessions:{ race:'2026-01-25T12:00Z' } },
+
+  // R2 WRC Sweden – 12-15 Feb 2026. Power Stage Sun 15 Feb ~13:00 CET (UTC+1) = 12:00Z
+  { city: 'Umeå', country: 'Sweden', region: 'Rally Sweden', round:'WRC-2', series:['wrc'], tz:'Europe/Stockholm', lat:63.82, lng:20.26,
+    sessions:{ race:'2026-02-15T12:00Z' } },
+
+  // R3 WRC Safari Kenya – 26 Feb–1 Mar 2026. Power Stage Sun 1 Mar ~11:00 EAT (UTC+3) = 08:00Z
+  { city: 'Nairobi', country: 'Kenya', region: 'Safari Rally Kenya', round:'WRC-3', series:['wrc'], tz:'Africa/Nairobi', lat:-1.29, lng:36.82,
+    sessions:{ race:'2026-03-01T08:00Z' } },
+
+  // R4 WRC Croatia – 23-26 Apr 2026. Power Stage Sun 26 Apr ~13:00 CEST (UTC+2) = 11:00Z
+  { city: 'Zagreb', country: 'Croatia', region: 'Rally Croatia', round:'WRC-4', series:['wrc'], tz:'Europe/Zagreb', lat:45.81, lng:15.98,
+    sessions:{ race:'2026-04-26T11:00Z' } },
+
+  // R5 WRC Portugal – 21-24 May 2026. Power Stage Sun 24 May ~14:30 WEST (UTC+1) = 13:30Z
+  { city: 'Matosinhos', country: 'Portugal', region: 'Rally de Portugal', round:'WRC-5', series:['wrc'], tz:'Europe/Lisbon', lat:41.18, lng:-8.69,
+    sessions:{ race:'2026-05-24T13:30Z' } },
+
+  // R6 WRC Sardinia – 4-7 Jun 2026. Power Stage Sun 7 Jun ~14:00 CEST (UTC+2) = 12:00Z
+  { city: 'Alghero', country: 'Italy', region: 'Rally Italia Sardegna', round:'WRC-6', series:['wrc'], tz:'Europe/Rome', lat:40.56, lng:8.32,
+    sessions:{ race:'2026-06-07T12:00Z' } },
+
+  // R7 WRC Poland – 25-28 Jun 2026. Power Stage Sun 28 Jun ~13:00 CEST (UTC+2) = 11:00Z
+  { city: 'Mikołajki', country: 'Poland', region: 'Rally Poland', round:'WRC-7', series:['wrc'], tz:'Europe/Warsaw', lat:53.79, lng:21.57,
+    sessions:{ race:'2026-06-28T11:00Z' } },
+
+  // R8 WRC Estonia – 16-19 Jul 2026. Power Stage Sun 19 Jul ~14:00 EEST (UTC+3) = 11:00Z
+  { city: 'Tartu', country: 'Estonia', region: 'Rally Estonia', round:'WRC-8', series:['wrc'], tz:'Europe/Tallinn', lat:58.37, lng:26.73,
+    sessions:{ race:'2026-07-19T11:00Z' } },
+
+  // R9 WRC Finland – 30 Jul–2 Aug 2026. Power Stage Sun 2 Aug ~14:00 EEST (UTC+3) = 11:00Z
+  { city: 'Jyväskylä', country: 'Finland', region: 'Rally Finland', round:'WRC-9', series:['wrc'], tz:'Europe/Helsinki', lat:62.24, lng:25.75,
+    sessions:{ race:'2026-08-02T11:00Z' } },
+
+  // R10 WRC Greece – 3-6 Sep 2026. Power Stage Sun 6 Sep ~14:00 EEST (UTC+3) = 11:00Z
+  { city: 'Lamia', country: 'Greece', region: 'Acropolis Rally Greece', round:'WRC-10', series:['wrc'], tz:'Europe/Athens', lat:38.90, lng:22.43,
+    sessions:{ race:'2026-09-06T11:00Z' } },
+
+  // R11 WRC Chile – 24-27 Sep 2026. Power Stage Sun 27 Sep ~14:00 CLT (UTC-3) = 17:00Z
+  { city: 'Concepción', country: 'Chile', region: 'Rally Chile Bio Bío', round:'WRC-11', series:['wrc'], tz:'America/Santiago', lat:-36.82, lng:-73.04,
+    sessions:{ race:'2026-09-27T17:00Z' } },
+
+  // R12 WRC Japan – 29 Oct–1 Nov 2026. Power Stage Sun 1 Nov ~13:00 JST (UTC+9) = 04:00Z
+  { city: 'Toyota City', country: 'Japan', region: 'Rally Japan', round:'WRC-12', series:['wrc'], tz:'Asia/Tokyo', lat:35.08, lng:137.16,
+    sessions:{ race:'2026-11-01T04:00Z' } },
+
+  // R13 WRC Central Europe – 19-22 Nov 2026. Power Stage Sun 22 Nov ~13:00 CET (UTC+1) = 12:00Z
+  { city: 'Passau', country: 'Germany', region: 'Rally Central Europe', round:'WRC-13', series:['wrc'], tz:'Europe/Berlin', lat:48.57, lng:13.45,
+    sessions:{ race:'2026-11-22T12:00Z' } },
+
 ];
 
 
@@ -1989,16 +3347,16 @@ container.addEventListener('wheel', e => {
 
 // ─── BADGE HELPER ─────────────────────────────────────────────────────────────
 function seriesBadgesHTML(series) {
-  const labels = { f1: 'F1', f2: 'F2', f3: 'F3', f1a: 'F1 Academy', fe: 'Formula E', indy: 'IndyCar' };
-  return series.map(s => `<span class="badge badge-${s}">${labels[s]}</span>`).join('');
+  const labels = { f1: 'F1', f2: 'F2', f3: 'F3', f1a: 'F1 Academy', fe: 'Formula E', indy: 'IndyCar', wec: 'WEC', wrc: 'WRC' };
+  return series.filter(s => isSeriesEnabled(s)).map(s => `<span class="badge badge-${s}">${labels[s]}</span>`).join('');
 }
 
 // ─── SESSION HELPERS ──────────────────────────────────────────────────────────
-const SESSION_LABELS = {
-  fp1:'Practice 1', fp2:'Practice 2', fp3:'Practice 3',
-  sq:'Sprint Quali', sprint:'Sprint Race',
-  quali:'Qualifying', race:'F1 Race'
-};
+const SESSION_LABELS = () => ({
+  fp1:t('s_fp1'), fp2:t('s_fp2'), fp3:t('s_fp3'),
+  sq:t('s_sq'), sprint:t('s_sprint'),
+  quali:t('s_quali'), race:t('s_race')
+});
 const SESSION_ORDER = ['fp1','fp2','sq','fp3','sprint','quali','race'];
 
 const localSessionFmt = new Intl.DateTimeFormat('en-GB', {
@@ -2014,17 +3372,18 @@ function formatCountdown(ms, shortForm) {
   const h = Math.floor((totalSec % 86400) / 3600);
   const m = Math.floor((totalSec % 3600) / 60);
   const s = totalSec % 60;
-  if (shortForm && d > 0) return `${d}d`;
-  if (d > 0) return `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m`;
+  const D = t('cd_d'), H = t('cd_h'), M = t('cd_m');
+  if (shortForm && d > 0) return `${d}${D}`;
+  if (d > 0) return `${d}${D} ${String(h).padStart(2,'0')}${H} ${String(m).padStart(2,'0')}${M}`;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
 function daysUntilRace(utcStr) {
   const ms = new Date(utcStr) - Date.now();
-  if (ms <= 0) return 'Done';
+  if (ms <= 0) return t('race_done_short');
   const days = Math.ceil(ms / 86400000);
-  if (days === 1) return '1 day';
-  return `${days} days`;
+  if (days === 1) return `1 ${t('day_singular')}`;
+  return `${days} ${t('day_plural')}`;
 }
 
 // ─── FIND NEXT RACES ──────────────────────────────────────────────────────────
@@ -2054,11 +3413,17 @@ function initHeader() {
   document.getElementById('hdr-fe-loc').textContent    = nfe  ? `${nfe.city} · ${nfe.country}`  : '—';
   document.getElementById('hdr-indy-name').textContent = nind ? nind.region : '—';
   document.getElementById('hdr-indy-loc').textContent  = nind ? `${nind.city} · ${nind.country}` : '—';
+  const nwec  = getNextOf('wec');
+  const nwrc  = getNextOf('wrc');
+  document.getElementById('hdr-wec-name').textContent  = nwec  ? nwec.region  : '—';
+  document.getElementById('hdr-wec-loc').textContent   = nwec  ? `${nwec.city} · ${nwec.country}`  : '—';
+  document.getElementById('hdr-wrc-name').textContent  = nwrc  ? nwrc.region  : '—';
+  document.getElementById('hdr-wrc-loc').textContent   = nwrc  ? `${nwrc.city} · ${nwrc.country}`  : '—';
 }
 initHeader();
 
 // Make header race blocks clickable — spin globe and open session panel
-[['hdr-f1-block','f1'],['hdr-fe-block','fe'],['hdr-indy-block','indy']].forEach(([id, key]) => {
+[['hdr-f1-block','f1'],['hdr-fe-block','fe'],['hdr-indy-block','indy'],['hdr-wec-block','wec'],['hdr-wrc-block','wrc']].forEach(([id, key]) => {
   const el = document.getElementById(id);
   if (!el) return;
   el.style.cursor = 'pointer';
@@ -2073,6 +3438,20 @@ initHeader();
 });
 
 // ─── FILTERING ────────────────────────────────────────────────────────────────
+
+// ── Series prefs early bootstrap (full logic defined later) ──────────────
+const _SERIES_PREFS_BOOT_KEY = 'gridpulse_series_prefs';
+const _ALL_SERIES_KEYS = ['f1','f2','f3','f1a','fe','indy','wec','wrc'];
+let enabledSeries = (() => {
+  try {
+    const raw = localStorage.getItem(_SERIES_PREFS_BOOT_KEY);
+    if (!raw) return new Set(_ALL_SERIES_KEYS);
+    const arr = JSON.parse(raw);
+    const s = new Set(arr.filter(k => _ALL_SERIES_KEYS.includes(k)));
+    return s.size > 0 ? s : new Set(_ALL_SERIES_KEYS);
+  } catch(e) { return new Set(_ALL_SERIES_KEYS); }
+})();
+function isSeriesEnabled(key) { return enabledSeries.has(key); }
 let activeFilter = 'all';
 
 function setActiveFilter(f) {
@@ -2113,7 +3492,8 @@ document.getElementById('mobile-filter-bar').addEventListener('click', e => {
 function applyFilter() {
   let visible = 0;
   cities.forEach((c, i) => {
-    const show = activeFilter === 'all' || c.series.includes(activeFilter);
+    const seriesOk = c.series.some(s => isSeriesEnabled(s));
+    const show = seriesOk && (activeFilter === 'all' || c.series.includes(activeFilter));
     const item = document.getElementById(`ci-${i}`);
     if (item) item.classList.toggle('hidden', !show);
     // Update globe dot visibility
@@ -2176,9 +3556,9 @@ function openSessionPanel(idx) {
   setSelectedCity(idx);
   switchFilterToCity(idx);
   const c = cities[idx];
-  document.getElementById('sp-round').textContent = `Round ${c.round}`;
+  document.getElementById('sp-round').textContent = `${t('round')} ${c.round}`;
   document.getElementById('sp-name').textContent = c.region;
-  document.getElementById('sp-venue').textContent = `${c.city} · ${c.country}`;
+  document.getElementById('sp-venue').textContent = `${c.city} · ${localiseCountry(c.country)}`;
   document.getElementById('sp-badges').innerHTML = seriesBadgesHTML(c.series);
 
   const now = Date.now();
@@ -2191,15 +3571,15 @@ function openSessionPanel(idx) {
   if (c.series.includes('f1')) {
     SESSION_ORDER.forEach(key => {
       if (!c.sessions[key]) return;
-      allSessions.push({ time: new Date(c.sessions[key]), series: 'f1', key, label: SESSION_LABELS[key] });
+      allSessions.push({ time: new Date(c.sessions[key]), series: 'f1', key, label: SESSION_LABELS()[key] });
     });
   }
 
   // Formula E / IndyCar standalone venues — map their sessions as the primary series
-  const FE_LABELS   = { race: 'E-Prix', race2: 'E-Prix 2', quali: 'Qualifying', fp: 'Free Practice' };
-  const INDY_LABELS = { race: 'Race', race2: 'Race 2', quali: 'Qualifying', fp: 'Practice' };
+  const FE_LABELS   = { race: t('s_fe_race'), race2: t('s_fe_race2'), quali: t('s_fe_quali'), fp: t('s_fe_fp') };
+  const INDY_LABELS = { race: t('s_indy_race'), race2: t('s_indy_race2'), quali: t('s_indy_quali'), fp: t('s_indy_fp') };
   if (!c.series.includes('f1')) {
-    const primarySeries = c.series.includes('fe') ? 'fe' : c.series.includes('indy') ? 'indy' : null;
+    const primarySeries = c.series.includes('fe') ? 'fe' : c.series.includes('indy') ? 'indy' : c.series.includes('wec') ? 'wec' : c.series.includes('wrc') ? 'wrc' : null;
     const primaryLabels = primarySeries === 'fe' ? FE_LABELS : INDY_LABELS;
     if (primarySeries) {
       Object.entries(c.sessions).forEach(([key, utc]) => {
@@ -2208,7 +3588,7 @@ function openSessionPanel(idx) {
     }
   } else {
     // For shared F1+FE venues, also add FE badge sessions if any explicit feSessions exist
-    if (c.feSessions) {
+    if (c.feSessions && isSeriesEnabled('fe')) {
       Object.entries(c.feSessions).forEach(([key, utc]) => {
         allSessions.push({ time: new Date(utc), series: 'fe', key, label: FE_LABELS[key] || key });
       });
@@ -2216,26 +3596,43 @@ function openSessionPanel(idx) {
   }
 
   // F2
-  const F2_LABELS = { fp: 'Free Practice', quali: 'Qualifying', sprint: 'Sprint Race', feature: 'Feature Race' };
-  if (c.f2Sessions) {
+  const F2_LABELS = { fp: t('s_f2_fp'), quali: t('s_f2_quali'), sprint: t('s_f2_sprint'), feature: t('s_f2_feature') };
+  if (c.f2Sessions && isSeriesEnabled('f2')) {
     Object.entries(c.f2Sessions).forEach(([key, utc]) => {
       allSessions.push({ time: new Date(utc), series: 'f2', key, label: F2_LABELS[key] || key });
     });
   }
 
   // F3
-  const F3_LABELS = { fp: 'Practice', quali: 'Qualifying', sprint: 'Sprint Race', feature: 'Feature Race' };
-  if (c.f3Sessions) {
+  const F3_LABELS = { fp: t('s_f3_fp'), quali: t('s_f3_quali'), sprint: t('s_f3_sprint'), feature: t('s_f3_feature') };
+  if (c.f3Sessions && isSeriesEnabled('f3')) {
     Object.entries(c.f3Sessions).forEach(([key, utc]) => {
       allSessions.push({ time: new Date(utc), series: 'f3', key, label: F3_LABELS[key] || key });
     });
   }
 
   // F1 Academy
-  const F1A_LABELS = { quali: 'Qualifying', race1: 'Race 1', race2: 'Race 2' };
-  if (c.f1aSessions) {
+  const F1A_LABELS = { quali: t('s_f1a_quali'), race1: t('s_f1a_r1'), race2: t('s_f1a_r2') };
+  if (c.f1aSessions && isSeriesEnabled('f1a')) {
     Object.entries(c.f1aSessions).forEach(([key, utc]) => {
       allSessions.push({ time: new Date(utc), series: 'f1a', key, label: F1A_LABELS[key] || key });
+    });
+  }
+
+
+  // WEC — standalone endurance venues
+  const WEC_LABELS = { race: t('s_wec_race'), practice: t('s_fp1'), quali: t('s_quali') };
+  if (!c.series.includes('f1') && c.series.includes('wec')) {
+    Object.entries(c.sessions).forEach(([key, utc]) => {
+      if (utc) allSessions.push({ time: new Date(utc), series: 'wec', key, label: WEC_LABELS[key] || key });
+    });
+  }
+
+  // WRC — standalone rally venues (ss1 = day 1 start, race = Power Stage)
+  const WRC_LABELS = { race: t('s_wrc_ps'), ss1: t('s_wrc_day1'), ss2: 'Day 2', ss3: 'Day 3' };
+  if (!c.series.includes('f1') && c.series.includes('wrc')) {
+    Object.entries(c.sessions).forEach(([key, utc]) => {
+      if (utc) allSessions.push({ time: new Date(utc), series: 'wrc', key, label: WRC_LABELS[key] || key });
     });
   }
 
@@ -2245,20 +3642,20 @@ function openSessionPanel(idx) {
   // Group by local date
   const byDay = {};
   allSessions.forEach(s => {
-    const dayKey = new Intl.DateTimeFormat('en-GB', { weekday:'long', day:'numeric', month:'short' }).format(s.time);
+    const dayKey = new Intl.DateTimeFormat(uiLocale(), { weekday:'long', day:'numeric', month:'short', timeZone: c.tz }).format(s.time);
     if (!byDay[dayKey]) byDay[dayKey] = [];
     byDay[dayKey].push(s);
   });
 
-  const seriesColour = { f1: '#ff6060', f2: '#60d4ff', f3: '#60ffb0', f1a: '#ffb060', fe: '#bb80ff', indy: '#ffe040' };
-  const seriesLabel  = { f1: 'F1', f2: 'F2', f3: 'F3', f1a: 'F1A', fe: 'FE', indy: 'INDY' };
+  const seriesColour = { f1: '#ff6060', f2: '#60d4ff', f3: '#60ffb0', f1a: '#ffb060', fe: '#bb80ff', indy: '#ffe040', wec: '#00e8cc', wrc: '#ff6644' };
+  const seriesLabel  = { f1: 'F1', f2: 'F2', f3: 'F3', f1a: 'F1A', fe: 'FE', indy: 'INDY', wec: 'WEC', wrc: 'WRC' };
 
   let html = '';
   Object.entries(byDay).forEach(([day, sessions]) => {
     html += `<div class="sp-section-title">${day}</div>`;
     sessions.forEach(s => {
       const isPast = s.time.getTime() < now;
-      const timeStr = new Intl.DateTimeFormat('en-GB', { hour:'2-digit', minute:'2-digit', hour12:false }).format(s.time);
+      const timeStr = new Intl.DateTimeFormat(uiLocale(), { hour:'2-digit', minute:'2-digit', hour12:false }).format(s.time);
       const isMainRace = s.key === 'race' || s.key === 'feature';
       const raceEmoji = s.series === 'fe' ? '⚡' : '🏁';
       const col = seriesColour[s.series];
@@ -2275,9 +3672,9 @@ function openSessionPanel(idx) {
   const raceMs = new Date(c.sessions.race) - Date.now();
   const cdEl = document.getElementById('sp-countdown');
   const cdVal = document.getElementById('sp-countdown-value');
-  const primaryS = c.series.includes('f1') ? 'f1' : c.series.includes('fe') ? 'fe' : 'indy';
-  const startLabel = { f1: '🏎 F1 Race starts in', fe: '⚡ E-Prix starts in', indy: '🏎 IndyCar Race starts in' }[primaryS];
-  const doneLabel  = { f1: '🏁 F1 Race', fe: '⚡ E-Prix', indy: '🏁 IndyCar Race' }[primaryS];
+  const primaryS = c.series.includes('f1') ? 'f1' : c.series.includes('fe') ? 'fe' : c.series.includes('wec') ? 'wec' : c.series.includes('wrc') ? 'wrc' : 'indy';
+  const startLabel = { f1: t('race_starts'), fe: t('eprix_starts'), indy: t('indy_starts'), wec: t('wec_starts'), wrc: t('wrc_starts') }[primaryS];
+  const doneLabel  = { f1: t('race_done_f1'), fe: t('race_done_fe'), indy: t('race_done_indy'), wec: t('race_done_wec'), wrc: t('race_done_wrc') }[primaryS];
   if (raceMs > 0) {
     cdEl.style.display = 'block';
     cdVal.innerHTML = `<span>${formatCountdown(raceMs)}</span>`;
@@ -2339,7 +3736,6 @@ function closeSessionPanel() {
 const cityListEl = document.getElementById('city-list');
 cities.forEach((c, i) => {
   const raceDate = new Date(c.sessions.race);
-  const raceDateStr = new Intl.DateTimeFormat('en-GB', { day:'numeric', month:'short' }).format(raceDate);
   const item = document.createElement('div');
   item.className = 'city-item';
   item.id = `ci-${i}`;
@@ -2348,11 +3744,11 @@ cities.forEach((c, i) => {
     <div class="ci-name">${c.region}</div>
     <div class="ci-country">
       <span style="color:var(--accent);font-size:0.5rem;letter-spacing:0.1em;margin-right:3px">R${c.round}</span>
-      <span>${c.country}</span>
+      <span class="ci-country-name" data-country="${c.country}">${c.country}</span>
     </div>
     <div class="series-badges">${seriesBadgesHTML(c.series)}</div>
     <div class="ci-time" id="cit-${i}">--:--</div>
-    <div class="ci-date" id="cid-${i}">${raceDateStr}</div>
+    <div class="ci-date" id="cid-${i}" data-race-date="${c.sessions.race}"></div>
   `;
   item.addEventListener('click', () => {
     highlightSidebar(i);
@@ -2361,6 +3757,15 @@ cities.forEach((c, i) => {
   cityListEl.appendChild(item);
 });
 applyFilter(); // initialise count and visibility
+// Initial country + date render for sidebar (will be re-rendered by applyTranslations on lang change)
+document.querySelectorAll('.ci-country-name[data-country]').forEach(el => {
+  el.textContent = localiseCountry(el.dataset.country);
+});
+// Initial date render
+document.querySelectorAll('.ci-date[data-race-date]').forEach(el => {
+  const d = new Date(el.dataset.raceDate);
+  el.textContent = new Intl.DateTimeFormat(uiLocale(), { day:'numeric', month:'short' }).format(d);
+});
 
 function highlightSidebar(idx) {
   document.querySelectorAll('.city-item').forEach(el => el.classList.remove('active'));
@@ -2517,7 +3922,7 @@ function getStandaloneSubSeries() {
 function getActiveHdrSeries() {
   const standalone = getStandaloneSubSeries();
   // Always include all series — on mobile we rotate through them one at a time
-  return ['f1', ...standalone, 'fe', 'indy'];
+  return ['f1', ...standalone, 'fe', 'indy', 'wec', 'wrc'].filter(k => isSeriesEnabled(k));
 }
 
 const HDR_BLOCKS = {
@@ -2527,39 +3932,15 @@ const HDR_BLOCKS = {
   f1a:  { blockId: 'hdr-f1a-block',  wrapId: 'hdr-f1a-countdown-wrap', cdId: 'hdr-f1a-countdown'  },
   fe:   { blockId: 'hdr-fe-block',   wrapId: 'hdr-fe-countdown-wrap',  cdId: 'hdr-fe-countdown'   },
   indy: { blockId: 'hdr-indy-block', wrapId: 'hdr-indy-countdown-wrap', cdId: 'hdr-indy-countdown' },
+  wec:  { blockId: 'hdr-wec-block',  wrapId: 'hdr-wec-countdown-wrap',  cdId: 'hdr-wec-countdown'  },
+  wrc:  { blockId: 'hdr-wrc-block',  wrapId: 'hdr-wrc-countdown-wrap',  cdId: 'hdr-wrc-countdown'  },
 };
 
 // ─── DEBUG ────────────────────────────────────────────────────────────────────
 // Show ALL currently-active blocks (respects which sub-series are standalone)
 function hdrShowAll() {
-  const hdr = document.querySelector('header');
-  if (!hdr) return;
-  // Show all blocks and their specific dividers
-  const allKeys = getActiveHdrSeries();
-  const divMap = {
-    f1:'hdr-h1-div', f2:'hdr-f2-div', f3:'hdr-f3-div',
-    f1a:'hdr-f1a-div', fe:'hdr-fe-pre-div', indy:'hdr-indy-pre-div'
-  };
-  // Hide all dividers first
-  Object.values(divMap).concat(['hdr-hint-div']).forEach(id => {
-    const el = document.getElementById(id); if (el) el.style.display = 'none';
-  });
-  allKeys.forEach(k => {
-    const b = HDR_BLOCKS[k];
-    if (!b) return;
-    const block = document.getElementById(b.blockId);
-    if (block) block.style.display = 'flex';
-    if (b.wrapId) {
-      const wrap = document.getElementById(b.wrapId);
-      if (wrap) wrap.style.display = 'flex';
-    } else {
-      const f1wrap = hdr.querySelector('.header-countdown:not([id])');
-      if (f1wrap) f1wrap.style.display = 'flex';
-    }
-    const divEl = document.getElementById(divMap[k]);
-    if (divEl) divEl.style.display = '';
-  });
-  updateF1Label();
+  // Show only enabled series blocks — delegate to hdrShowSet which handles show/hide for all 8 keys
+  hdrShowSet(getActiveHdrSeries());
 }
 
 // Show ONE series, hide the others
@@ -2569,8 +3950,8 @@ function hdrShowOne(key) {
   hdr.querySelectorAll('.hdr-race-block').forEach(el => el.style.display = 'none');
   hdr.querySelectorAll('.header-countdown').forEach(el => el.style.display = 'none');
   // Hide all dividers, show only the one preceding this card
-  const divMap = {f1:'hdr-h1-div',f2:'hdr-f2-div',f3:'hdr-f3-div',f1a:'hdr-f1a-div',fe:'hdr-fe-pre-div',indy:'hdr-indy-pre-div'};
-  ['hdr-h1-div','hdr-f2-div','hdr-f3-div','hdr-f1a-div','hdr-fe-pre-div','hdr-indy-pre-div','hdr-hint-div'].forEach(id => {
+  const divMap = {f1:'hdr-h1-div',f2:'hdr-f2-div',f3:'hdr-f3-div',f1a:'hdr-f1a-div',fe:'hdr-fe-pre-div',indy:'hdr-indy-pre-div',wec:'hdr-wec-pre-div',wrc:'hdr-wrc-pre-div'};
+  ['hdr-h1-div','hdr-f2-div','hdr-f3-div','hdr-f1a-div','hdr-fe-pre-div','hdr-indy-pre-div','hdr-wec-pre-div','hdr-wrc-pre-div','hdr-hint-div'].forEach(id => {
     const el = document.getElementById(id); if (el) el.style.display = 'none';
   });
   const showDiv = document.getElementById(divMap[key]);
@@ -2597,16 +3978,17 @@ function hdrShowOne(key) {
     f1:{nameId:'hdr-f1-name',locId:'hdr-f1-loc'},f2:{nameId:'hdr-f2-name',locId:'hdr-f2-loc'},
     f3:{nameId:'hdr-f3-name',locId:'hdr-f3-loc'},f1a:{nameId:'hdr-f1a-name',locId:'hdr-f1a-loc'},
     fe:{nameId:'hdr-fe-name',locId:'hdr-fe-loc'},indy:{nameId:'hdr-indy-name',locId:'hdr-indy-loc'},
+    wec:{nameId:'hdr-wec-name',locId:'hdr-wec-loc'},wrc:{nameId:'hdr-wrc-name',locId:'hdr-wrc-loc'},
   };
   const ids = nameLocIds[key];
   if (nr && ids) {
     const nameEl = document.getElementById(ids.nameId);
     const locEl  = document.getElementById(ids.locId);
     if (nameEl) nameEl.textContent = nr.region;
-    if (locEl)  locEl.textContent  = nr.city + ' · ' + nr.country;
+    if (locEl)  locEl.textContent  = nr.city + ' · ' + localiseCountry(nr.country);
   }
   const cdEl = document.getElementById(b.cdId);
-  if (cdEl) cdEl.textContent = raceMs > 0 ? formatCountdown(raceMs, isMobile()) : 'On now!';
+  if (cdEl) cdEl.textContent = raceMs > 0 ? formatCountdown(raceMs, isMobile()) : t('on_now');
 }
 
 
@@ -2639,7 +4021,7 @@ function startHeaderRotationGroups(allSeries, groupSize) {
         const b = HDR_BLOCKS[k];
         if (b && nr) {
           const cdEl = document.getElementById(b.cdId);
-          if (cdEl) cdEl.textContent = ms > 0 ? formatCountdown(ms, false) : 'On now!';
+          if (cdEl) cdEl.textContent = ms > 0 ? formatCountdown(ms, false) : t('on_now');
         }
       });
     }
@@ -2660,11 +4042,12 @@ function startHeaderRotationGroups(allSeries, groupSize) {
 function hdrShowSet(keys) {
   const hdr = document.querySelector('header');
   if (!hdr) return;
-  const allKeys = ['f1', 'f2', 'f3', 'f1a', 'fe', 'indy'];
+  const allKeys = ['f1', 'f2', 'f3', 'f1a', 'fe', 'indy', 'wec', 'wrc'];
   // Map each key to its preceding divider id
   const divMap = {
     f1:'hdr-h1-div', f2:'hdr-f2-div', f3:'hdr-f3-div',
-    f1a:'hdr-f1a-div', fe:'hdr-fe-pre-div', indy:'hdr-indy-pre-div'
+    f1a:'hdr-f1a-div', fe:'hdr-fe-pre-div', indy:'hdr-indy-pre-div',
+    wec:'hdr-wec-pre-div', wrc:'hdr-wrc-pre-div'
   };
   allKeys.forEach(k => {
     const show = keys.includes(k);
@@ -2686,12 +4069,9 @@ function hdrShowSet(keys) {
     const divEl = document.getElementById(divMap[k]);
     if (divEl) divEl.style.display = show ? '' : 'none';
   });
-  // Always hide the post-indy and hint dividers during rotation
-  ['hdr-indy-pre-div','hdr-hint-div'].forEach(id => {
-    // hdr-indy-pre-div is BEFORE indy (handled above), hdr-hint-div is after indy
-    const el = document.getElementById('hdr-hint-div');
-    if (el) el.style.display = 'none';
-  });
+  // Always hide the hint divider
+  const hintDiv = document.getElementById('hdr-hint-div');
+  if (hintDiv) hintDiv.style.display = 'none';
   // If indy is shown, show its preceding divider (already handled), but not hint-div
   if (keys.includes('f1')) updateF1Label();
 }
@@ -2799,7 +4179,7 @@ function updateF1Label() {
   subs.forEach(({ key, blockId, wrapId, cdId, nameId, locId, divId, label }) => {
     const withF1 = nrF1 && nrF1.series.includes(key);
     if (withF1) {
-      supporting.push(label);
+      if (isSeriesEnabled(key)) supporting.push(label);
       // Only touch display when rotation is NOT running (rotation manages visibility itself)
       if (!headerRotateTimer) {
         [blockId, wrapId, divId].forEach(id => {
@@ -2814,27 +4194,28 @@ function updateF1Label() {
       const locEl  = document.getElementById(locId);
       const cdEl   = document.getElementById(cdId);
       if (nameEl) nameEl.textContent = nr.region;
-      if (locEl)  locEl.textContent  = nr.city + ' · ' + nr.country;
+      if (locEl)  locEl.textContent  = nr.city + ' · ' + localiseCountry(nr.country);
       if (cdEl) {
         const ms = getSubRaceDate(nr, key) - Date.now();
-        cdEl.textContent = ms > 0 ? formatCountdown(ms, isMobile()) : 'On now!';
+        cdEl.textContent = ms > 0 ? formatCountdown(ms, isMobile()) : t('on_now');
       }
       // Only touch display when rotation is NOT running AND not on mobile pre-init
       if (!headerRotateTimer && !isMobile()) {
         const blockEl = document.getElementById(blockId);
         const wrapEl  = document.getElementById(wrapId);
         const divEl   = document.getElementById(divId);
-        if (blockEl) blockEl.style.display = 'flex';
-        if (wrapEl)  wrapEl.style.display  = 'flex';
-        if (divEl)   divEl.style.display   = '';
+        const showSub = isSeriesEnabled(key);
+        if (blockEl) blockEl.style.display = showSub ? 'flex' : 'none';
+        if (wrapEl)  wrapEl.style.display  = showSub ? 'flex' : 'none';
+        if (divEl)   divEl.style.display   = showSub ? '' : 'none';
       }
     }
   });
 
   if (labelEl) {
     labelEl.textContent = supporting.length
-      ? '🏎 Next F1  ·  ' + supporting.join(' · ')
-      : '🏎 Next F1';
+      ? t('next_f1') + '  ·  ' + supporting.join(' · ')
+      : t('next_f1');
   }
 }
 
@@ -2847,18 +4228,20 @@ function tick() {
     { key: 'f1',   cdId: 'hdr-f1-countdown',   nameId: 'hdr-f1-name',   locId: 'hdr-f1-loc' },
     { key: 'fe',   cdId: 'hdr-fe-countdown',   nameId: 'hdr-fe-name',   locId: 'hdr-fe-loc' },
     { key: 'indy', cdId: 'hdr-indy-countdown', nameId: 'hdr-indy-name', locId: 'hdr-indy-loc' },
+    { key: 'wec',  cdId: 'hdr-wec-countdown',  nameId: 'hdr-wec-name',  locId: 'hdr-wec-loc'  },
+    { key: 'wrc',  cdId: 'hdr-wrc-countdown',  nameId: 'hdr-wrc-name',  locId: 'hdr-wrc-loc'  },
   ];
   series.forEach(({ key, cdId, nameId, locId }) => {
     const nr = getNextOf(key);
     if (!nr) return;
     document.getElementById(nameId).textContent = nr.region;
-    document.getElementById(locId).textContent  = `${nr.city} · ${nr.country}`;
+    document.getElementById(locId).textContent  = `${nr.city} · ${localiseCountry(nr.country)}`;
     const ms = new Date(nr.sessions.race) - now;
     const el = document.getElementById(cdId);
     if (ms > 0) {
       el.textContent = formatCountdown(ms, isMobile && isMobile());
     } else {
-      el.textContent = 'On now!';
+      el.textContent = t('on_now');
     }
   });
   // Sidebar days until race
@@ -2885,14 +4268,135 @@ function tick() {
     const cdLabel = document.querySelector('.sp-countdown-label');
     if (cdVal && raceMs > 0) {
       cdVal.innerHTML = `<span>${formatCountdown(raceMs)}</span>`;
-      const ps = c.series.includes('f1') ? 'f1' : c.series.includes('fe') ? 'fe' : 'indy';
-      const lbl = { f1: '🏎 F1 Race starts in', fe: '⚡ E-Prix starts in', indy: '🏎 IndyCar Race starts in' }[ps];
+      const ps = c.series.includes('f1') ? 'f1' : c.series.includes('fe') ? 'fe' : c.series.includes('wec') ? 'wec' : c.series.includes('wrc') ? 'wrc' : 'indy';
+      const lbl = { f1: t('race_starts'), fe: t('eprix_starts'), indy: t('indy_starts'), wec: t('wec_starts'), wrc: t('wrc_starts') }[ps];
       if (cdLabel) cdLabel.textContent = lbl;
     }
   }
 }
 tick();
 setInterval(tick, 1000);
+
+// ─── SERIES PREFERENCES ────────────────────────────────────────────────────────
+// ALL_SERIES keys (use _ALL_SERIES_KEYS declared above)
+const ALL_SERIES = _ALL_SERIES_KEYS;
+const SERIES_LABELS = {
+  f1:'Formula 1', f2:'Formula 2', f3:'Formula 3', f1a:'F1 Academy',
+  fe:'Formula E', indy:'IndyCar', wec:'WEC', wrc:'WRC'
+};
+const SERIES_COLOURS = {
+  f1:'#ff6060', f2:'#60d4ff', f3:'#60ffb0', f1a:'#ffb060',
+  fe:'#bb80ff', indy:'#ffe040', wec:'#00e8cc', wrc:'#ff6644'
+};
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+const SERIES_PREFS_KEY = _SERIES_PREFS_BOOT_KEY;
+
+function loadSeriesPrefs() {
+  try {
+    const raw = localStorage.getItem(SERIES_PREFS_KEY);
+    if (!raw) return new Set(ALL_SERIES);
+    const arr = JSON.parse(raw);
+    // Always ensure at least one series enabled
+    const s = new Set(arr.filter(k => ALL_SERIES.includes(k)));
+    return s.size > 0 ? s : new Set(ALL_SERIES);
+  } catch(e) { return new Set(ALL_SERIES); }
+}
+
+function saveSeriesPrefs(enabled) {
+  try { localStorage.setItem(SERIES_PREFS_KEY, JSON.stringify([...enabled])); } catch(e) {}
+}
+
+enabledSeries = loadSeriesPrefs(); // re-initialise using full loadSeriesPrefs
+
+function applySeriesPrefs() {
+  // 1. Filter bar buttons — hide disabled series buttons
+  ALL_SERIES.forEach(key => {
+    const enabled = isSeriesEnabled(key);
+    document.querySelectorAll(`.filter-btn.${key}, .mob-filter-btn.${key}`).forEach(btn => {
+      btn.style.display = enabled ? '' : 'none';
+    });
+  });
+
+  // 1b. Hide 'All' filter button if only one series is enabled
+  const enabledCount = enabledSeries.size;
+  document.querySelectorAll('.filter-btn.all, .mob-filter-btn.all').forEach(btn => {
+    btn.style.display = enabledCount <= 1 ? 'none' : '';
+  });
+  // If only one series and activeFilter='all', switch to that series automatically
+  if (enabledCount === 1) {
+    const onlySeries = [...enabledSeries][0];
+    if (activeFilter === 'all') setActiveFilter(onlySeries);
+  }
+
+  // 2. If activeFilter is a now-disabled series, reset to 'all'
+  if (activeFilter !== 'all' && !isSeriesEnabled(activeFilter)) {
+    setActiveFilter('all');
+  } else {
+    applyFilter();
+  }
+
+  // 3. Header rotation — checkHeaderFit uses getActiveHdrSeries which respects enabledSeries
+  checkHeaderFit();
+
+  // 4. Sidebar city item badges — refresh to hide disabled series badges
+  cities.forEach((city, i) => {
+    const badgesEl = document.querySelector(`#ci-${i} .series-badges`);
+    if (badgesEl) badgesEl.innerHTML = seriesBadgesHTML(city.series);
+  });
+
+  // 5. Sidebar count update
+  applyFilter();
+}
+
+function buildSeriesPane() {
+  const grid = document.getElementById('series-pref-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  ALL_SERIES.forEach(key => {
+    const enabled = isSeriesEnabled(key);
+    const col = SERIES_COLOURS[key];
+    const rgb = hexToRgb(col);
+    const el = document.createElement('div');
+    el.className = 'series-toggle' + (enabled ? ' enabled' : '');
+    el.style.setProperty('--series-col', col);
+    el.style.setProperty('--series-col-rgb', rgb);
+    el.dataset.series = key;
+    el.innerHTML = `
+      <div class="series-toggle-dot"></div>
+      <span class="series-toggle-name">${SERIES_LABELS[key]}</span>
+      <div class="series-toggle-check">${enabled ? '✓' : ''}</div>
+    `;
+    el.addEventListener('click', () => {
+      const isOn = enabledSeries.has(key);
+      // Prevent disabling the last enabled series
+      if (isOn && enabledSeries.size <= 1) return;
+      if (isOn) { enabledSeries.delete(key); } else { enabledSeries.add(key); }
+      saveSeriesPrefs(enabledSeries);
+      buildSeriesPane(); // re-render checkboxes
+      applySeriesPrefs();
+    });
+    grid.appendChild(el);
+  });
+
+  const resetBtn = document.getElementById('series-reset-btn');
+  if (resetBtn) {
+    resetBtn.onclick = () => {
+      enabledSeries = new Set(ALL_SERIES);
+      saveSeriesPrefs(enabledSeries);
+      buildSeriesPane();
+      applySeriesPrefs();
+    };
+  }
+}
+
+// Apply preferences on page load
+try { applySeriesPrefs(); } catch(e) { console.error('applySeriesPrefs error:', e); }
+
 
 // ─── STARTUP: select next F1 race, no auto-rotation ───────────────────────────
 (function selectNextF1OnLoad() {
@@ -3037,23 +4541,24 @@ function startTour() {
   setActiveFilter(_tourSeries);
   document.getElementById('tour-btn-icon').innerHTML = '&#9646;&#9646;';
   document.getElementById('tour-play-btn').classList.add('tour-running');
-  document.getElementById('tour-play-btn').title = 'Stop tour';
+  document.getElementById('tour-play-btn').title = t('stop_tour');
   tourIdx = 0;
   tourStep();
 }
 
 function stopTour() {
+  const wasTourRunning = tourActive;
   tourActive = false;
   clearTimeout(tourTimer);
   clearTimeout(idleTimer);
   idleTimer = null;
   clearArc();
-  // Restore pre-tour filter
-  if (activeFilter !== _tourPreFilter) setActiveFilter(_tourPreFilter);
+  // Only restore pre-tour filter if the tour was actually running
+  if (wasTourRunning && activeFilter !== _tourPreFilter) setActiveFilter(_tourPreFilter);
   // Update button to play icon
   document.getElementById('tour-btn-icon').innerHTML = '&#9654;';
   document.getElementById('tour-play-btn').classList.remove('tour-running');
-  document.getElementById('tour-play-btn').title = 'Start tour';
+  document.getElementById('tour-play-btn').title = t('start_tour');
 }
 
 // Tour play button
@@ -3244,7 +4749,7 @@ async function loadNews() {
     return true;
   }).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 20);
 
-  newsCount.textContent = `${allNewsItems.length} stories`;
+  newsCount.textContent = `${allNewsItems.length} ${t('stories')}`;
   buildTicker(getFilteredNews());
   buildDropdown(getFilteredNews());
 
@@ -3329,7 +4834,7 @@ function populateMobileNews() {
   } else if (mobNewsFilter === 'other') {
     items = allNewsItems.filter(i => i.badge !== 'f1');
   }
-  if (mobCount) mobCount.textContent = `· ${items.length} stories`;
+  if (mobCount) mobCount.textContent = `· ${items.length} ${t('stories')}`;
   mobileNewsList.innerHTML = items.length ? items.map(item => `
     <a class="news-item" href="${item.link}" target="_blank" rel="noopener noreferrer">
       <span class="news-badge ${item.badge}">${item.label}</span>
@@ -3402,13 +4907,14 @@ function mobileTab(tab) {
         });
       });
 
-      raceListOverlay.querySelectorAll('.city-item').forEach((clone, idx) => {
+      raceListOverlay.querySelectorAll('.city-item').forEach((clone) => {
         clone.addEventListener('click', () => {
+          const cityIdx = parseInt(clone.dataset.idx, 10);
           mobileTab('globe');
           setTimeout(() => {
-            highlightSidebar(idx);
-            spinToCity(idx);
-            openSessionPanel(idx);
+            highlightSidebar(cityIdx);
+            spinToCity(cityIdx);
+            openSessionPanel(cityIdx);
           }, 80);
         });
       });
@@ -3460,7 +4966,7 @@ function syncMobileList() {
 
 
 // ─── INFO PANEL ───────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
+function initInfoPanel() {
   const overlay = document.getElementById('info-overlay');
   const closeBtn = document.getElementById('info-close');
   if (!overlay || !closeBtn) return;
@@ -3468,6 +4974,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function openInfo(tab) {
     overlay.classList.add('open');
     if (tab) switchInfoTab(tab);
+    buildSeriesPane();
   }
   function closeInfo() {
     overlay.classList.remove('open');
@@ -3485,7 +4992,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.info-tab').forEach(btn => {
     btn.addEventListener('click', () => switchInfoTab(btn.dataset.tab));
   });
-});
+}
+
 </script>
 
 <!-- INFO PANEL -->
@@ -3493,52 +5001,63 @@ document.addEventListener('DOMContentLoaded', function() {
   <div id="info-panel">
     <div id="info-panel-header">
       <span id="info-panel-title">GridPulse &middot; Info</span>
-      <button id="info-close">&#10005;</button>
+      <button id="info-close" data-i18n-title="close">&#10005;</button>
     </div>
     <div id="info-tabs">
-      <button class="info-tab active" data-tab="about">About</button>
-      <button class="info-tab" data-tab="contact">Contact</button>
-      <button class="info-tab" data-tab="terms">Terms of Use</button>
+      <button class="info-tab" data-tab="series" data-i18n="info_series">Series</button>
+      <button class="info-tab active" data-tab="about" data-i18n="info_about">About</button>
+      <button class="info-tab" data-tab="contact" data-i18n="info_contact">Contact</button>
+      <button class="info-tab" data-tab="terms" data-i18n="info_terms">Terms of Use</button>
     </div>
     <div id="info-content">
 
+      <div class="info-pane" id="info-pane-series">
+        <h2 data-i18n="info_series_h">Series <em>Settings</em></h2>
+        <p data-i18n="info_series_desc" style="font-size:0.6rem;color:var(--muted);margin-bottom:0.5rem">Choose which racing series are shown on the globe, calendar, and header.</p>
+        <div class="series-pref-grid" id="series-pref-grid">
+          <!-- Populated by JS -->
+        </div>
+        <p class="series-pref-note" data-i18n="info_series_note">Your selection is saved in your browser and restored on every visit.</p>
+        <button id="series-reset-btn" data-i18n="info_series_reset">Reset to all series</button>
+      </div>
+
       <div class="info-pane active" id="info-pane-about">
         <h2>Grid<em>Pulse</em></h2>
-        <p>GridPulse is a live motorsport calendar and race tracker built for fans who want to follow the full racing season &mdash; across every series, on a single globe.</p>
-        <p>Spin the globe, explore circuits, and see exactly what is racing where and when. From Formula 1 grands prix to Formula E city circuits and IndyCar ovals, every round is plotted on an interactive 3D map with real-time countdowns to the next session.</p>
-        <h3>What is covered</h3>
+        <p data-i18n="info_intro1">GridPulse is a live motorsport calendar and race tracker built for fans who want to follow the full racing season &mdash; across every series, on a single globe.</p>
+        <p data-i18n="info_intro2">Spin the globe, explore circuits, and see exactly what is racing where and when. Every round is plotted on an interactive 3D map with real-time countdowns to the next session.</p>
+        <h3 data-i18n="info_h_covered">What is covered</h3>
         <ul>
-          <li>Formula 1 &mdash; full season calendar with practice, qualifying and race sessions</li>
-          <li>Formula 2 &amp; Formula 3 &mdash; sprint and feature race sessions</li>
-          <li>F1 Academy &mdash; the all-female development series</li>
-          <li>Formula E &mdash; electric street racing E-Prix calendar</li>
-          <li>IndyCar &mdash; oval and road course championship calendar</li>
+          <li data-i18n="info_li_f1">Formula 1 &mdash; full season calendar with practice, qualifying and race sessions</li>
+          <li data-i18n="info_li_f2f3">Formula 2 &amp; Formula 3 &mdash; sprint and feature race sessions</li>
+          <li data-i18n="info_li_f1a">F1 Academy &mdash; the all-female development series</li>
+          <li data-i18n="info_li_fe">Formula E &mdash; electric street racing E-Prix calendar</li>
+          <li data-i18n="info_li_indy">IndyCar &mdash; oval and road course championship calendar</li>
         </ul>
-        <h3>How to use it</h3>
+        <h3 data-i18n="info_h_how">How to use it</h3>
         <ul>
-          <li>Drag the globe to rotate, scroll or pinch to zoom</li>
-          <li>Click any race dot to open the full session schedule</li>
-          <li>Use the series filter to focus on a single championship</li>
-          <li>Press &#9654; to start the automatic race tour</li>
-          <li>The header rotates through next-up races across all active series</li>
+          <li data-i18n="info_how_1">Drag the globe to rotate, scroll or pinch to zoom</li>
+          <li data-i18n="info_how_2">Click any race dot to open the full session schedule</li>
+          <li data-i18n="info_how_3">Use the series filter to focus on a single championship</li>
+          <li data-i18n="info_how_4">Press &#9654; to start the automatic race tour</li>
+          <li data-i18n="info_how_5">The header rotates through next-up races across all active series</li>
         </ul>
-        <h3>Data &amp; updates</h3>
-        <p>Session times are sourced from official series calendars and displayed in your local time zone. News feeds are pulled live from Autosport and The Race.</p>
+        <h3 data-i18n="info_h_data">Data &amp; updates</h3>
+        <p data-i18n="info_data_p">Session times are sourced from official series calendars and displayed in your local time zone. News feeds are pulled live from Autosport and The Race.</p>
         <div class="info-divider"></div>
-        <p style="font-size:0.52rem;opacity:0.35">GridPulse is an independent fan project and is not affiliated with Formula One Management, Formula E Operations, IndyCar or any team or driver.</p>
+        <p style="font-size:0.52rem;opacity:0.35" data-i18n="info_disclaimer">GridPulse is an independent fan project and is not affiliated with Formula One Management, Formula E Operations, IndyCar or any team or driver.</p>
       </div>
 
       <div class="info-pane" id="info-pane-contact">
-        <h2>Get in <em>Touch</em></h2>
-        <p>Have a question, found a bug, or want to suggest a feature? We would love to hear from you.</p>
-        <h3>General enquiries</h3>
+        <h2 data-i18n-html="info_contact_h2">Get in <em>Touch</em></h2>
+        <p data-i18n="info_contact_intro">Have a question, found a bug, or want to suggest a feature? We would love to hear from you.</p>
+        <h3 data-i18n="info_contact_general">General enquiries</h3>
         <div class="info-contact-grid">
-          <div class="info-contact-card"><div class="label">Email</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1c9c4cdcdcee1c6d3c8c5d1d4cdd2c48fc0d1d1">[email&#160;protected]</a></div></div>
-          <div class="info-contact-card"><div class="label">Response time</div><div class="value">2&ndash;3 business days</div></div>
-          <div class="info-contact-card"><div class="label">Bug reports</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5133243622113623383521243d22347f302121">[email&#160;protected]</a></div></div>
-          <div class="info-contact-card"><div class="label">Feature requests</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4224272726202321290225302b2632372e31276c233232">[email&#160;protected]</a></div></div>
+          <div class="info-contact-card"><div class="label" data-i18n="info_email">Email</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="620a070e0e0d2205100b0612170e11074c031212">[email&#160;protected]</a></div></div>
+          <div class="info-contact-card"><div class="label" data-i18n="info_response">Response time</div><div class="value" data-i18n="info_response_val">2&ndash;3 business days</div></div>
+          <div class="info-contact-card"><div class="label" data-i18n="info_bugs">Bug reports</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed8f988a9ead8a9f84899d98819e88c38c9d9d">[email&#160;protected]</a></div></div>
+          <div class="info-contact-card"><div class="label" data-i18n="info_feedback">Feature requests</div><div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5234373736303331391235203b3622273e21377c332222">[email&#160;protected]</a></div></div>
         </div>
-        <h3>Follow us</h3>
+        <h3 data-i18n="info_follow">Follow us</h3>
         <div class="info-contact-grid">
           <div class="info-contact-card"><div class="label">X / Twitter</div><div class="value">@gridpulseapp</div></div>
           <div class="info-contact-card"><div class="label">Instagram</div><div class="value">@gridpulse</div></div>
@@ -3548,19 +5067,57 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <div class="info-pane" id="info-pane-terms">
-        <h2>Terms of <em>Use</em></h2>
-        <p>Last updated: January 2026. By accessing or using GridPulse you agree to these terms.</p>
-        <h3>1. Acceptance</h3>
-        <p>These terms govern your access to GridPulse. By using the Service you confirm you are at least 13 years old and agree to be bound by these terms. If you do not agree, please do not use the Service.</p>
-        <h3>2. Permitted use</h3>
-        <p>GridPulse is provided for personal, non-commercial use only. You may not reproduce, scrape, redistribute or commercially exploit any content, data or code from the Service without prior written permission.</p>
-        <h3>3. Accuracy of information</h3>
-        <p>While we strive to keep all session times and calendar data accurate, GridPulse does not guarantee the completeness or accuracy of information displayed. Session times are subject to change by series organisers. Always verify critical information with official series sources before making travel or viewing arrangements.</p>
-        <h3>4. Third-party content</h3>
-        <p>GridPulse aggregates news from third-party sources including Autosport and The Race. We are not responsible for the content of these external sources. Links to third-party sites do not constitute endorsement.</p>
-        <h3>5. Intellectual property</h3>
-        <p>All original content, design and code within GridPulse is the property of GridPulse and its creators. Series names, logos and trademarks referenced belong to their respective owners. GridPulse is an independent project not affiliated with any racing series or governing body.</p>
-        <h3>6. Limitation of liability</h3>
-        <p>The Service is provided &ldquo;as is&rdquo; without warranties of any kind. To the fullest extent permitted by law, GridPulse shall not be liable for any direct, indirect, incidental or consequential damages arising from your use of the Service.</p>
-        <h3>7. Changes to terms</h3>
-        <p>We may update these terms from time t
+        <h2 data-i18n-html="info_terms_h2">Terms of <em>Use</em></h2>
+        <p class="terms-bilingual-note" id="terms-bilingual-note" style="display:none;font-size:0.55rem;padding:0.5rem 0.7rem;background:rgba(200,255,0,0.06);border-left:2px solid var(--accent);margin-bottom:1rem;border-radius:0 4px 4px 0"></p>
+        <div id="terms-body">
+          <p data-i18n="terms_intro">Last updated: January 2026. By accessing or using GridPulse you agree to these terms.</p>
+          <div class="terms-section" data-section="1">
+            <h3 data-i18n="terms_h1">1. Acceptance</h3>
+            <p data-i18n="terms_p1">These terms govern your access to GridPulse. By using the Service you confirm you are at least 13 years old and agree to be bound by these terms. If you do not agree, please do not use the Service.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p1" style="display:none"></p>
+          </div>
+          <div class="terms-section" data-section="2">
+            <h3 data-i18n="terms_h2">2. Permitted use</h3>
+            <p data-i18n="terms_p2">GridPulse is provided for personal, non-commercial use only. You may not reproduce, scrape, redistribute or commercially exploit any content, data or code from the Service without prior written permission.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p2" style="display:none"></p>
+          </div>
+          <div class="terms-section" data-section="3">
+            <h3 data-i18n="terms_h3">3. Accuracy of information</h3>
+            <p data-i18n="terms_p3">While we strive to keep all session times and calendar data accurate, GridPulse does not guarantee the completeness or accuracy of information displayed. Always verify critical information with official series sources.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p3" style="display:none"></p>
+          </div>
+          <div class="terms-section" data-section="4">
+            <h3 data-i18n="terms_h4">4. Third-party content</h3>
+            <p data-i18n="terms_p4">GridPulse aggregates news from third-party sources including Autosport and The Race. We are not responsible for the content of these external sources.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p4" style="display:none"></p>
+          </div>
+          <div class="terms-section" data-section="5">
+            <h3 data-i18n="terms_h5">5. Intellectual property</h3>
+            <p data-i18n="terms_p5">All original content, design and code within GridPulse is the property of GridPulse and its creators. Series names, logos and trademarks referenced belong to their respective owners.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p5" style="display:none"></p>
+          </div>
+          <div class="terms-section" data-section="6">
+            <h3 data-i18n="terms_h6">6. Limitation of liability</h3>
+            <p data-i18n="terms_p6">The Service is provided without warranties of any kind. To the fullest extent permitted by law, GridPulse shall not be liable for any direct, indirect, incidental or consequential damages from your use.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p6" style="display:none"></p>
+          </div>
+          <div class="terms-section" data-section="7">
+            <h3 data-i18n="terms_h7">7. Changes to terms</h3>
+            <p data-i18n="terms_p7">We may update these terms from time to time. Continued use of the Service following any changes constitutes acceptance of the revised terms.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p7" style="display:none"></p>
+          </div>
+          <div class="terms-section" data-section="8">
+            <h3 data-i18n="terms_h8">8. Governing law</h3>
+   
+            <p data-i18n="terms_p8">These terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+            <p class="terms-en-shadow" data-en-key="terms_p8" style="display:none"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>initInfoPanel();</script>
+</body>
+</html>
