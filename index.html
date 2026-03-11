@@ -6,14 +6,46 @@
 <title>GridPulse</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,100;0,300;1,100&display=swap" rel="stylesheet">
 <style>
-  :root {
+  /* ── Dark theme (default) ── */
+  :root, [data-theme="dark"] {
     --bg: #07070f;
     --surface: #10101a;
     --surface2: #18182a;
     --border: rgba(255,255,255,0.07);
     --accent: #c8ff00;
+    --accent-text: #000;
     --text: #e8e8f0;
     --muted: rgba(232,232,240,0.4);
+    --panel-bg: #0d0d1a;
+    --knob-bg: #0d0d1a;
+    --input-hover: rgba(255,255,255,0.05);
+    --lang-opt-hover: rgba(255,255,255,0.05);
+    --sidebar-bg: var(--surface);
+    --globe-bg: #000000;
+    --phase-night: #4a4a7a;
+    --tour-stop: #ff5050;
+    --mob-filter-active-text: #fff;
+  }
+
+  /* ── Light theme ── */
+  [data-theme="light"] {
+    --bg: #f0f2f8;
+    --surface: #ffffff;
+    --surface2: #e8eaf2;
+    --border: rgba(0,0,0,0.1);
+    --accent: #2d7a00;
+    --accent-text: #fff;
+    --text: #1a1a2e;
+    --muted: rgba(26,26,46,0.5);
+    --panel-bg: #ffffff;
+    --knob-bg: #ffffff;
+    --input-hover: rgba(0,0,0,0.04);
+    --lang-opt-hover: rgba(0,0,0,0.04);
+    --sidebar-bg: #f8f9fc;
+    --globe-bg: #c8d8f0;
+    --phase-night: #8888aa;
+    --tour-stop: #cc2200;
+    --mob-filter-active-text: #fff;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { height: 100%; }
@@ -72,7 +104,7 @@
     transition: background 0.15s, opacity 0.3s;
     flex-shrink: 0;
   }
-  .hdr-race-block:hover { background: rgba(255,255,255,0.05); }
+  .hdr-race-block:hover { background: var(--input-hover); }
   .next-race {
     display: flex;
     flex-direction: column;
@@ -156,7 +188,7 @@
     flex-shrink: 0;
     align-items: center;
   }
-  #news-toggle:hover { background: rgba(255,255,255,0.05); }
+  #news-toggle:hover { background: var(--input-hover); }
   #news-toggle .nt-label {
     white-space: nowrap;
     flex-shrink: 0;
@@ -378,7 +410,7 @@
 
   .phase-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
   .phase-dot.day { background: var(--accent); box-shadow: 0 0 4px var(--accent); }
-  .phase-dot.night { background: #4a4a7a; }
+  .phase-dot.night { background: var(--phase-night); }
   .phase-dot.dawn, .phase-dot.dusk { background: #ff9500; }
 
   /* ── Session panel — normal flex item between globe and sidebar ── */
@@ -623,6 +655,7 @@
       flex-shrink: 0;
       flex-wrap: nowrap;
       overflow-x: hidden;
+      z-index: 300;
     }
     h1 { font-size: 1.1rem; }
     .next-race-name { font-size: 0.8rem; }
@@ -676,7 +709,7 @@
       letter-spacing: 0.05em;
       backdrop-filter: blur(4px);
     }
-    .mob-filter-btn.active { color: #fff; }
+    .mob-filter-btn.active { color: var(--mob-filter-active-text); }
     .mob-filter-btn.all.active  { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); }
     .mob-filter-btn.f1.active   { background: rgba(230,0,0,0.25);     border-color: rgba(230,0,0,0.7);   color:#ff6060; }
     .mob-filter-btn.f2.active   { background: rgba(0,180,255,0.2);    border-color: rgba(0,180,255,0.7); color:#00b4ff; }
@@ -813,7 +846,7 @@
     }
     .mob-news-filter.active {
       background: var(--accent);
-      color: #000;
+      color: var(--accent-text);
       border-color: var(--accent);
     }
 
@@ -903,7 +936,7 @@
     flex-shrink: 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
-  #sidebar-collapse-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+  #sidebar-collapse-btn:hover { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
   .sidebar.collapsed #sidebar-collapse-btn { left: -20px; }
   .sidebar { overflow: visible; }
   .sidebar.collapsed { width: 0 !important; }
@@ -956,8 +989,8 @@
     color: rgba(255,80,80,0.8);
   }
   #tour-play-btn.tour-running:hover {
-    border-color: #ff5050;
-    color: #ff5050;
+    border-color: var(--tour-stop);
+    color: var(--tour-stop);
   }
 
   /* INFO PANEL */
@@ -976,7 +1009,7 @@
     position: relative;
     width: 70%;
     height: 70%;
-    background: #0d0d1a;
+    background: var(--panel-bg);
     border: 1px solid rgba(200,255,0,0.18);
     border-radius: 12px;
     display: flex;
@@ -1052,7 +1085,7 @@
     font-family: 'DM Mono', monospace;
     font-size: 1rem;
     font-weight: 400;
-    color: #e8e8f0;
+    color: var(--text);
     margin-bottom: 1rem;
     letter-spacing: 0.05em;
   }
@@ -1145,7 +1178,7 @@
     position: fixed;
     top: auto;
     right: auto;
-    background: #0d0d1a;
+    background: var(--panel-bg);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 6px;
     overflow: hidden;
@@ -1168,10 +1201,10 @@
     text-align: left;
     transition: background 0.15s, color 0.15s;
   }
-  .lang-opt:hover { background: rgba(255,255,255,0.05); color: #e8e8f0; }
+  .lang-opt:hover { background: var(--input-hover); color: var(--text); }
   .lang-opt.active { color: var(--accent); }
   /* Position wrapper relatively so dropdown anchors correctly */
-  #lang-wrap { position: relative; flex-shrink: 0; margin-left: auto; }
+  #lang-wrap { position: relative; flex-shrink: 0; }
   @media (max-width: 700px) {
     #lang-btn { font-size: 0.45rem; height: 1.6rem; }
   }
@@ -1231,7 +1264,7 @@
     color: rgba(232,232,240,0.6);
     transition: color 0.15s;
   }
-  .series-toggle.enabled .series-toggle-name { color: #e8e8f0; }
+  .series-toggle.enabled .series-toggle-name { color: var(--text); }
   .series-toggle-check {
     width: 18px; height: 18px; border-radius: 4px;
     border: 1px solid rgba(255,255,255,0.2);
@@ -1244,7 +1277,7 @@
   .series-toggle.enabled .series-toggle-check {
     background: var(--series-col, #c8ff00);
     border-color: var(--series-col, #c8ff00);
-    color: #000;
+    color: var(--accent-text);
   }
   .series-pref-note {
     margin-top: 1.2rem;
@@ -1269,7 +1302,376 @@
   }
   #series-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
 
+
+  /* ── Settings pane section headings ──────────────────────────────── */
+  .settings-section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 1.4rem 0 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(200,255,0,0.12);
+  }
+  .settings-section-title:first-child { margin-top: 0; }
+  .settings-section-desc {
+    font-size: 0.54rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+  }
+  /* ── Toggle row ────────────────────────────────────────────────────── */
+  .settings-toggle-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .settings-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.02);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .settings-toggle-row:hover { background: var(--input-hover); }
+  .settings-toggle-info { display: flex; flex-direction: column; gap: 0.15rem; }
+  .settings-toggle-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+  .settings-toggle-desc {
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+  /* ── Toggle switch ─────────────────────────────────────────────────── */
+  .settings-toggle-switch {
+    width: 32px; height: 18px; border-radius: 9px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    position: relative; flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .settings-toggle-switch.active { border-color: transparent; }
+  .settings-toggle-switch.active { background: var(--accent); }
+  .settings-toggle-knob {
+    position: absolute; top: 2px; left: 2px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--panel-bg);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .settings-toggle-switch.active .settings-toggle-knob {
+    transform: translateX(14px);
+    background: var(--panel-bg);
+  }
+
+
+  /* ── Theme toggle buttons ──────────────────────────────────────── */
+  .theme-toggle-row {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+  .theme-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.54rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .theme-btn:hover { border-color: var(--accent); color: var(--text); }
+  .theme-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(var(--accent-rgb, 200,255,0), 0.08);
+  }
+  .theme-btn-icon { font-size: 0.9rem; }
+
+
+  /* ── Light theme overrides ─────────────────────────────────────── */
+
+  /* Structure */
+  [data-theme="light"] body { background: var(--bg); }
+  [data-theme="light"] header { background: var(--surface); border-bottom: 1px solid rgba(0,0,0,0.12); }
+  [data-theme="light"] .sidebar { background: var(--sidebar-bg) !important; border-right: 1px solid rgba(0,0,0,0.12) !important; }
+  [data-theme="light"] #session-panel { background: var(--surface) !important; border-left: 1px solid rgba(0,0,0,0.12) !important; }
+  [data-theme="light"] #info-panel { background: var(--panel-bg); border: 1px solid rgba(0,0,0,0.15); }
+  [data-theme="light"] #lang-menu { background: var(--surface); border-color: rgba(0,0,0,0.15); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+  [data-theme="light"] #info-content { scrollbar-color: rgba(0,0,0,0.2) transparent; }
+
+  /* Header race blocks */
+  [data-theme="light"] .hdr-race-block { border-right: 1px solid rgba(0,0,0,0.08); }
+  [data-theme="light"] .hdr-race-block:hover { background: rgba(0,0,0,0.04); }
+  [data-theme="light"] .header-divider { background: rgba(0,0,0,0.15); }
+  [data-theme="light"] .next-race-label { color: rgba(26,26,46,0.55); }
+  [data-theme="light"] .next-race-location { color: rgba(26,26,46,0.55); }
+  /* Countdown values — darken series colours so they read on white */
+  [data-theme="light"] .countdown-value { color: #c0392b; }
+  [data-theme="light"] #hdr-fe-countdown   { color: #6a0dad; }
+  [data-theme="light"] #hdr-indy-countdown { color: #b8860b; }
+  [data-theme="light"] #hdr-wec-countdown  { color: #007a6e; }
+  [data-theme="light"] #hdr-wrc-countdown  { color: #b83a20; }
+  [data-theme="light"] #hdr-f2-countdown   { color: #0077aa; }
+  [data-theme="light"] #hdr-f3-countdown   { color: #007a40; }
+  [data-theme="light"] #hdr-f1a-countdown  { color: #c06000; }
+
+  /* News ticker */
+  [data-theme="light"] #news-toggle { background: var(--surface); border-bottom: 1px solid rgba(0,0,0,0.1); }
+  [data-theme="light"] .nt-dot { background: #c0392b; }
+  [data-theme="light"] .nt-divider { background: rgba(0,0,0,0.15); }
+  [data-theme="light"] .news-item { border-bottom: 1px solid rgba(0,0,0,0.08); color: var(--text); }
+  [data-theme="light"] .news-item:hover { background: var(--surface2); }
+  [data-theme="light"] .news-source-tag { background: rgba(0,0,0,0.07); color: rgba(26,26,46,0.6); border: 1px solid rgba(0,0,0,0.1); }
+
+  /* Sidebar */
+  [data-theme="light"] .sidebar-header { color: rgba(26,26,46,0.6); border-bottom: 1px solid rgba(0,0,0,0.1); }
+  [data-theme="light"] .city-item { border-bottom: 1px solid rgba(0,0,0,0.07); }
+  [data-theme="light"] .city-item:hover { background: rgba(0,0,0,0.04); }
+  [data-theme="light"] .city-item.active { background: rgba(45,122,0,0.06); border-left: 2px solid var(--accent); }
+  [data-theme="light"] .ci-name { color: var(--text); }
+  [data-theme="light"] .ci-time { color: var(--accent); }
+  [data-theme="light"] .ci-date { color: rgba(26,26,46,0.55); }
+
+  /* Filter buttons */
+  [data-theme="light"] .filter-btn { color: rgba(26,26,46,0.6); border: 1px solid rgba(0,0,0,0.18); background: var(--surface); }
+  [data-theme="light"] .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  [data-theme="light"] .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  [data-theme="light"] .filter-btn.all { border-color: rgba(0,0,0,0.18); color: rgba(26,26,46,0.6); }
+
+  /* Badges — darken so they're legible on light bg */
+  [data-theme="light"] .badge-f1  { background: rgba(200,0,0,0.1);    color: #aa0000; border-color: rgba(200,0,0,0.35); }
+  [data-theme="light"] .badge-f2  { background: rgba(0,140,200,0.1);  color: #005a88; border-color: rgba(0,140,200,0.35); }
+  [data-theme="light"] .badge-f3  { background: rgba(0,160,80,0.1);   color: #005a2a; border-color: rgba(0,160,80,0.35); }
+  [data-theme="light"] .badge-f1a { background: rgba(200,100,0,0.1);  color: #884400; border-color: rgba(200,100,0,0.35); }
+  [data-theme="light"] .badge-fe  { background: rgba(100,0,200,0.1);  color: #5500aa; border-color: rgba(100,0,200,0.35); }
+  [data-theme="light"] .badge-indy{ background: rgba(160,130,0,0.12); color: #665200; border-color: rgba(160,130,0,0.35); }
+  [data-theme="light"] .badge-wec { background: rgba(0,160,140,0.1);  color: #005a50; border-color: rgba(0,160,140,0.35); }
+  [data-theme="light"] .badge-wrc { background: rgba(200,60,20,0.1);  color: #882200; border-color: rgba(200,60,20,0.35); }
+
+  /* Session panel */
+  [data-theme="light"] .sp-session-row { border-bottom: 1px solid rgba(0,0,0,0.07); }
+  [data-theme="light"] .sp-session-label { color: rgba(26,26,46,0.55); }
+  [data-theme="light"] .sp-session-label.is-race { color: #aa0000; }
+  [data-theme="light"] .sp-session-time { color: var(--text); }
+  [data-theme="light"] .sp-day-heading { color: rgba(26,26,46,0.5); border-bottom: 1px solid rgba(0,0,0,0.08); }
+  [data-theme="light"] .sp-section-title { color: rgba(26,26,46,0.5); }
+  [data-theme="light"] .sp-countdown { background: rgba(180,0,0,0.06); border: 1px solid rgba(180,0,0,0.2); }
+  [data-theme="light"] .sp-countdown-value { color: #aa0000; }
+  [data-theme="light"] .sp-countdown-label { color: rgba(26,26,46,0.55); }
+  [data-theme="light"] .sp-race-name { color: var(--text); }
+  [data-theme="light"] .sp-race-location { color: rgba(26,26,46,0.55); }
+
+  /* Ad placeholders */
+  [data-theme="light"] .ad-placeholder { background: rgba(0,0,0,0.04); border: 2px dashed rgba(0,0,0,0.2); color: rgba(0,0,0,0.35); }
+  [data-theme="light"] .ad-skyscraper { border-color: rgba(0,0,0,0.1); background: var(--bg); }
+  [data-theme="light"] .ad-above-globe { background: var(--bg); border-bottom: 1px solid rgba(0,0,0,0.1); }
+  [data-theme="light"] #mobile-ad { background: var(--bg); border-top: 1px solid rgba(0,0,0,0.1); }
+
+  /* Settings & series pane */
+  [data-theme="light"] .series-toggle { border: 1px solid rgba(0,0,0,0.12); background: var(--surface); }
+  [data-theme="light"] .series-toggle:hover { background: var(--surface2); border-color: rgba(0,0,0,0.2); }
+  [data-theme="light"] .series-toggle-name { color: var(--text); }
+  [data-theme="light"] .series-toggle-check { border: 1px solid rgba(0,0,0,0.2); background: var(--surface2); }
+  [data-theme="light"] .settings-toggle-row { border: 1px solid rgba(0,0,0,0.12); background: var(--surface); }
+  [data-theme="light"] .settings-toggle-row:hover { background: var(--surface2); }
+  [data-theme="light"] .settings-section-title { color: var(--accent); border-bottom: 1px solid rgba(45,122,0,0.2); }
+  [data-theme="light"] .settings-toggle-label { color: var(--text); }
+  [data-theme="light"] .settings-toggle-desc { color: rgba(26,26,46,0.55); }
+  [data-theme="light"] .info-pane p { color: rgba(26,26,46,0.6); }
+
+  /* Mobile */
+  [data-theme="light"] #mobile-tabs { background: var(--surface); border-top: 1px solid rgba(0,0,0,0.12); }
+  [data-theme="light"] .mob-tab { color: rgba(26,26,46,0.5); }
+  [data-theme="light"] .mob-tab.active { color: var(--accent); }
+  [data-theme="light"] #mobile-race-list { background: var(--surface); }
+  [data-theme="light"] #mobile-news { background: var(--surface); }
+  [data-theme="light"] .mob-filter-btn { border-color: rgba(0,0,0,0.18); color: rgba(26,26,46,0.6); background: var(--surface); }
+  [data-theme="light"] .mob-filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Tooltip */
+  [data-theme="light"] #tooltip { background: var(--surface); border: 1px solid rgba(0,0,0,0.15); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+  [data-theme="light"] #tt-name { color: var(--text); }
+  [data-theme="light"] #tt-location { color: rgba(26,26,46,0.6); }
+  [data-theme="light"] #tt-time { color: var(--accent); }
+
+  /* Theme toggle buttons */
+  [data-theme="light"] .theme-btn { border-color: rgba(0,0,0,0.15); background: var(--surface2); color: rgba(26,26,46,0.6); }
+  [data-theme="light"] .theme-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(45,122,0,0.07); }
+
+  /* Info panel tabs */
+  [data-theme="light"] .info-tab { color: rgba(26,26,46,0.55); border-bottom: 2px solid transparent; }
+  [data-theme="light"] .info-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  [data-theme="light"] #info-panel-header { border-bottom: 1px solid rgba(0,0,0,0.1); }
+  [data-theme="light"] #info-panel-title { color: var(--text); }
+  [data-theme="light"] #info-close { color: rgba(26,26,46,0.5); }
+  [data-theme="light"] #info-close:hover { color: var(--text); }
+
+  /* Series pref note */
+  [data-theme="light"] .series-pref-note { color: rgba(26,26,46,0.5); }
+  [data-theme="light"] #series-reset-btn { border-color: rgba(0,0,0,0.2); color: rgba(26,26,46,0.6); }
+  [data-theme="light"] #series-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+
+  /* ── Header buttons (info + lang) ── */
+  [data-theme="light"] .settings-toggle-switch:not(.active) {
+    background: rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.25);
+  }
+  [data-theme="light"] .settings-toggle-switch.active {
+    border-color: transparent;
+  }
+  [data-theme="light"] #info-btn,
+  [data-theme="light"] #lang-btn {
+    border: 1px solid rgba(0,0,0,0.2);
+    color: rgba(26,26,46,0.6);
+    background: none;
+  }
+  [data-theme="light"] #info-btn:hover,
+  [data-theme="light"] #lang-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  [data-theme="light"] #lang-menu .lang-opt {
+    color: var(--text);
+  }
+  [data-theme="light"] #lang-menu .lang-opt:hover {
+    background: var(--input-hover);
+  }
+  [data-theme="light"] #lang-menu .lang-opt.active {
+    color: var(--accent);
+  }
+
+  /* ── Info panel structure ── */
+  [data-theme="light"] #info-panel {
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  }
+  [data-theme="light"] #info-tabs {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  [data-theme="light"] #info-close {
+    border: 1px solid rgba(0,0,0,0.15);
+    color: rgba(26,26,46,0.45);
+  }
+  [data-theme="light"] #info-close:hover {
+    border-color: rgba(0,0,0,0.35);
+    color: var(--text);
+  }
+  [data-theme="light"] #info-panel-header {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  [data-theme="light"] #info-content {
+    scrollbar-color: rgba(0,0,0,0.15) transparent;
+  }
+
+  /* ── Info panel text content ── */
+  [data-theme="light"] .info-pane h2 {
+    color: var(--text);
+  }
+  [data-theme="light"] .info-pane h2 em {
+    color: var(--accent);
+  }
+  [data-theme="light"] .info-pane h3 {
+    color: var(--accent);
+    opacity: 1;
+  }
+  [data-theme="light"] .info-pane p,
+  [data-theme="light"] .info-pane ul li {
+    color: rgba(26,26,46,0.7);
+  }
+  [data-theme="light"] .info-pane ul li::before {
+    color: var(--accent);
+  }
+  [data-theme="light"] .info-pane a {
+    color: var(--accent);
+  }
+
+  /* ── Terms & contact cards ── */
+  [data-theme="light"] .terms-en-shadow {
+    color: rgba(26,26,46,0.35);
+    border-left: 1px solid rgba(0,0,0,0.1);
+  }
+  [data-theme="light"] .info-contact-card {
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--surface2);
+  }
+  [data-theme="light"] .info-contact-card:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+
+  /* ── Series pref note + reset btn ── */
+  [data-theme="light"] .series-pref-note {
+    color: rgba(26,26,46,0.45);
+  }
+  [data-theme="light"] #series-reset-btn {
+    border: 1px solid rgba(0,0,0,0.18);
+    color: rgba(26,26,46,0.6);
+    background: transparent;
+  }
+  [data-theme="light"] #series-reset-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── Sidebar collapse toggle ── */
+  [data-theme="light"] #sidebar-collapse-btn {
+    background: var(--surface);
+    border: 1px solid rgba(0,0,0,0.15);
+    color: rgba(26,26,46,0.5);
+  }
+  [data-theme="light"] #sidebar-collapse-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── Tour play button ── */
+  [data-theme="light"] #tour-play-btn {
+    background: var(--surface);
+    border: 1px solid rgba(0,0,0,0.15);
+    color: rgba(26,26,46,0.6);
+  }
+  [data-theme="light"] #tour-play-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+
+  /* ── Fixed right header controls ──────────────────────────────────── */
+  #hdr-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  #hdr-right .hint {
+    /* Override any existing .hint positioning */
+    position: static !important;
+  }
+
 </style>
+<script>
+(function(){try{var t=localStorage.getItem('gridpulse_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 </head>
 <body>
 
@@ -1376,21 +1778,24 @@
     <div class="header-countdown-value" id="hdr-wrc-countdown" style="color:#ff6644">--:--:--</div>
   </div>
 
-  <div class="header-divider hdr-fe-indy" id="hdr-hint-div"></div>
-  <span class="hint" data-i18n="hint">Drag · Scroll to zoom</span>
-  <div id="lang-wrap">
-    <button id="lang-btn">EN</button>
-    <div id="lang-menu">
-      <button class="lang-opt active" data-lang="en">🇬🇧 English</button>
-      <button class="lang-opt" data-lang="fr">🇫🇷 Français</button>
-      <button class="lang-opt" data-lang="es">🇪🇸 Español</button>
-      <button class="lang-opt" data-lang="de">🇩🇪 Deutsch</button>
-      <button class="lang-opt" data-lang="pl">🇵🇱 Polski</button>
-      <button class="lang-opt" data-lang="ja">🇯🇵 日本語</button>
-      <button class="lang-opt" data-lang="ko">🇰🇷 한국어</button>
+  <!-- Fixed right controls — always pinned to the right regardless of race cards -->
+  <div id="hdr-right">
+    <span class="hint" data-i18n="hint">Drag · Scroll to zoom</span>
+    <div class="header-divider" style="height:1.4rem;margin:0 0.3rem"></div>
+    <div id="lang-wrap">
+      <button id="lang-btn">EN</button>
+      <div id="lang-menu">
+        <button class="lang-opt active" data-lang="en">🇬🇧 English</button>
+        <button class="lang-opt" data-lang="fr">🇫🇷 Français</button>
+        <button class="lang-opt" data-lang="es">🇪🇸 Español</button>
+        <button class="lang-opt" data-lang="de">🇩🇪 Deutsch</button>
+        <button class="lang-opt" data-lang="pl">🇵🇱 Polski</button>
+        <button class="lang-opt" data-lang="ja">🇯🇵 日本語</button>
+        <button class="lang-opt" data-lang="ko">🇰🇷 한국어</button>
+      </div>
     </div>
+    <button id="info-btn" title="Information">&#x24D8;</button>
   </div>
-  <button id="info-btn" title="About GridPulse">&#x24D8;</button>
 
 </header>
 
@@ -1426,7 +1831,7 @@
 <div class="main">
 
   <!-- AD SLOT — Skyscraper to the LEFT of globe (160×600) -->
-  <div class="ad-skyscraper">
+  <div class="ad-skyscraper" id="ad-skyscraper">
     <div class="ad-placeholder" style="flex:1;width:100%">
       📢 Ad<br>160×600<br>Skyscraper
     </div>
@@ -1451,7 +1856,7 @@
     </div>
 
     <!-- AD SLOT — Above globe, centred (728×90) -->
-    <div class="ad-above-globe">
+    <div class="ad-above-globe" id="ad-above-globe">
       <div class="ad-placeholder" style="width:min(728px,100%);height:100%;border-radius:3px">
         📢 Ad — 728×90 (Above Globe)
       </div>
@@ -1560,6 +1965,76 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+// ── Debug panel ──────────────────────────────────────────────────────────────
+(function() {
+  const DBG = {
+    panel: null,
+    errors: [],
+    texLoaded: 0, texTotal: 4, texFailed: 0,
+    geoState: 'idle',
+    fpsFrames: 0, fpsLast: performance.now(), fps: 0,
+    globeReady: false,
+    outlineState: 'none',
+
+    init() {
+      // Show panel with keyboard shortcut: Shift+D
+      document.addEventListener('keydown', e => {
+        if (e.shiftKey && e.key === 'D') {
+          const p = document.getElementById('debug-panel');
+          if (p) p.style.display = p.style.display === 'none' ? 'flex' : 'none';
+        }
+      });
+      // Catch global errors
+      window.addEventListener('error', ev => {
+        this.errors.push(ev.message || String(ev));
+        this.update();
+      });
+      window.addEventListener('unhandledrejection', ev => {
+        this.errors.push('PROMISE: ' + (ev.reason?.message || String(ev.reason)));
+        this.update();
+      });
+      this.update();
+    },
+
+    set(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    },
+
+    update() {
+      const p = document.getElementById('debug-panel');
+      if (!p || p.style.display === 'none') return;
+      const threeVer = (typeof THREE !== 'undefined') ? ('r' + THREE.REVISION) : 'MISSING';
+      this.set('dbg-three', 'THREE: ' + threeVer);
+      this.set('dbg-tex',   `TEX: ${this.texLoaded}/${this.texTotal}${this.texFailed ? ' (' + this.texFailed + ' ERR)' : ''}`);
+      this.set('dbg-geo',   'GEO: ' + this.geoState);
+      this.set('dbg-fps',   'FPS: ' + Math.round(this.fps));
+      this.set('dbg-globe', 'GLOBE: ' + (this.globeReady ? 'ready' : 'loading'));
+      this.set('dbg-outline','OUTLINE: ' + this.outlineState);
+      const errEl = document.getElementById('dbg-errors');
+      if (errEl) errEl.textContent = this.errors.length ? '⚠ ' + this.errors.slice(-2).join(' | ') : '';
+    },
+
+    tickFps() {
+      this.fpsFrames++;
+      const now = performance.now();
+      if (now - this.fpsLast >= 1000) {
+        this.fps = this.fpsFrames * 1000 / (now - this.fpsLast);
+        this.fpsFrames = 0;
+        this.fpsLast = now;
+        this.update();
+      }
+    }
+  };
+  window._dbg = DBG;
+  // Init after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => DBG.init());
+  } else {
+    DBG.init();
+  }
+})();
+
 window.onerror = function(msg, src, line, col, err) {
   // Ignore uninformative cross-origin errors from CDN scripts
   if (msg === 'Script error.' || msg === 'Script error') return true;
@@ -1686,6 +2161,20 @@ const TRANSLATIONS = {
     race_done_short: "Done",
     day_singular: "day",
     day_plural: "days",
+    settings_tab: "Settings",
+    settings_display: "Display",
+    settings_series: "Racing Series",
+    settings_ads: "Show Adverts",
+    settings_ads_desc: "Banner and skyscraper ad slots",
+    settings_news_ticker: "Show News Ticker",
+    settings_news_ticker_desc: "Live motorsport news bar at the top",
+    settings_theme_section: "Theme",
+    settings_theme_dark: "Dark",
+    settings_theme_light: "Light",
+    just_now: "just now",
+    min_ago: "{n}m ago",
+    hour_ago: "{n}h ago",
+    day_ago: "{n}d ago",
   },
   fr: {
     next_f1:        '🏎 Prochain F1',
@@ -1797,6 +2286,20 @@ const TRANSLATIONS = {
     race_done_short: "Terminé",
     day_singular: "jour",
     day_plural: "jours",
+    settings_tab: "Paramètres",
+    settings_display: "Affichage",
+    settings_series: "Séries Automobile",
+    settings_ads: "Afficher les publicités",
+    settings_ads_desc: "Bannières et espaces publicitaires",
+    settings_news_ticker: "Afficher le fil d'actualités",
+    settings_news_ticker_desc: "Barre d'actualités en haut",
+    settings_theme_section: "Thème",
+    settings_theme_dark: "Sombre",
+    settings_theme_light: "Clair",
+    just_now: "à l'instant",
+    min_ago: "il y a {n}m",
+    hour_ago: "il y a {n}h",
+    day_ago: "il y a {n}j",
   },
   es: {
     next_f1:        '🏎 Próxima F1',
@@ -1907,6 +2410,20 @@ const TRANSLATIONS = {
     race_done_short: "Listo",
     day_singular: "día",
     day_plural: "días",
+    settings_tab: "Ajustes",
+    settings_display: "Pantalla",
+    settings_series: "Series de Carreras",
+    settings_ads: "Mostrar anuncios",
+    settings_ads_desc: "Espacios publicitarios y banners",
+    settings_news_ticker: "Mostrar ticker de noticias",
+    settings_news_ticker_desc: "Barra de noticias en la parte superior",
+    settings_theme_section: "Tema",
+    settings_theme_dark: "Oscuro",
+    settings_theme_light: "Claro",
+    just_now: "ahora mismo",
+    min_ago: "hace {n}m",
+    hour_ago: "hace {n}h",
+    day_ago: "hace {n}d",
   },
     // Session labels
     s_fp1: 'Pr\u00e1ctica 1', s_fp2: 'Pr\u00e1ctica 2', s_fp3: 'Pr\u00e1ctica 3',
@@ -2067,6 +2584,20 @@ const TRANSLATIONS = {
     race_done_short: "Fertig",
     day_singular: "Tag",
     day_plural: "Tage",
+    settings_tab: "Einstellungen",
+    settings_display: "Anzeige",
+    settings_series: "Rennserien",
+    settings_ads: "Werbung anzeigen",
+    settings_ads_desc: "Banner- und Skyscraper-Werbeplätze",
+    settings_news_ticker: "News-Ticker anzeigen",
+    settings_news_ticker_desc: "Live-Motorsport-Nachrichtenleiste oben",
+    settings_theme_section: "Design",
+    settings_theme_dark: "Dunkel",
+    settings_theme_light: "Hell",
+    just_now: "gerade eben",
+    min_ago: "vor {n}m",
+    hour_ago: "vor {n}h",
+    day_ago: "vor {n}T",
   },
 
   pl: {
@@ -2197,6 +2728,20 @@ const TRANSLATIONS = {
     race_done_short: "Koniec",
     day_singular: "dzień",
     day_plural: "dni",
+    settings_tab: "Ustawienia",
+    settings_display: "Wyświetlanie",
+    settings_series: "Serie wyścigowe",
+    settings_ads: "Pokaż reklamy",
+    settings_ads_desc: "Banery i miejsca reklamowe",
+    settings_news_ticker: "Pokaż ticker newsów",
+    settings_news_ticker_desc: "Pasek newsów motorsportu na górze",
+    settings_theme_section: "Motyw",
+    settings_theme_dark: "Ciemny",
+    settings_theme_light: "Jasny",
+    just_now: "przed chwilą",
+    min_ago: "{n}m temu",
+    hour_ago: "{n}h temu",
+    day_ago: "{n}d temu",
   },
   ja: {
     next_f1: "🏎 次のF1",
@@ -2326,6 +2871,20 @@ const TRANSLATIONS = {
     race_done_short: "終了",
     day_singular: "日",
     day_plural: "日",
+    settings_tab: "設定",
+    settings_display: "表示",
+    settings_series: "レースシリーズ",
+    settings_ads: "広告を表示",
+    settings_ads_desc: "バナーおよびスカイスクレイパー広告",
+    settings_news_ticker: "ニューステッカーを表示",
+    settings_news_ticker_desc: "上部のモータースポーツニュースバー",
+    settings_theme_section: "テーマ",
+    settings_theme_dark: "ダーク",
+    settings_theme_light: "ライト",
+    just_now: "たった今",
+    min_ago: "{n}分前",
+    hour_ago: "{n}時間前",
+    day_ago: "{n}日前",
   },
   ko: {
     next_f1: "🏎 다음 F1",
@@ -2455,582 +3014,593 @@ const TRANSLATIONS = {
     race_done_short: "완료",
     day_singular: "일",
     day_plural: "일",
+    settings_tab: "설정",
+    settings_display: "디스플레이",
+    settings_series: "레이싱 시리즈",
+    settings_ads: "광고 표시",
+    settings_ads_desc: "배너 및 스카이스크래퍼 광고 슬롯",
+    settings_news_ticker: "뉴스 티커 표시",
+    settings_news_ticker_desc: "상단의 라이브 모터스포츠 뉴스 바",
+    settings_theme_section: "테마",
+    settings_theme_dark: "다크",
+    settings_theme_light: "라이트",
+    just_now: "방금 전",
+    min_ago: "{n}분 전",
+    hour_ago: "{n}시간 전",
+    day_ago: "{n}일 전",
   },
 };
 
-let currentLang = 'en';
-const LANG_LOCALE = { en:'en-GB', fr:'fr-FR', es:'es-ES', de:'de-DE', pl:'pl-PL', ja:'ja-JP', ko:'ko-KR' };
-function uiLocale() { return LANG_LOCALE[currentLang] || 'en-GB'; }
+// Detect browser language — use supported lang if available, else 'en'
+const SUPPORTED_LANGS = ['en', 'fr', 'es', 'de', 'pl', 'ja', 'ko'];
 
-const COUNTRY_ISO = {
-  'Australia':'AU','Austria':'AT','Azerbaijan':'AZ','Bahrain':'BH',
-  'Belgium':'BE','Brazil':'BR','Canada':'CA','Chile':'CL','China':'CN',
-  'Croatia':'HR','Estonia':'EE','Finland':'FI','France':'FR','Germany':'DE',
-  'Greece':'GR','Hungary':'HU','Italy':'IT','Japan':'JP','Kenya':'KE',
-  'Mexico':'MX','Monaco':'MC','Netherlands':'NL','Poland':'PL','Portugal':'PT',
-  'Qatar':'QA','Saudi Arabia':'SA','Singapore':'SG','Spain':'ES','Sweden':'SE',
-  'UAE':'AE','USA':'US','United Kingdom':'GB'
-};
-function localiseCountry(name) {
-  const code = COUNTRY_ISO[name];
-  if (!code) return name;
-  try {
-    return new Intl.DisplayNames([uiLocale()], { type:'region' }).of(code) || name;
-  } catch(e) { return name; }
-}
-
+// ── Language / i18n ───────────────────────────────────────────────────────────
+let _lang = (function() {
+  try { const s = localStorage.getItem('gridpulse_lang'); if (s) return s; } catch(e) {}
+  const nav = navigator.languages || [navigator.language || 'en'];
+  for (const l of nav) {
+    const code = l.slice(0, 2).toLowerCase();
+    if (SUPPORTED_LANGS.includes(code)) return code;
+  }
+  return 'en';
+})();
 
 function t(key) {
-  return (TRANSLATIONS[currentLang] || TRANSLATIONS.en)[key] || TRANSLATIONS.en[key] || key;
+  const block = TRANSLATIONS[_lang] || TRANSLATIONS['en'];
+  return (block && block[key]) || (TRANSLATIONS['en'] && TRANSLATIONS['en'][key]) || key;
 }
 
 function applyTranslations() {
-  const lang = currentLang;
-
-  // 1. Static elements with data-i18n (textContent — no child HTML tags)
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.textContent = t(el.dataset.i18n);
+    const key = el.dataset.i18n;
+    const val = t(key);
+    if (val) el.textContent = val;
   });
-
-  // 1b. Elements with data-i18n-html (may contain child tags like <em>)
-  document.querySelectorAll('[data-i18n-html]').forEach(el => {
-    el.innerHTML = t(el.dataset.i18nHtml);
-  });
-
-  // 2. Title attributes
-  document.querySelectorAll('[data-i18n-title]').forEach(el => {
-    el.title = t(el.dataset.i18nTitle);
-  });
-
-  // 2b. Bilingual terms — show English shadow paragraphs when not English
-  const isEnglish = lang === 'en';
-  const termsNote = document.getElementById('terms-bilingual-note');
-  if (termsNote) {
-    if (isEnglish) {
-      termsNote.style.display = 'none';
-    } else {
-      termsNote.style.display = 'block';
-      termsNote.textContent = t('terms_bilingual_note');
-    }
-  }
-  document.querySelectorAll('.terms-en-shadow').forEach(el => {
-    if (isEnglish) {
-      el.style.display = 'none';
-    } else {
-      el.style.display = 'block';
-      el.textContent = TRANSLATIONS.en[el.dataset.enKey] || '';
-    }
-  });
-
-  // 3. Header series labels
-  const f1label = document.getElementById('hdr-f1-label');
-  if (f1label && !f1label.textContent.includes('·')) f1label.textContent = t('next_f1');
-  ['f2','f3','f1a','fe','indy','wec','wrc'].forEach(k => {
-    const el = document.querySelector('[data-i18n-prefix="next_' + k + '"]');
-    if (el) el.textContent = t('next_' + k);
-  });
-
-  // 4. Header "Starts in" spans (set by tick but have data-i18n — refresh now)
-  document.querySelectorAll('.header-countdown-label span[data-i18n]').forEach(el => {
-    el.textContent = t(el.dataset.i18n);
-  });
-
-  // 5. Session panel countdown label (if panel is open)
-  if (activePanelCity >= 0) {
-    const cdLabel = document.querySelector('.sp-countdown-label');
-    if (cdLabel) {
-      const c = cities[activePanelCity];
-      const primaryS = c.series.includes('f1') ? 'f1' : c.series.includes('fe') ? 'fe' : c.series.includes('wec') ? 'wec' : c.series.includes('wrc') ? 'wrc' : 'indy';
-      const raceMs = new Date(c.sessions.race) - Date.now();
-      cdLabel.textContent = raceMs > 0
-        ? { f1: t('race_starts'), fe: t('eprix_starts'), indy: t('indy_starts') }[primaryS]
-        : { f1: t('race_done_f1'), fe: t('race_done_fe'), indy: t('race_done_indy') }[primaryS];
-    }
-  }
-
-  // 6. Rebuild news ticker and dropdown with new language strings
-  if (typeof buildTicker === 'function' && typeof getFilteredNews === 'function') {
-    buildTicker(getFilteredNews());
-    buildDropdown(getFilteredNews());
-  }
-  if (typeof populateMobileNews === 'function') {
-    populateMobileNews();
-  }
-
-  // 7. Sidebar count (already a number, no translation needed)
-  // But re-run applyFilter to update the count label text if needed
-  // applyFilter just sets a number so nothing to translate
-
-  // 8. Tour button title
-  const tourBtn = document.getElementById('tour-play-btn');
-  if (tourBtn) tourBtn.title = tourActive ? t('stop_tour') : t('start_tour');
-
-  // 9. Language button label + active state
-  const langBtnEl = document.getElementById('lang-btn');
-  if (langBtnEl) langBtnEl.textContent = lang.toUpperCase();
-  document.querySelectorAll('.lang-opt').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-
-  // 10. News loading placeholder text
-  const newsLoadingEl = document.getElementById('news-loading-text');
-  if (newsLoadingEl) newsLoadingEl.textContent = t('news_loading_ticker');
-
-  // 10a. Sidebar city dates and country names — reformat with current locale
-  document.querySelectorAll('.ci-country-name[data-country]').forEach(el => {
-    el.textContent = localiseCountry(el.dataset.country);
-  });
-  document.querySelectorAll('.ci-date[data-race-date]').forEach(el => {
-    const d = new Date(el.dataset.raceDate);
-    el.textContent = new Intl.DateTimeFormat(uiLocale(), { day:'numeric', month:'short' }).format(d);
-  });
-
-  // 10b. News story count (re-render with translated 'stories' word)
-  const newsCountEl = document.getElementById('news-count');
-  if (newsCountEl && typeof allNewsItems !== 'undefined' && allNewsItems.length > 0) {
-    newsCountEl.textContent = `${allNewsItems.length} ${t('stories')}`;
-  }
-  // Also update mobile news count
-  const mobNewsCountEl = document.getElementById('mob-news-count');
-  if (mobNewsCountEl && typeof allNewsItems !== 'undefined' && allNewsItems.length > 0) {
-    const mobItems = typeof mobNewsFilter !== 'undefined' && mobNewsFilter === 'f1'
-      ? allNewsItems.filter(i => i.badge === 'f1')
-      : typeof mobNewsFilter !== 'undefined' && mobNewsFilter === 'other'
-      ? allNewsItems.filter(i => i.badge !== 'f1')
-      : allNewsItems;
-    mobNewsCountEl.textContent = `· ${mobItems.length} ${t('stories')}`;
-  }
-
-  // 11. Session panel: re-render round label + session rows if panel is open
-  if (activePanelCity >= 0 && typeof openSessionPanel === 'function') {
-    openSessionPanel(activePanelCity);
-  }
-
-  // 12. Force tick() to re-render countdowns immediately
-  if (typeof tick === 'function') tick();
 }
 
-// Language switcher wiring
-document.addEventListener('DOMContentLoaded', function() {
-  const langBtn  = document.getElementById('lang-btn');
-  const langMenu = document.getElementById('lang-menu');
+// ── Theme ─────────────────────────────────────────────────────────────────────
+let _theme = (function() {
+  try { const s = localStorage.getItem('gridpulse_theme'); if (s) return s; } catch(e) {}
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+})();
 
-  langBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    const isOpen = langMenu.classList.toggle('open');
-    if (isOpen) {
-      const r = langBtn.getBoundingClientRect();
-      langMenu.style.top  = (r.bottom + 4) + 'px';
-      langMenu.style.left = (r.right - langMenu.offsetWidth || r.left) + 'px';
-      // Re-measure after display:block
-      requestAnimationFrame(() => {
-        langMenu.style.left = (r.right - langMenu.offsetWidth) + 'px';
-      });
-    }
+function applyTheme(theme) {
+  _theme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('gridpulse_theme', theme); } catch(e) {}
+  // Update theme button active state
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.themeVal === theme);
   });
-  document.addEventListener('click', () => langMenu.classList.remove('open'));
+  // Update globe clear colour
+  if (typeof renderer !== 'undefined' && renderer) {
+    renderer.setClearColor(theme === 'light' ? 0xd8e4f0 : 0x07070f);
+  }
+  // Update country outline colours
+  if (typeof updateCountryOutlineTheme === 'function') updateCountryOutlineTheme();
+  // Stars only in dark mode
+  if (window._starsObj) window._starsObj.visible = (theme !== 'light');
+}
 
-  document.querySelectorAll('.lang-opt').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      currentLang = btn.dataset.lang;
-      langMenu.classList.remove('open');
-      applyTranslations();
-    });
-  });
+// ── Utility ───────────────────────────────────────────────────────────────────
+function isMobile() {
+  return window.innerWidth < 768;
+}
 
-  // Apply default language on load
-  applyTranslations();
-});
+function getPhase(tz) {
+  try {
+    const now = new Date();
+    const localStr = now.toLocaleTimeString('en-US', { timeZone: tz, hour12: false, hour: '2-digit', minute: '2-digit' });
+    const [h] = localStr.split(':').map(Number);
+    if (h >= 6 && h < 12) return 'morning';
+    if (h >= 12 && h < 18) return 'afternoon';
+    if (h >= 18 && h < 22) return 'evening';
+    return 'night';
+  } catch(e) { return 'day'; }
+}
 
+function uiLocale() {
+  const map = { en:'en-GB', fr:'fr-FR', es:'es-ES', de:'de-DE', pl:'pl-PL', ja:'ja-JP', ko:'ko-KR' };
+  return map[_lang] || 'en-GB';
+}
 
-// F1 2026 Season — 24 rounds with all series session times (UTC ISO strings)
-// F1 sessions confirmed from The Race; F2/F3 from official FIA sites; F1A from f1academy.com
-// Support series times are based on confirmed Melbourne slots + standard weekend patterns
-// ─── UTILITY ──────────────────────────────────────────────────────────────────
-const isMobile = () => window.innerWidth <= 700;
-const isTablet = () => window.innerWidth > 700 && window.innerWidth <= 1024;
+function localiseCountry(country) {
+  try {
+    const dn = new Intl.DisplayNames([_lang], { type: 'region' });
+    // Try to find ISO code from country name
+    const ISO_MAP = {
+      'Australia':'AU','Austria':'AT','Azerbaijan':'AZ','Bahrain':'BH','Belgium':'BE',
+      'Brazil':'BR','Canada':'CA','Chile':'CL','China':'CN','Croatia':'HR',
+      'Estonia':'EE','Finland':'FI','France':'FR','Germany':'DE','Greece':'GR',
+      'Hungary':'HU','Italy':'IT','Japan':'JP','Kenya':'KE','Mexico':'MX',
+      'Monaco':'MC','Netherlands':'NL','Poland':'PL','Portugal':'PT','Qatar':'QA',
+      'Saudi Arabia':'SA','Singapore':'SG','Spain':'ES','Sweden':'SE',
+      'UAE':'AE','United Kingdom':'GB','USA':'US'
+    };
+    const code = ISO_MAP[country];
+    if (code) return dn.of(code) || country;
+  } catch(e) {}
+  return country;
+}
 
+// ── Race city data ─────────────────────────────────────────────────────────────
 const cities = [
-  // R1 Australia (F1+F2+F3) – confirmed from gpblog.com official schedule
+  // ── F1 2026 ──────────────────────────────────────────────────────────────────
+  // R1 Australia
   { city: 'Albert Park', country: 'Australia', region: 'Australian GP', round:1, series:['f1','f2','f3'], tz:'Australia/Melbourne', lat:-37.84, lng:144.97,
     sessions:{ fp1:'2026-03-06T01:30Z', fp2:'2026-03-06T05:00Z', fp3:'2026-03-07T02:30Z', quali:'2026-03-07T05:00Z', race:'2026-03-08T04:00Z' },
     f3Sessions:{ fp:'2026-03-05T21:50Z', quali:'2026-03-06T03:00Z', sprint:'2026-03-07T00:15Z', feature:'2026-03-07T22:05Z' },
     f2Sessions:{ fp:'2026-03-05T23:00Z', quali:'2026-03-06T03:55Z', sprint:'2026-03-07T03:10Z', feature:'2026-03-08T00:25Z' } },
 
-  // R2 China Sprint (F1+F1A) – F1A times TBC, using standard Friday/Sat/Sun slots CST(UTC+8)
+  // R2 China Sprint
   { city: 'Shanghai Int\'l Circuit', country: 'China', region: 'Chinese GP', round:2, series:['f1','f1a'], tz:'Asia/Shanghai', lat:31.34, lng:121.22,
     sessions:{ fp1:'2026-03-13T03:30Z', sq:'2026-03-13T07:30Z', sprint:'2026-03-14T03:00Z', quali:'2026-03-14T07:00Z', race:'2026-03-15T07:00Z' },
     f1aSessions:{ quali:'2026-03-13T09:00Z', race1:'2026-03-14T01:30Z', race2:'2026-03-15T00:00Z' } },
 
-  // R3 Japan (F1 only)
+  // R3 Japan
   { city: 'Suzuka Circuit', country: 'Japan', region: 'Japanese GP', round:3, series:['f1'], tz:'Asia/Tokyo', lat:34.84, lng:136.54,
     sessions:{ fp1:'2026-03-27T02:30Z', fp2:'2026-03-27T06:00Z', fp3:'2026-03-28T03:00Z', quali:'2026-03-28T07:00Z', race:'2026-03-29T05:00Z' } },
 
-  // R4 Bahrain (F1+F2+F3) – evening races, local times AST(UTC+3)
+  // R4 Bahrain
   { city: 'Bahrain Int\'l Circuit', country: 'Bahrain', region: 'Bahrain GP', round:4, series:['f1','f2','f3'], tz:'Asia/Bahrain', lat:26.03, lng:50.51,
     sessions:{ fp1:'2026-04-10T09:30Z', fp2:'2026-04-10T13:00Z', fp3:'2026-04-11T10:30Z', quali:'2026-04-11T14:00Z', race:'2026-04-12T15:00Z' },
     f3Sessions:{ fp:'2026-04-10T07:00Z', quali:'2026-04-10T11:30Z', sprint:'2026-04-11T08:30Z', feature:'2026-04-12T07:30Z' },
-    f2Sessions:{ fp:'2026-04-10T08:00Z', quali:'2026-04-10T12:30Z', sprint:'2026-04-11T11:30Z', feature:'2026-04-12T09:30Z' } },
+    f2Sessions:{ fp:'2026-04-10T08:00Z', quali:'2026-04-10T12:30Z', sprint:'2026-04-11T11:45Z', feature:'2026-04-12T09:30Z' } },
 
-  // R5 Saudi (F1+F2+F1A) – night race, AST(UTC+3)
-  { city: 'Jeddah Corniche Circuit', country: 'Saudi Arabia', region: 'Saudi Arabian GP', round:5, series:['f1','f2','f1a'], tz:'Asia/Riyadh', lat:21.63, lng:39.10,
-    sessions:{ fp1:'2026-04-17T15:00Z', fp2:'2026-04-17T18:30Z', fp3:'2026-04-18T16:30Z', quali:'2026-04-18T17:00Z', race:'2026-04-19T17:00Z' },
-    f2Sessions:{ fp:'2026-04-17T12:00Z', quali:'2026-04-17T15:30Z', sprint:'2026-04-18T12:30Z', feature:'2026-04-19T11:30Z' },
-    f1aSessions:{ quali:'2026-04-17T17:00Z', race1:'2026-04-18T14:30Z', race2:'2026-04-19T13:00Z' } },
+  // R5 Saudi Arabia
+  { city: 'Jeddah Corniche Circuit', country: 'Saudi Arabia', region: 'Saudi Arabian GP', round:5, series:['f1','f2','f3'], tz:'Asia/Riyadh', lat:21.54, lng:39.17,
+    sessions:{ fp1:'2026-04-17T13:30Z', fp2:'2026-04-17T17:00Z', fp3:'2026-04-18T13:30Z', quali:'2026-04-18T17:00Z', race:'2026-04-19T17:00Z' },
+    f3Sessions:{ fp:'2026-04-17T10:45Z', quali:'2026-04-17T15:00Z', sprint:'2026-04-18T11:15Z', feature:'2026-04-18T23:45Z' },
+    f2Sessions:{ fp:'2026-04-17T12:00Z', quali:'2026-04-17T16:00Z', sprint:'2026-04-18T13:00Z', feature:'2026-04-19T13:30Z' } },
 
-  // R6 Miami Sprint (F1 only)
-  { city: 'Miami Int\'l Autodrome', country: 'USA', region: 'Miami GP', round:6, series:['f1'], tz:'America/New_York', lat:25.96, lng:-80.24,
-    sessions:{ fp1:'2026-05-01T16:30Z', sq:'2026-05-01T20:30Z', sprint:'2026-05-02T15:30Z', quali:'2026-05-02T19:00Z', race:'2026-05-03T20:00Z' } },
+  // R6 Miami Sprint
+  { city: 'Miami International Autodrome', country: 'USA', region: 'Miami GP', round:6, series:['f1','f1a'], tz:'America/New_York', lat:25.95, lng:-80.24,
+    sessions:{ fp1:'2026-05-01T16:30Z', sq:'2026-05-01T20:30Z', sprint:'2026-05-02T16:00Z', quali:'2026-05-02T20:00Z', race:'2026-05-03T19:00Z' },
+    f1aSessions:{ quali:'2026-05-01T22:00Z', race1:'2026-05-02T14:00Z', race2:'2026-05-03T14:00Z' } },
 
-  // R7 Canada Sprint (F1+F1A) – EDT(UTC-4)
-  { city: 'Circuit Gilles Villeneuve', country: 'Canada', region: 'Canadian GP', round:7, series:['f1','f1a'], tz:'America/Toronto', lat:45.50, lng:-73.52,
-    sessions:{ fp1:'2026-05-22T17:30Z', sq:'2026-05-22T21:30Z', sprint:'2026-05-23T16:30Z', quali:'2026-05-23T20:00Z', race:'2026-05-24T20:00Z' },
-    f1aSessions:{ quali:'2026-05-22T22:30Z', race1:'2026-05-23T14:00Z', race2:'2026-05-24T13:00Z' } },
+  // R7 Imola
+  { city: 'Autodromo Enzo e Dino Ferrari', country: 'Italy', region: 'Emilia Romagna GP', round:7, series:['f1','f2','f3'], tz:'Europe/Rome', lat:44.34, lng:11.71,
+    sessions:{ fp1:'2026-05-15T11:30Z', fp2:'2026-05-15T15:00Z', fp3:'2026-05-16T10:30Z', quali:'2026-05-16T14:00Z', race:'2026-05-17T13:00Z' },
+    f3Sessions:{ fp:'2026-05-15T08:45Z', quali:'2026-05-15T12:30Z', sprint:'2026-05-16T08:30Z', feature:'2026-05-16T22:45Z' },
+    f2Sessions:{ fp:'2026-05-15T10:00Z', quali:'2026-05-15T13:30Z', sprint:'2026-05-16T10:00Z', feature:'2026-05-17T09:30Z' } },
 
-  // R8 Monaco (F1+F2+F3) – CEST(UTC+2)
+  // R8 Monaco
   { city: 'Circuit de Monaco', country: 'Monaco', region: 'Monaco GP', round:8, series:['f1','f2','f3'], tz:'Europe/Monaco', lat:43.74, lng:7.43,
-    sessions:{ fp1:'2026-06-05T11:30Z', fp2:'2026-06-05T15:00Z', fp3:'2026-06-06T10:30Z', quali:'2026-06-06T13:00Z', race:'2026-06-07T13:00Z' },
-    f3Sessions:{ fp:'2026-06-05T09:00Z', quali:'2026-06-05T13:00Z', sprint:'2026-06-06T08:30Z', feature:'2026-06-07T07:30Z' },
-    f2Sessions:{ fp:'2026-06-05T10:00Z', quali:'2026-06-05T14:00Z', sprint:'2026-06-06T11:00Z', feature:'2026-06-07T09:30Z' } },
+    sessions:{ fp1:'2026-05-22T11:30Z', fp2:'2026-05-22T15:00Z', fp3:'2026-05-23T10:30Z', quali:'2026-05-23T14:00Z', race:'2026-05-24T13:00Z' },
+    f3Sessions:{ fp:'2026-05-22T08:45Z', quali:'2026-05-22T12:30Z', sprint:'2026-05-23T08:30Z', feature:'2026-05-23T21:45Z' },
+    f2Sessions:{ fp:'2026-05-22T10:00Z', quali:'2026-05-22T13:30Z', sprint:'2026-05-23T10:00Z', feature:'2026-05-24T09:30Z' } },
 
-  // R9 Barcelona (F1+F2+F3) – CEST(UTC+2)
+  // R9 Spain
   { city: 'Circuit de Barcelona-Catalunya', country: 'Spain', region: 'Spanish GP', round:9, series:['f1','f2','f3'], tz:'Europe/Madrid', lat:41.57, lng:2.26,
-    sessions:{ fp1:'2026-06-12T11:30Z', fp2:'2026-06-12T15:00Z', fp3:'2026-06-13T10:30Z', quali:'2026-06-13T13:00Z', race:'2026-06-14T13:00Z' },
-    f3Sessions:{ fp:'2026-06-12T09:00Z', quali:'2026-06-12T13:00Z', sprint:'2026-06-13T08:45Z', feature:'2026-06-14T07:30Z' },
-    f2Sessions:{ fp:'2026-06-12T10:00Z', quali:'2026-06-12T14:00Z', sprint:'2026-06-13T11:00Z', feature:'2026-06-14T09:30Z' } },
+    sessions:{ fp1:'2026-05-29T11:30Z', fp2:'2026-05-29T15:00Z', fp3:'2026-05-30T10:30Z', quali:'2026-05-30T14:00Z', race:'2026-05-31T13:00Z' },
+    f3Sessions:{ fp:'2026-05-29T08:45Z', quali:'2026-05-29T12:30Z', sprint:'2026-05-30T08:30Z', feature:'2026-05-30T21:45Z' },
+    f2Sessions:{ fp:'2026-05-29T10:00Z', quali:'2026-05-29T13:30Z', sprint:'2026-05-30T10:00Z', feature:'2026-05-31T09:30Z' } },
 
-  // R10 Austria (F1+F2+F3) – CEST(UTC+2)
-  { city: 'Red Bull Ring', country: 'Austria', region: 'Austrian GP', round:10, series:['f1','f2','f3'], tz:'Europe/Vienna', lat:47.22, lng:14.76,
-    sessions:{ fp1:'2026-06-26T11:30Z', fp2:'2026-06-26T15:00Z', fp3:'2026-06-27T10:30Z', quali:'2026-06-27T13:00Z', race:'2026-06-28T13:00Z' },
-    f3Sessions:{ fp:'2026-06-26T09:00Z', quali:'2026-06-26T13:00Z', sprint:'2026-06-27T08:45Z', feature:'2026-06-28T07:30Z' },
-    f2Sessions:{ fp:'2026-06-26T10:00Z', quali:'2026-06-26T14:00Z', sprint:'2026-06-27T11:00Z', feature:'2026-06-28T09:30Z' } },
+  // R10 Canada
+  { city: 'Circuit Gilles-Villeneuve', country: 'Canada', region: 'Canadian GP', round:10, series:['f1','f2','f3'], tz:'America/Toronto', lat:45.50, lng:-73.52,
+    sessions:{ fp1:'2026-06-12T17:30Z', fp2:'2026-06-12T21:00Z', fp3:'2026-06-13T16:30Z', quali:'2026-06-13T20:00Z', race:'2026-06-14T18:00Z' },
+    f3Sessions:{ fp:'2026-06-12T15:00Z', quali:'2026-06-12T19:00Z', sprint:'2026-06-13T14:30Z', feature:'2026-06-13T22:45Z' },
+    f2Sessions:{ fp:'2026-06-12T16:00Z', quali:'2026-06-12T20:00Z', sprint:'2026-06-13T16:00Z', feature:'2026-06-14T14:30Z' } },
 
-  // R11 Britain Sprint (F1+F2+F3+F1A) – BST(UTC+1)
-  { city: 'Silverstone Circuit', country: 'United Kingdom', region: 'British GP', round:11, series:['f1','f2','f3','f1a'], tz:'Europe/London', lat:52.07, lng:-1.02,
-    sessions:{ fp1:'2026-07-03T10:30Z', sq:'2026-07-03T14:30Z', sprint:'2026-07-04T11:00Z', quali:'2026-07-04T14:00Z', race:'2026-07-05T14:00Z' },
-    f3Sessions:{ fp:'2026-07-03T08:30Z', quali:'2026-07-03T13:00Z', sprint:'2026-07-04T08:30Z', feature:'2026-07-05T08:30Z' },
-    f2Sessions:{ fp:'2026-07-03T09:30Z', quali:'2026-07-03T14:00Z', sprint:'2026-07-04T09:45Z', feature:'2026-07-05T10:00Z' },
-    f1aSessions:{ quali:'2026-07-03T15:30Z', race1:'2026-07-04T07:30Z', race2:'2026-07-05T07:00Z' } },
+  // R11 Austria Sprint
+  { city: 'Red Bull Ring', country: 'Austria', region: 'Austrian GP', round:11, series:['f1','f2','f3'], tz:'Europe/Vienna', lat:47.22, lng:14.76,
+    sessions:{ fp1:'2026-06-26T10:30Z', sq:'2026-06-26T14:30Z', sprint:'2026-06-27T10:00Z', quali:'2026-06-27T14:00Z', race:'2026-06-28T13:00Z' },
+    f3Sessions:{ fp:'2026-06-26T08:00Z', quali:'2026-06-26T11:30Z', sprint:'2026-06-27T07:30Z', feature:'2026-06-27T19:45Z' },
+    f2Sessions:{ fp:'2026-06-26T09:00Z', quali:'2026-06-26T13:00Z', sprint:'2026-06-27T09:00Z', feature:'2026-06-28T09:30Z' } },
 
-  // R12 Belgium (F1+F2+F3) – CEST(UTC+2)
-  { city: 'Circuit de Spa-Francorchamps', country: 'Belgium', region: 'Belgian GP', round:12, series:['f1','f2','f3'], tz:'Europe/Brussels', lat:50.44, lng:5.97,
-    sessions:{ fp1:'2026-07-17T11:30Z', fp2:'2026-07-17T15:00Z', fp3:'2026-07-18T10:30Z', quali:'2026-07-18T13:00Z', race:'2026-07-19T13:00Z' },
-    f3Sessions:{ fp:'2026-07-17T09:00Z', quali:'2026-07-17T13:00Z', sprint:'2026-07-18T08:45Z', feature:'2026-07-19T07:30Z' },
-    f2Sessions:{ fp:'2026-07-17T10:00Z', quali:'2026-07-17T14:00Z', sprint:'2026-07-18T11:00Z', feature:'2026-07-19T09:30Z' } },
+  // R12 Great Britain
+  { city: 'Silverstone Circuit', country: 'United Kingdom', region: 'British GP', round:12, series:['f1','f2','f3'], tz:'Europe/London', lat:52.07, lng:-1.02,
+    sessions:{ fp1:'2026-07-03T11:30Z', fp2:'2026-07-03T15:00Z', fp3:'2026-07-04T10:30Z', quali:'2026-07-04T14:00Z', race:'2026-07-05T14:00Z' },
+    f3Sessions:{ fp:'2026-07-03T08:45Z', quali:'2026-07-03T12:30Z', sprint:'2026-07-04T08:30Z', feature:'2026-07-04T22:45Z' },
+    f2Sessions:{ fp:'2026-07-03T10:00Z', quali:'2026-07-03T13:30Z', sprint:'2026-07-04T10:00Z', feature:'2026-07-05T09:30Z' } },
 
-  // R13 Hungary (F1+F2+F3) – CEST(UTC+2)
-  { city: 'Hungaroring', country: 'Hungary', region: 'Hungarian GP', round:13, series:['f1','f2','f3'], tz:'Europe/Budapest', lat:47.58, lng:19.25,
-    sessions:{ fp1:'2026-07-24T11:30Z', fp2:'2026-07-24T15:00Z', fp3:'2026-07-25T10:30Z', quali:'2026-07-25T13:00Z', race:'2026-07-26T13:00Z' },
-    f3Sessions:{ fp:'2026-07-24T09:00Z', quali:'2026-07-24T13:00Z', sprint:'2026-07-25T08:45Z', feature:'2026-07-26T07:30Z' },
-    f2Sessions:{ fp:'2026-07-24T10:00Z', quali:'2026-07-24T14:00Z', sprint:'2026-07-25T11:00Z', feature:'2026-07-26T09:30Z' } },
+  // R13 Belgium Sprint
+  { city: 'Circuit de Spa-Francorchamps', country: 'Belgium', region: 'Belgian GP', round:13, series:['f1','f2','f3'], tz:'Europe/Brussels', lat:50.44, lng:5.97,
+    sessions:{ fp1:'2026-07-24T11:30Z', sq:'2026-07-24T15:30Z', sprint:'2026-07-25T11:00Z', quali:'2026-07-25T15:00Z', race:'2026-07-26T13:00Z' },
+    f3Sessions:{ fp:'2026-07-24T09:00Z', quali:'2026-07-24T12:30Z', sprint:'2026-07-25T08:30Z', feature:'2026-07-25T20:45Z' },
+    f2Sessions:{ fp:'2026-07-24T10:00Z', quali:'2026-07-24T14:00Z', sprint:'2026-07-25T10:00Z', feature:'2026-07-26T09:30Z' } },
 
-  // R14 Netherlands Sprint (F1+F1A) – CEST(UTC+2)
-  { city: 'Circuit Zandvoort', country: 'Netherlands', region: 'Dutch GP', round:14, series:['f1','f1a'], tz:'Europe/Amsterdam', lat:52.39, lng:4.54,
-    sessions:{ fp1:'2026-08-21T10:30Z', sq:'2026-08-21T14:30Z', sprint:'2026-08-22T11:00Z', quali:'2026-08-22T14:00Z', race:'2026-08-23T13:00Z' },
-    f1aSessions:{ quali:'2026-08-21T15:30Z', race1:'2026-08-22T07:30Z', race2:'2026-08-23T07:30Z' } },
+  // R14 Hungary
+  { city: 'Hungaroring', country: 'Hungary', region: 'Hungarian GP', round:14, series:['f1','f2','f3'], tz:'Europe/Budapest', lat:47.58, lng:19.25,
+    sessions:{ fp1:'2026-07-31T11:30Z', fp2:'2026-07-31T15:00Z', fp3:'2026-08-01T10:30Z', quali:'2026-08-01T14:00Z', race:'2026-08-02T13:00Z' },
+    f3Sessions:{ fp:'2026-07-31T08:45Z', quali:'2026-07-31T12:30Z', sprint:'2026-08-01T08:30Z', feature:'2026-08-01T21:45Z' },
+    f2Sessions:{ fp:'2026-07-31T10:00Z', quali:'2026-07-31T13:30Z', sprint:'2026-08-01T10:00Z', feature:'2026-08-02T09:30Z' } },
 
-  // R15 Italy (F1+F2+F3) – CEST(UTC+2)
-  { city: 'Autodromo Nazionale Monza', country: 'Italy', region: 'Italian GP', round:15, series:['f1','f2','f3'], tz:'Europe/Rome', lat:45.62, lng:9.28,
-    sessions:{ fp1:'2026-09-04T11:30Z', fp2:'2026-09-04T15:00Z', fp3:'2026-09-05T10:30Z', quali:'2026-09-05T13:00Z', race:'2026-09-06T13:00Z' },
-    f3Sessions:{ fp:'2026-09-04T09:00Z', quali:'2026-09-04T13:00Z', sprint:'2026-09-05T08:45Z', feature:'2026-09-06T07:30Z' },
-    f2Sessions:{ fp:'2026-09-04T10:00Z', quali:'2026-09-04T14:00Z', sprint:'2026-09-05T11:00Z', feature:'2026-09-06T09:30Z' } },
+  // R15 Netherlands
+  { city: 'Circuit Zandvoort', country: 'Netherlands', region: 'Dutch GP', round:15, series:['f1'], tz:'Europe/Amsterdam', lat:52.39, lng:4.54,
+    sessions:{ fp1:'2026-08-28T10:30Z', fp2:'2026-08-28T14:00Z', fp3:'2026-08-29T09:30Z', quali:'2026-08-29T13:00Z', race:'2026-08-30T13:00Z' } },
 
-  // R16 Madrid (F1+F2+F3) – CEST(UTC+2)
-  { city: 'Madrid Street Circuit (IFEMA)', country: 'Spain', region: 'Spanish GP (Madrid)', round:16, series:['f1','f2','f3'], tz:'Europe/Madrid', lat:40.47, lng:-3.69,
-    sessions:{ fp1:'2026-09-11T11:30Z', fp2:'2026-09-11T15:00Z', fp3:'2026-09-12T10:30Z', quali:'2026-09-12T13:00Z', race:'2026-09-13T13:00Z' },
-    f3Sessions:{ fp:'2026-09-11T09:00Z', quali:'2026-09-11T13:00Z', sprint:'2026-09-12T08:45Z', feature:'2026-09-13T07:30Z' },
-    f2Sessions:{ fp:'2026-09-11T10:00Z', quali:'2026-09-11T14:00Z', sprint:'2026-09-12T11:00Z', feature:'2026-09-13T09:30Z' } },
+  // R16 Italy (Monza)
+  { city: 'Autodromo Nazionale Monza', country: 'Italy', region: 'Italian GP', round:16, series:['f1','f2','f3'], tz:'Europe/Rome', lat:45.62, lng:9.28,
+    sessions:{ fp1:'2026-09-04T11:30Z', fp2:'2026-09-04T15:00Z', fp3:'2026-09-05T10:30Z', quali:'2026-09-05T14:00Z', race:'2026-09-06T13:00Z' },
+    f3Sessions:{ fp:'2026-09-04T08:45Z', quali:'2026-09-04T12:30Z', sprint:'2026-09-05T08:30Z', feature:'2026-09-05T21:45Z' },
+    f2Sessions:{ fp:'2026-09-04T10:00Z', quali:'2026-09-04T13:30Z', sprint:'2026-09-05T10:00Z', feature:'2026-09-06T09:30Z' } },
 
-  // R17 Baku SAT race (F1+F2) – AZT(UTC+4)
-  { city: 'Baku City Circuit', country: 'Azerbaijan', region: 'Azerbaijan GP', round:17, series:['f1','f2'], tz:'Asia/Baku', lat:40.37, lng:49.85,
-    sessions:{ fp1:'2026-09-25T09:00Z', fp2:'2026-09-25T12:30Z', quali:'2026-09-25T10:00Z', race:'2026-09-26T11:00Z' },
-    f2Sessions:{ fp:'2026-09-24T07:00Z', quali:'2026-09-24T11:30Z', sprint:'2026-09-25T07:30Z', feature:'2026-09-26T07:30Z' } },
+  // R17 Azerbaijan
+  { city: 'Baku City Circuit', country: 'Azerbaijan', region: 'Azerbaijan GP', round:17, series:['f1','f2','f3'], tz:'Asia/Baku', lat:40.37, lng:49.85,
+    sessions:{ fp1:'2026-09-18T09:30Z', fp2:'2026-09-18T13:00Z', fp3:'2026-09-19T08:30Z', quali:'2026-09-19T12:00Z', race:'2026-09-20T11:00Z' },
+    f3Sessions:{ fp:'2026-09-18T07:00Z', quali:'2026-09-18T10:30Z', sprint:'2026-09-19T06:30Z', feature:'2026-09-19T19:45Z' },
+    f2Sessions:{ fp:'2026-09-18T08:00Z', quali:'2026-09-18T11:30Z', sprint:'2026-09-19T08:00Z', feature:'2026-09-20T07:30Z' } },
 
-  // R18 Singapore Sprint (F1 only)
-  { city: 'Marina Bay Circuit', country: 'Singapore', region: 'Singapore GP', round:18, series:['f1'], tz:'Asia/Singapore', lat:1.29, lng:103.86,
-    sessions:{ fp1:'2026-10-09T09:30Z', sq:'2026-10-09T13:30Z', sprint:'2026-10-10T10:00Z', quali:'2026-10-10T13:00Z', race:'2026-10-11T12:00Z' } },
+  // R18 Singapore
+  { city: 'Marina Bay Street Circuit', country: 'Singapore', region: 'Singapore GP', round:18, series:['f1'], tz:'Asia/Singapore', lat:1.29, lng:103.86,
+    sessions:{ fp1:'2026-10-02T09:30Z', fp2:'2026-10-02T13:00Z', fp3:'2026-10-03T09:30Z', quali:'2026-10-03T13:00Z', race:'2026-10-04T12:00Z' } },
 
-  // R19 USA (F1+F1A) – CDT(UTC-5)
-  { city: 'Circuit of the Americas', country: 'USA', region: 'US GP', round:19, series:['f1','f1a'], tz:'America/Chicago', lat:30.13, lng:-97.64,
-    sessions:{ fp1:'2026-10-23T16:30Z', fp2:'2026-10-23T20:00Z', fp3:'2026-10-24T16:30Z', quali:'2026-10-24T20:00Z', race:'2026-10-25T20:00Z' },
-    f1aSessions:{ quali:'2026-10-23T22:00Z', race1:'2026-10-24T14:00Z', race2:'2026-10-25T13:30Z' } },
+  // R19 USA (COTA) Sprint
+  { city: 'Circuit of the Americas', country: 'USA', region: 'United States GP', round:19, series:['f1','f1a'], tz:'America/Chicago', lat:30.13, lng:-97.64,
+    sessions:{ fp1:'2026-10-16T17:30Z', sq:'2026-10-16T21:30Z', sprint:'2026-10-17T17:00Z', quali:'2026-10-17T21:00Z', race:'2026-10-18T19:00Z' },
+    f1aSessions:{ quali:'2026-10-16T23:00Z', race1:'2026-10-17T15:00Z', race2:'2026-10-18T15:00Z' } },
 
-  // R20 Mexico (F1 only)
-  { city: 'Autodromo Hermanos Rodriguez', country: 'Mexico', region: 'Mexico City GP', round:20, series:['f1','fe'], tz:'America/Mexico_City', lat:19.40, lng:-99.09,
-    sessions:{ fp1:'2026-10-30T17:30Z', fp2:'2026-10-30T21:00Z', fp3:'2026-10-31T17:30Z', quali:'2026-10-31T21:00Z', race:'2026-11-01T20:00Z' } },
+  // R20 Mexico
+  { city: 'Autodromo Hermanos Rodriguez', country: 'Mexico', region: 'Mexico City GP', round:20, series:['f1','f2','f3'], tz:'America/Mexico_City', lat:19.40, lng:-99.09,
+    sessions:{ fp1:'2026-10-23T18:30Z', fp2:'2026-10-23T22:00Z', fp3:'2026-10-24T17:30Z', quali:'2026-10-24T21:00Z', race:'2026-10-25T20:00Z' },
+    f3Sessions:{ fp:'2026-10-23T16:00Z', quali:'2026-10-23T19:30Z', sprint:'2026-10-24T15:30Z', feature:'2026-10-24T23:45Z' },
+    f2Sessions:{ fp:'2026-10-23T17:00Z', quali:'2026-10-23T20:30Z', sprint:'2026-10-24T17:00Z', feature:'2026-10-25T16:30Z' } },
 
-  // R21 Brazil (F1 only)
-  { city: 'Autodromo Jose Carlos Pace', country: 'Brazil', region: 'São Paulo GP', round:21, series:['f1'], tz:'America/Sao_Paulo', lat:-23.70, lng:-46.70,
-    sessions:{ fp1:'2026-11-06T14:30Z', fp2:'2026-11-06T18:00Z', fp3:'2026-11-07T14:30Z', quali:'2026-11-07T18:00Z', race:'2026-11-08T17:00Z' } },
+  // R21 Brazil Sprint
+  { city: 'Autodromo Jose Carlos Pace', country: 'Brazil', region: 'São Paulo GP', round:21, series:['f1','f2','f3'], tz:'America/Sao_Paulo', lat:-23.70, lng:-46.70,
+    sessions:{ fp1:'2026-10-30T14:30Z', sq:'2026-10-30T18:30Z', sprint:'2026-10-31T14:00Z', quali:'2026-10-31T18:00Z', race:'2026-11-01T17:00Z' },
+    f3Sessions:{ fp:'2026-10-30T12:00Z', quali:'2026-10-30T15:30Z', sprint:'2026-10-31T12:00Z', feature:'2026-10-31T21:45Z' },
+    f2Sessions:{ fp:'2026-10-30T13:00Z', quali:'2026-10-30T16:30Z', sprint:'2026-10-31T13:30Z', feature:'2026-11-01T13:30Z' } },
 
-  // R22 Las Vegas SAT race (F1+F1A) – PST(UTC-8)
+  // R22 Las Vegas Sprint
   { city: 'Las Vegas Strip Circuit', country: 'USA', region: 'Las Vegas GP', round:22, series:['f1','f1a'], tz:'America/Los_Angeles', lat:36.11, lng:-115.17,
-    sessions:{ fp1:'2026-11-20T07:00Z', fp2:'2026-11-20T11:00Z', quali:'2026-11-21T06:00Z', race:'2026-11-22T04:00Z' },
-    f1aSessions:{ quali:'2026-11-20T13:00Z', race1:'2026-11-21T03:30Z', race2:'2026-11-22T02:00Z' } },
+    sessions:{ fp1:'2026-11-20T04:30Z', sq:'2026-11-20T08:30Z', sprint:'2026-11-21T04:00Z', quali:'2026-11-21T08:00Z', race:'2026-11-22T06:00Z' },
+    f1aSessions:{ quali:'2026-11-20T10:00Z', race1:'2026-11-21T02:00Z', race2:'2026-11-22T02:00Z' } },
 
-  // R23 Qatar (F1+F2) – AST(UTC+3)
-  { city: 'Lusail Circuit', country: 'Qatar', region: 'Qatar GP', round:23, series:['f1','f2'], tz:'Asia/Qatar', lat:25.49, lng:51.45,
-    sessions:{ fp1:'2026-11-27T12:30Z', fp2:'2026-11-27T16:00Z', fp3:'2026-11-28T12:30Z', quali:'2026-11-28T15:00Z', race:'2026-11-29T16:00Z' },
-    f2Sessions:{ fp:'2026-11-27T10:00Z', quali:'2026-11-27T13:30Z', sprint:'2026-11-28T10:00Z', feature:'2026-11-29T11:30Z' } },
+  // R23 Qatar Sprint
+  { city: 'Lusail International Circuit', country: 'Qatar', region: 'Qatar GP', round:23, series:['f1','f2','f3'], tz:'Asia/Qatar', lat:25.49, lng:51.45,
+    sessions:{ fp1:'2026-11-27T12:30Z', sq:'2026-11-27T16:30Z', sprint:'2026-11-28T12:00Z', quali:'2026-11-28T16:00Z', race:'2026-11-29T15:00Z' },
+    f3Sessions:{ fp:'2026-11-27T10:00Z', quali:'2026-11-27T13:30Z', sprint:'2026-11-28T10:00Z', feature:'2026-11-28T19:45Z' },
+    f2Sessions:{ fp:'2026-11-27T11:00Z', quali:'2026-11-27T14:30Z', sprint:'2026-11-28T11:30Z', feature:'2026-11-29T11:30Z' } },
 
-  // R24 Abu Dhabi (F1+F2) – GST(UTC+4)
-  { city: 'Yas Marina Circuit', country: 'UAE', region: 'Abu Dhabi GP', round:24, series:['f1','f2'], tz:'Asia/Dubai', lat:24.47, lng:54.60,
-    sessions:{ fp1:'2026-12-04T10:30Z', fp2:'2026-12-04T14:00Z', fp3:'2026-12-05T10:30Z', quali:'2026-12-05T12:00Z', race:'2026-12-06T13:00Z' },
-    f2Sessions:{ fp:'2026-12-04T08:00Z', quali:'2026-12-04T11:30Z', sprint:'2026-12-05T08:00Z', feature:'2026-12-06T09:30Z' } },
+  // R24 Abu Dhabi
+  { city: 'Yas Marina Circuit', country: 'UAE', region: 'Abu Dhabi GP', round:24, series:['f1','f2','f3'], tz:'Asia/Dubai', lat:24.47, lng:54.60,
+    sessions:{ fp1:'2026-12-04T09:30Z', fp2:'2026-12-04T13:00Z', fp3:'2026-12-05T09:30Z', quali:'2026-12-05T13:00Z', race:'2026-12-06T13:00Z' },
+    f3Sessions:{ fp:'2026-12-04T07:00Z', quali:'2026-12-04T10:30Z', sprint:'2026-12-05T07:00Z', feature:'2026-12-05T20:45Z' },
+    f2Sessions:{ fp:'2026-12-04T08:00Z', quali:'2026-12-04T11:30Z', sprint:'2026-12-05T08:30Z', feature:'2026-12-06T09:30Z' } },
 
-  // ── FORMULA E 2025/26 SEASON 12 ─────────────────────────────────────────────
-  // Venues not shared with F1. FE race UTC times from fiaformulae.com / e-formula.news
-  // Standard FE race start: ~14:00-15:00 local. Using confirmed times where available.
-  // Jeddah, Monaco, Miami, Mexico City, Shanghai are shared with F1 entries above.
+  // ── Formula E 2026 ────────────────────────────────────────────────────────────
+  { city: 'Diriyah', country: 'Saudi Arabia', region: 'Diriyah E-Prix', round:'FE-1', series:['fe'], tz:'Asia/Riyadh', lat:24.73, lng:46.57,
+    sessions:{ race:'2026-02-27T17:00Z' },
+    feSessions:{ race:'2026-02-27T17:00Z', race2:'2026-02-28T17:00Z' } },
+  { city: 'São Paulo', country: 'Brazil', region: 'São Paulo E-Prix', round:'FE-2', series:['fe'], tz:'America/Sao_Paulo', lat:-23.55, lng:-46.63,
+    sessions:{ race:'2026-03-14T19:00Z' },
+    feSessions:{ race:'2026-03-14T19:00Z' } },
+  { city: 'Tokyo', country: 'Japan', region: 'Tokyo E-Prix', round:'FE-3', series:['fe'], tz:'Asia/Tokyo', lat:35.67, lng:139.77,
+    sessions:{ race:'2026-03-28T07:00Z' },
+    feSessions:{ race:'2026-03-28T07:00Z' } },
+  { city: 'Monaco', country: 'Monaco', region: 'Monaco E-Prix', round:'FE-4', series:['fe'], tz:'Europe/Monaco', lat:43.74, lng:7.43,
+    sessions:{ race:'2026-05-09T13:00Z' },
+    feSessions:{ race:'2026-05-09T13:00Z' } },
+  { city: 'Berlin Tempelhof', country: 'Germany', region: 'Berlin E-Prix', round:'FE-5', series:['fe'], tz:'Europe/Berlin', lat:52.47, lng:13.40,
+    sessions:{ race:'2026-05-23T13:00Z' },
+    feSessions:{ race:'2026-05-23T13:00Z', race2:'2026-05-24T13:00Z' } },
+  { city: 'Jakarta', country: 'Indonesia', region: 'Jakarta E-Prix', round:'FE-6', series:['fe'], tz:'Asia/Jakarta', lat:-6.21, lng:106.85,
+    sessions:{ race:'2026-06-06T09:00Z' },
+    feSessions:{ race:'2026-06-06T09:00Z' } },
+  { city: 'Portland', country: 'USA', region: 'Portland E-Prix', round:'FE-7', series:['fe'], tz:'America/Los_Angeles', lat:45.60, lng:-122.69,
+    sessions:{ race:'2026-07-18T20:00Z' },
+    feSessions:{ race:'2026-07-18T20:00Z' } },
+  { city: 'London ExCeL', country: 'United Kingdom', region: 'London E-Prix', round:'FE-8', series:['fe'], tz:'Europe/London', lat:51.51, lng:0.03,
+    sessions:{ race:'2026-07-25T14:00Z' },
+    feSessions:{ race:'2026-07-25T14:00Z', race2:'2026-07-26T14:00Z' } },
+  { city: 'Seoul', country: 'South Korea', region: 'Seoul E-Prix', round:'FE-9', series:['fe'], tz:'Asia/Seoul', lat:37.52, lng:126.98,
+    sessions:{ race:'2026-08-08T07:00Z' },
+    feSessions:{ race:'2026-08-08T07:00Z' } },
+  { city: 'Shanghai', country: 'China', region: 'Shanghai E-Prix', round:'FE-10', series:['fe'], tz:'Asia/Shanghai', lat:31.23, lng:121.47,
+    sessions:{ race:'2026-08-29T10:00Z' },
+    feSessions:{ race:'2026-08-29T10:00Z' } },
 
-  // R1 FE São Paulo – 6 Dec 2025 ~14:00 BRT (UTC-3) = 17:00Z
-  { city: 'Sambadrome', country: 'Brazil', region: 'São Paulo E-Prix', round:'FE-1', series:['fe'], tz:'America/Sao_Paulo', lat:-23.49, lng:-46.63,
-    sessions:{ race:'2025-12-06T17:00Z' } },
-
-  // R3 FE Miami – 31 Jan 2026 ~14:00 EST (UTC-5) = 19:00Z  (Miami Int'l Autodrome — shared venue with F1 R6)
-  // Already added 'fe' to Miami F1 entry above. No separate dot needed.
-
-  // R4+5 FE Jeddah – 13-14 Feb 2026 20:05 AST (UTC+3) = 17:05Z confirmed
-  // Already added 'fe' to Jeddah F1 entry above.
-
-  // R6 FE Madrid/Jarama – 21 Mar 2026 ~14:00 CET (UTC+1) = 13:00Z
-  { city: 'Circuito de Madrid-Jarama', country: 'Spain', region: 'Madrid E-Prix', round:'FE-6', series:['fe'], tz:'Europe/Madrid', lat:40.62, lng:-3.59,
-    sessions:{ race:'2026-03-21T13:00Z' } },
-
-  // R7+8 FE Berlin – 2-3 May 2026 ~14:00 CEST (UTC+2) = 12:00Z
-  { city: 'Tempelhof Airport', country: 'Germany', region: 'Berlin E-Prix', round:'FE-7', series:['fe'], tz:'Europe/Berlin', lat:52.47, lng:13.40,
-    sessions:{ race:'2026-05-02T12:00Z', race2:'2026-05-03T12:00Z' } },
-
-  // R9+10 FE Monaco – 16-17 May 2026  (shared with F1 R8 — already added 'fe')
-
-  // R11 FE Sanya – 20 Jun 2026 ~14:00 CST (UTC+8) = 06:00Z
-  { city: 'Sanya Street Circuit', country: 'China', region: 'Sanya E-Prix', round:'FE-11', series:['fe'], tz:'Asia/Shanghai', lat:18.26, lng:109.51,
-    sessions:{ race:'2026-06-20T06:00Z' } },
-
-  // R12+13 FE Shanghai – 4-5 Jul 2026  (shared with F1 R2 — already added 'fe')
-
-  // R14+15 FE Tokyo – 25-26 Jul 2026 ~14:00 JST (UTC+9) = 05:00Z
-  { city: 'Tokyo Street Circuit', country: 'Japan', region: 'Tokyo E-Prix', round:'FE-14', series:['fe'], tz:'Asia/Tokyo', lat:35.67, lng:139.77,
-    sessions:{ race:'2026-07-25T05:00Z', race2:'2026-07-26T05:00Z' } },
-
-  // R16+17 FE London – 15-16 Aug 2026 ~15:00 BST (UTC+1) = 14:00Z
-  { city: 'ExCeL London', country: 'United Kingdom', region: 'London E-Prix', round:'FE-16', series:['fe'], tz:'Europe/London', lat:51.51, lng:0.03,
-    sessions:{ race:'2026-08-15T14:00Z', race2:'2026-08-16T14:00Z' } },
-
-  // ── INDYCAR 2026 SEASON ──────────────────────────────────────────────────────
-  // 18 races. Race UTC times from indycar.com official schedule (ET broadcast times).
-  // ET = UTC-5 (standard) or UTC-4 (daylight). US DST starts Mar 8, ends Nov 1.
-
-  // R1 St. Petersburg – Sun 1 Mar, 12:00 ET (EST UTC-5) = 17:00Z
-  { city: 'Streets of St. Petersburg', country: 'USA', region: 'Grand Prix of St. Petersburg', round:'IC-1', series:['indy'], tz:'America/New_York', lat:27.77, lng:-82.64,
-    sessions:{ race:'2026-03-01T17:00Z' } },
-
-  // R2 Phoenix – Sat 7 Mar, 15:00 ET (MST UTC-7, no DST) = 22:00Z
-  { city: 'Phoenix Raceway', country: 'USA', region: 'Grand Prix of Phoenix', round:'IC-2', series:['indy'], tz:'America/Phoenix', lat:33.37, lng:-112.31,
-    sessions:{ race:'2026-03-07T22:00Z' } },
-
-  // R3 Arlington – Sun 15 Mar, 12:30 ET (CDT UTC-5 after DST Mar 8) = 17:30Z
-  { city: 'Streets of Arlington', country: 'USA', region: 'Grand Prix of Arlington', round:'IC-3', series:['indy'], tz:'America/Chicago', lat:32.75, lng:-97.09,
-    sessions:{ race:'2026-03-15T17:30Z' } },
-
-  // R4 Barber – Sun 29 Mar, 13:00 ET (EDT UTC-4) = 17:00Z
-  { city: 'Barber Motorsports Park', country: 'USA', region: 'Honda Indy Grand Prix of Alabama', round:'IC-4', series:['indy'], tz:'America/New_York', lat:33.56, lng:-86.44,
-    sessions:{ race:'2026-03-29T17:00Z' } },
-
-  // R5 Long Beach – Sun 19 Apr, 17:30 ET (EDT UTC-4) = 21:30Z
-  { city: 'Streets of Long Beach', country: 'USA', region: 'Acura Grand Prix of Long Beach', round:'IC-5', series:['indy'], tz:'America/Los_Angeles', lat:33.76, lng:-118.19,
-    sessions:{ race:'2026-04-19T21:30Z' } },
-
-  // R6 IMS Road Course – Sat 9 May, 16:30 ET (EDT UTC-4) = 20:30Z
-  { city: 'IMS Road Course', country: 'USA', region: 'Sonsio Grand Prix at IMS', round:'IC-6', series:['indy'], tz:'America/New_York', lat:39.79, lng:-86.24,
-    sessions:{ race:'2026-05-09T20:30Z' } },
-
-  // R7 Indianapolis 500 – Sun 24 May, ~12:00 ET (EDT UTC-4) = 16:00Z
-  { city: 'Indianapolis Motor Speedway', country: 'USA', region: '110th Indianapolis 500', round:'IC-7', series:['indy'], tz:'America/New_York', lat:39.79, lng:-86.24,
-    sessions:{ race:'2026-05-24T16:00Z' } },
-
-  // R8 Detroit – Sun 31 May, 10:30 ET (EDT UTC-4) = 14:30Z
-  { city: 'Streets of Detroit', country: 'USA', region: 'Detroit Grand Prix', round:'IC-8', series:['indy'], tz:'America/New_York', lat:42.33, lng:-83.05,
-    sessions:{ race:'2026-05-31T14:30Z' } },
-
-  // R9 Gateway (WWT Raceway) – Sat 6 Jun, 17:30 ET (CDT UTC-5) = 22:30Z
-  { city: 'World Wide Technology Raceway', country: 'USA', region: 'Bommarito Automotive Group 500', round:'IC-9', series:['indy'], tz:'America/Chicago', lat:38.64, lng:-90.16,
-    sessions:{ race:'2026-06-06T22:30Z' } },
-
-  // R10 Road America – Sat 20 Jun, 12:30 ET (CDT UTC-5) = 17:30Z
-  { city: 'Road America', country: 'USA', region: 'REV Group Grand Prix', round:'IC-10', series:['indy'], tz:'America/Chicago', lat:43.80, lng:-87.99,
-    sessions:{ race:'2026-06-20T17:30Z' } },
-
-  // R11 Mid-Ohio – Sat 4 Jul, 13:00 ET (EDT UTC-4) = 17:00Z
-  { city: 'Mid-Ohio Sports Car Course', country: 'USA', region: 'Honda Indy 200 at Mid-Ohio', round:'IC-11', series:['indy'], tz:'America/New_York', lat:40.69, lng:-82.65,
-    sessions:{ race:'2026-07-04T17:00Z' } },
-
-  // R12 Nashville – Sat 19 Jul, TBD ET ~20:00 (CDT UTC-5) = ~01:00Z Sun
-  { city: 'Nashville Superspeedway', country: 'USA', region: 'Music City Grand Prix', round:'IC-12', series:['indy'], tz:'America/Chicago', lat:36.18, lng:-86.26,
-    sessions:{ race:'2026-07-20T01:00Z' } },
-
-  // R13 Portland – Sun 9 Aug, 14:00 ET (PDT UTC-7) = 21:00Z
+  // ── IndyCar 2026 ──────────────────────────────────────────────────────────────
+  { city: 'St. Petersburg', country: 'USA', region: 'Firestone Grand Prix of St. Pete', round:'IC-1', series:['indy'], tz:'America/New_York', lat:27.77, lng:-82.64,
+    sessions:{ race:'2026-03-08T18:30Z' } },
+  { city: 'Texas Motor Speedway', country: 'USA', region: 'PPG 375 at Texas', round:'IC-2', series:['indy'], tz:'America/Chicago', lat:33.04, lng:-97.28,
+    sessions:{ race:'2026-03-28T23:00Z' } },
+  { city: 'Barber Motorsports Park', country: 'USA', region: 'Children\'s of Alabama Indy Grand Prix', round:'IC-3', series:['indy'], tz:'America/Chicago', lat:33.57, lng:-86.62,
+    sessions:{ race:'2026-04-26T18:00Z' } },
+  { city: 'Indianapolis Motor Speedway', country: 'USA', region: 'Indianapolis 500', round:'IC-4', series:['indy'], tz:'America/Indiana/Indianapolis', lat:39.79, lng:-86.24,
+    sessions:{ race:'2026-05-24T17:00Z' } },
+  { city: 'Detroit', country: 'USA', region: 'Chevrolet Detroit Grand Prix', round:'IC-5', series:['indy'], tz:'America/Detroit', lat:42.33, lng:-83.05,
+    sessions:{ race:'2026-06-07T17:30Z' } },
+  { city: 'Road America', country: 'USA', region: 'XPEL Grand Prix', round:'IC-6', series:['indy'], tz:'America/Chicago', lat:43.80, lng:-87.99,
+    sessions:{ race:'2026-06-21T17:00Z' } },
+  { city: 'Mid-Ohio Sports Car Course', country: 'USA', region: 'Honda Indy 200 at Mid-Ohio', round:'IC-7', series:['indy'], tz:'America/New_York', lat:40.69, lng:-82.64,
+    sessions:{ race:'2026-07-05T17:00Z' } },
+  { city: 'Iowa Speedway', country: 'USA', region: 'HyVee Homefront 250', round:'IC-8', series:['indy'], tz:'America/Chicago', lat:41.66, lng:-93.06,
+    sessions:{ race:'2026-07-18T23:00Z', race2:'2026-07-19T23:00Z' } },
+  { city: 'Toronto', country: 'Canada', region: 'Honda Indy Toronto', round:'IC-9', series:['indy'], tz:'America/Toronto', lat:43.64, lng:-79.42,
+    sessions:{ race:'2026-07-12T18:00Z' } },
+  { city: 'Nashville Superspeedway', country: 'USA', region: 'Big Machine Music City Grand Prix', round:'IC-10', series:['indy'], tz:'America/Chicago', lat:36.17, lng:-86.26,
+    sessions:{ race:'2026-08-02T23:30Z' } },
+  { city: 'Indianapolis Road Course', country: 'USA', region: 'Gallagher Grand Prix', round:'IC-11', series:['indy'], tz:'America/Indiana/Indianapolis', lat:39.79, lng:-86.23,
+    sessions:{ race:'2026-08-09T17:00Z' } },
+  { city: 'Gateway Motorsports Park', country: 'USA', region: 'Bommarito Automotive Group 500', round:'IC-12', series:['indy'], tz:'America/Chicago', lat:38.64, lng:-90.16,
+    sessions:{ race:'2026-08-22T23:00Z' } },
   { city: 'Portland International Raceway', country: 'USA', region: 'Grand Prix of Portland', round:'IC-13', series:['indy'], tz:'America/Los_Angeles', lat:45.60, lng:-122.69,
-    sessions:{ race:'2026-08-09T21:00Z' } },
+    sessions:{ race:'2026-09-13T20:30Z' } },
+  { city: 'WeatherTech Raceway Laguna Seca', country: 'USA', region: 'Firestone Grand Prix of Monterey', round:'IC-14', series:['indy'], tz:'America/Los_Angeles', lat:36.58, lng:-121.75,
+    sessions:{ race:'2026-09-20T20:30Z' } },
 
-  // R14 Markham (Canada) – Sun 16 Aug, 12:00 ET (EDT UTC-4) = 16:00Z
-  { city: 'Streets of Markham', country: 'Canada', region: 'Honda Indy Toronto (Markham)', round:'IC-14', series:['indy'], tz:'America/Toronto', lat:43.86, lng:-79.34,
-    sessions:{ race:'2026-08-16T16:00Z' } },
-
-  // R15 Milwaukee – Sat 29 Aug, 14:30 ET (CDT UTC-5) = 19:30Z (race 1)
-  { city: 'Milwaukee Mile', country: 'USA', region: 'Hy-Vee Milwaukee Mile 250s', round:'IC-15', series:['indy'], tz:'America/Chicago', lat:43.01, lng:-88.02,
-    sessions:{ race:'2026-08-29T19:30Z', race2:'2026-08-30T18:00Z' } },
-
-  // R16 Freedom 250 Washington D.C. – Sun 23 Aug, ~13:00 ET (EDT UTC-4) = 17:00Z
-  { city: 'National Mall Circuit', country: 'USA', region: 'Freedom 250 Grand Prix', round:'IC-16', series:['indy'], tz:'America/New_York', lat:38.89, lng:-77.03,
-    sessions:{ race:'2026-08-23T17:00Z' } },
-
-  // R17 Laguna Seca – Sun 6 Sep, 14:30 ET (PDT UTC-7) = 21:30Z
-  { city: 'WeatherTech Raceway Laguna Seca', country: 'USA', region: 'Firestone Grand Prix of Monterey', round:'IC-17', series:['indy'], tz:'America/Los_Angeles', lat:36.58, lng:-121.75,
-    sessions:{ race:'2026-09-06T21:30Z' } },
-
-  // ── WEC 2026 FIA WORLD ENDURANCE CHAMPIONSHIP ───────────────────────────────
-  // 8 rounds. Race start UTC times (approximate from official schedule).
-  // Qatar 1812km – Jan 2026 / Sebring 1000 Miles – Mar / Portimão 6h – Apr /
-  // Spa 6h – May / Le Mans 24h – Jun / Monza 6h – Jul /
-  // São Paulo 6h – Sep / Bahrain 8h – Nov
-
-  // R1 WEC Qatar – 24 Jan 2026 ~16:00 AST (UTC+3) = 13:00Z (1812 km)
-  { city: 'Lusail International Circuit', country: 'Qatar', region: 'Qatar 1812km', round:'WEC-1', series:['wec'], tz:'Asia/Qatar', lat:25.49, lng:51.45,
+  // ── WEC 2026 ──────────────────────────────────────────────────────────────────
+  { city: 'Lusail Circuit', country: 'Qatar', region: 'Qatar 1812km', round:'WEC-1', series:['wec'], tz:'Asia/Qatar', lat:25.49, lng:51.45,
     sessions:{ race:'2026-01-24T13:00Z' } },
-
-  // R2 WEC Sebring – 14 Mar 2026 ~12:00 EDT (UTC-4) = 16:00Z (1000 Miles)
   { city: 'Sebring International Raceway', country: 'USA', region: 'Sebring 1000 Miles', round:'WEC-2', series:['wec'], tz:'America/New_York', lat:27.45, lng:-81.35,
     sessions:{ race:'2026-03-14T16:00Z' } },
-
-  // R3 WEC Portimão – 12 Apr 2026 ~12:00 WEST (UTC+1) = 11:00Z (6 Hours)
   { city: 'Algarve International Circuit', country: 'Portugal', region: 'Portimão 6 Hours', round:'WEC-3', series:['wec'], tz:'Europe/Lisbon', lat:37.23, lng:-8.63,
     sessions:{ race:'2026-04-12T11:00Z' } },
-
-  // R4 WEC Spa – 2 May 2026 ~14:00 CEST (UTC+2) = 12:00Z (6 Hours)
-  { city: 'Circuit de Spa-Francorchamps', country: 'Belgium', region: 'Spa 6 Hours', round:'WEC-4', series:['wec'], tz:'Europe/Brussels', lat:50.44, lng:5.97,
+  { city: 'Circuit de Spa-Francorchamps WEC', country: 'Belgium', region: 'Spa 6 Hours', round:'WEC-4', series:['wec'], tz:'Europe/Brussels', lat:50.44, lng:5.97,
     sessions:{ race:'2026-05-02T12:00Z' } },
-
-  // R5 WEC Le Mans – 13 Jun 2026 ~16:00 CEST (UTC+2) = 14:00Z (24 Hours — finishes Sun 15 Jun)
   { city: 'Circuit de la Sarthe', country: 'France', region: 'Le Mans 24 Hours', round:'WEC-5', series:['wec'], tz:'Europe/Paris', lat:47.95, lng:0.21,
     sessions:{ race:'2026-06-13T14:00Z' } },
-
-  // R6 WEC Monza – 12 Jul 2026 ~12:00 CEST (UTC+2) = 10:00Z (6 Hours)
-  { city: 'Autodromo Nazionale Monza', country: 'Italy', region: 'Monza 6 Hours', round:'WEC-6', series:['wec'], tz:'Europe/Rome', lat:45.62, lng:9.28,
+  { city: 'Autodromo Nazionale Monza WEC', country: 'Italy', region: 'Monza 6 Hours', round:'WEC-6', series:['wec'], tz:'Europe/Rome', lat:45.62, lng:9.29,
     sessions:{ race:'2026-07-12T10:00Z' } },
-
-  // R7 WEC São Paulo – 13 Sep 2026 ~13:00 BRT (UTC-3) = 16:00Z (6 Hours)
-  { city: 'Autódromo José Carlos Pace', country: 'Brazil', region: 'São Paulo 6 Hours', round:'WEC-7', series:['wec'], tz:'America/Sao_Paulo', lat:-23.70, lng:-46.70,
+  { city: 'Interlagos WEC', country: 'Brazil', region: 'São Paulo 6 Hours', round:'WEC-7', series:['wec'], tz:'America/Sao_Paulo', lat:-23.71, lng:-46.70,
     sessions:{ race:'2026-09-13T16:00Z' } },
-
-  // R8 WEC Bahrain – 14 Nov 2026 ~17:00 AST (UTC+3) = 14:00Z (8 Hours)
-  { city: 'Bahrain International Circuit', country: 'Bahrain', region: 'Bahrain 8 Hours', round:'WEC-8', series:['wec'], tz:'Asia/Bahrain', lat:26.03, lng:50.51,
+  { city: 'Bahrain International Circuit WEC', country: 'Bahrain', region: 'Bahrain 8 Hours', round:'WEC-8', series:['wec'], tz:'Asia/Bahrain', lat:26.03, lng:50.52,
     sessions:{ race:'2026-11-14T14:00Z' } },
 
-  // ── WRC 2026 FIA WORLD RALLY CHAMPIONSHIP ───────────────────────────────────
-  // 13 rounds. "race" = Power Stage Sunday (final competitive stage).
-  // Times are approximate SS start times converted to UTC.
-  // Sources: WRC official 2026 calendar
-
-  // R1 WRC Monte Carlo – 22-25 Jan 2026. Power Stage Sun 25 Jan ~13:00 CET (UTC+1) = 12:00Z
+  // ── WRC 2026 ──────────────────────────────────────────────────────────────────
   { city: 'Monte Carlo', country: 'Monaco', region: 'Rally Monte Carlo', round:'WRC-1', series:['wrc'], tz:'Europe/Monaco', lat:43.74, lng:7.43,
     sessions:{ race:'2026-01-25T12:00Z' } },
-
-  // R2 WRC Sweden – 12-15 Feb 2026. Power Stage Sun 15 Feb ~13:00 CET (UTC+1) = 12:00Z
   { city: 'Umeå', country: 'Sweden', region: 'Rally Sweden', round:'WRC-2', series:['wrc'], tz:'Europe/Stockholm', lat:63.82, lng:20.26,
     sessions:{ race:'2026-02-15T12:00Z' } },
-
-  // R3 WRC Safari Kenya – 26 Feb–1 Mar 2026. Power Stage Sun 1 Mar ~11:00 EAT (UTC+3) = 08:00Z
   { city: 'Nairobi', country: 'Kenya', region: 'Safari Rally Kenya', round:'WRC-3', series:['wrc'], tz:'Africa/Nairobi', lat:-1.29, lng:36.82,
     sessions:{ race:'2026-03-01T08:00Z' } },
-
-  // R4 WRC Croatia – 23-26 Apr 2026. Power Stage Sun 26 Apr ~13:00 CEST (UTC+2) = 11:00Z
   { city: 'Zagreb', country: 'Croatia', region: 'Rally Croatia', round:'WRC-4', series:['wrc'], tz:'Europe/Zagreb', lat:45.81, lng:15.98,
     sessions:{ race:'2026-04-26T11:00Z' } },
-
-  // R5 WRC Portugal – 21-24 May 2026. Power Stage Sun 24 May ~14:30 WEST (UTC+1) = 13:30Z
   { city: 'Matosinhos', country: 'Portugal', region: 'Rally de Portugal', round:'WRC-5', series:['wrc'], tz:'Europe/Lisbon', lat:41.18, lng:-8.69,
     sessions:{ race:'2026-05-24T13:30Z' } },
-
-  // R6 WRC Sardinia – 4-7 Jun 2026. Power Stage Sun 7 Jun ~14:00 CEST (UTC+2) = 12:00Z
   { city: 'Alghero', country: 'Italy', region: 'Rally Italia Sardegna', round:'WRC-6', series:['wrc'], tz:'Europe/Rome', lat:40.56, lng:8.32,
     sessions:{ race:'2026-06-07T12:00Z' } },
-
-  // R7 WRC Poland – 25-28 Jun 2026. Power Stage Sun 28 Jun ~13:00 CEST (UTC+2) = 11:00Z
   { city: 'Mikołajki', country: 'Poland', region: 'Rally Poland', round:'WRC-7', series:['wrc'], tz:'Europe/Warsaw', lat:53.79, lng:21.57,
     sessions:{ race:'2026-06-28T11:00Z' } },
-
-  // R8 WRC Estonia – 16-19 Jul 2026. Power Stage Sun 19 Jul ~14:00 EEST (UTC+3) = 11:00Z
   { city: 'Tartu', country: 'Estonia', region: 'Rally Estonia', round:'WRC-8', series:['wrc'], tz:'Europe/Tallinn', lat:58.37, lng:26.73,
     sessions:{ race:'2026-07-19T11:00Z' } },
-
-  // R9 WRC Finland – 30 Jul–2 Aug 2026. Power Stage Sun 2 Aug ~14:00 EEST (UTC+3) = 11:00Z
   { city: 'Jyväskylä', country: 'Finland', region: 'Rally Finland', round:'WRC-9', series:['wrc'], tz:'Europe/Helsinki', lat:62.24, lng:25.75,
     sessions:{ race:'2026-08-02T11:00Z' } },
-
-  // R10 WRC Greece – 3-6 Sep 2026. Power Stage Sun 6 Sep ~14:00 EEST (UTC+3) = 11:00Z
   { city: 'Lamia', country: 'Greece', region: 'Acropolis Rally Greece', round:'WRC-10', series:['wrc'], tz:'Europe/Athens', lat:38.90, lng:22.43,
     sessions:{ race:'2026-09-06T11:00Z' } },
-
-  // R11 WRC Chile – 24-27 Sep 2026. Power Stage Sun 27 Sep ~14:00 CLT (UTC-3) = 17:00Z
   { city: 'Concepción', country: 'Chile', region: 'Rally Chile Bio Bío', round:'WRC-11', series:['wrc'], tz:'America/Santiago', lat:-36.82, lng:-73.04,
     sessions:{ race:'2026-09-27T17:00Z' } },
-
-  // R12 WRC Japan – 29 Oct–1 Nov 2026. Power Stage Sun 1 Nov ~13:00 JST (UTC+9) = 04:00Z
   { city: 'Toyota City', country: 'Japan', region: 'Rally Japan', round:'WRC-12', series:['wrc'], tz:'Asia/Tokyo', lat:35.08, lng:137.16,
     sessions:{ race:'2026-11-01T04:00Z' } },
-
-  // R13 WRC Central Europe – 19-22 Nov 2026. Power Stage Sun 22 Nov ~13:00 CET (UTC+1) = 12:00Z
   { city: 'Passau', country: 'Germany', region: 'Rally Central Europe', round:'WRC-13', series:['wrc'], tz:'Europe/Berlin', lat:48.57, lng:13.45,
     sessions:{ race:'2026-11-22T12:00Z' } },
-
 ];
 
-
-// Time formatters
-const timeFmt = {}, dateFmt = {};
-cities.forEach(c => {
-  timeFmt[c.tz] = new Intl.DateTimeFormat('en-GB', { timeZone: c.tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12: false });
-  dateFmt[c.tz] = new Intl.DateTimeFormat('en-GB', { timeZone: c.tz, weekday:'short', day:'numeric', month:'short' });
-});
-
-function getPhase(tz) {
-  const h = parseInt(new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour:'numeric', hour12:false }).format(new Date()));
-  if (h >= 6 && h < 8) return 'dawn';
-  if (h >= 8 && h < 18) return 'day';
-  if (h >= 18 && h < 20) return 'dusk';
-  return 'night';
-}
-function phaseLabel(p) { return {day:'Day',night:'Night',dawn:'Dawn',dusk:'Dusk'}[p]; }
-function getOffset(tz) {
-  const parts = new Intl.DateTimeFormat('en',{timeZone:tz,timeZoneName:'shortOffset'}).formatToParts(new Date());
-  return parts.find(p=>p.type==='timeZoneName')?.value||'';
+// Helper: get primary race timestamp for any city (handles FE feSessions)
+function cityRaceTime(city) {
+  if (city && city.sessions && city.sessions.race) return city.sessions.race;
+  if (city && city.feSessions && city.feSessions.race) return city.feSessions.race;
+  return null;
 }
 
-// ─── THREE.JS GLOBE ────────────────────────────────────────────────────────────
-const container = document.getElementById('canvas-wrapper');
-const W = () => container.clientWidth;
-const H = () => container.clientHeight;
-
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(W(), H());
-renderer.setClearColor(0x000000, 0);
-container.appendChild(renderer.domElement);
+// ── Three.js scene setup ───────────────────────────────────────────────────────
+const W = () => document.getElementById('globe-container')?.clientWidth  || window.innerWidth;
+const H = () => document.getElementById('globe-container')?.clientHeight || window.innerHeight;
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, W() / H(), 0.1, 1000);
-camera.position.z = 3.2;
+
+const camera = new THREE.PerspectiveCamera(45, W() / H(), 0.1, 100);
+camera.position.set(0, 0, 3.2);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(W(), H(), false);
+renderer.setClearColor(_theme === 'light' ? 0xd8e4f0 : 0x07070f);
+
+const container = document.getElementById('globe-container');
+if (container) {
+  container.appendChild(renderer.domElement);
+  renderer.domElement.style.width  = '100%';
+  renderer.domElement.style.height = '100%';
+  renderer.domElement.style.display = 'block';
+}
+
+// Ambient + directional light for fallback material
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
+scene.add(ambientLight);
 
 // Stars background
-const starGeo = new THREE.BufferGeometry();
-const starCount = 2000;
-const starPos = new Float32Array(starCount * 3);
-for (let i = 0; i < starCount * 3; i++) starPos[i] = (Math.random() - 0.5) * 200;
-starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.12, transparent: true, opacity: 0.5 });
-scene.add(new THREE.Points(starGeo, starMat));
+(function addStars() {
+  const starGeo = new THREE.BufferGeometry();
+  const starCount = 2000;
+  const positions = new Float32Array(starCount * 3);
+  for (let i = 0; i < starCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 200;
+  }
+  starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.08, sizeAttenuation: true });
+  const stars = new THREE.Points(starGeo, starMat);
+  scene.add(stars);
+  // Hide stars in light mode
+  window._starsObj = stars;
+})();
 
-// Globe sphere
+
+
+// ── Country border polygons for globe outline ────────────────────────────────
+
+// ── Country outline on globe ─────────────────────────────────────────────────
+// Uses Natural Earth 110m GeoJSON from CDN for accurate borders
+var countryOutlineGroup = null; // var (not let/const) to avoid TDZ — hoisted safely
+
+// Map our city country names → ISO A3 codes used in Natural Earth GeoJSON
+const COUNTRY_ISO = {
+  'Australia':     'AUS', 'Austria':       'AUT', 'Azerbaijan':    'AZE',
+  'Bahrain':       'BHR', 'Belgium':       'BEL', 'Brazil':        'BRA',
+  'Canada':        'CAN', 'Chile':         'CHL', 'China':         'CHN',
+  'Croatia':       'HRV', 'Estonia':       'EST', 'Finland':       'FIN',
+  'France':        'FRA', 'Germany':       'DEU', 'Greece':        'GRC',
+  'Hungary':       'HUN', 'Italy':         'ITA', 'Japan':         'JPN',
+  'Kenya':         'KEN', 'Mexico':        'MEX', 'Monaco':        'MCO',
+  'Netherlands':   'NLD', 'Poland':        'POL', 'Portugal':      'PRT',
+  'Qatar':         'QAT', 'Saudi Arabia':  'SAU', 'Singapore':     'SGP',
+  'Spain':         'ESP', 'Sweden':        'SWE', 'UAE':           'ARE',
+  'United Kingdom':'GBR', 'USA':           'USA',
+};
+
+// GeoJSON cache — fetched once, stored here
+var _geoJsonCache = null;
+var _geoJsonFetching = false;
+var _geoJsonCallbacks = [];
+
+// 50m Natural Earth countries from CDN (better quality, still compact)
+const GEOJSON_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
+
+function getGeoJson(cb) {
+  if (_geoJsonCache) { cb(_geoJsonCache); return; }
+  _geoJsonCallbacks.push(cb);
+  if (_geoJsonFetching) return;
+  _geoJsonFetching = true;
+  if (window._dbg) { window._dbg.geoState = 'fetching...'; window._dbg.update(); }
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    .then(r => r.json())
+    .then(topo => {
+      _geoJsonCache = topo;
+      if (window._dbg) { window._dbg.geoState = 'loaded (' + (topo.arcs ? topo.arcs.length : '?') + ' arcs)'; window._dbg.update(); }
+      _geoJsonCallbacks.forEach(fn => fn(topo));
+      _geoJsonCallbacks = [];
+    })
+    .catch(err => {
+      _geoJsonFetching = false;
+      _geoJsonCallbacks = [];
+      if (window._dbg) { window._dbg.geoState = 'FAILED'; window._dbg.errors.push('GEO: ' + err.message); const p = document.getElementById('debug-panel'); if(p) p.style.display='flex'; window._dbg.update(); }
+    });
+}
+
+function clearCountryOutline() {
+  if (countryOutlineGroup) {
+    globe.remove(countryOutlineGroup);
+    countryOutlineGroup.children.forEach(line => {
+      line.geometry.dispose();
+      line.material.dispose();
+    });
+    countryOutlineGroup = null;
+  }
+}
+
+function _buildOutlineFromRings(rings) {
+  clearCountryOutline();
+  if (!rings || rings.length === 0) return;
+
+  const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') !== 'light';
+  const lineColor = isDark ? 0xc8ff00 : 0x2d7a00;
+  const outlineR = globeRadius + 0.002;
+
+  countryOutlineGroup = new THREE.Group();
+
+  rings.forEach(ring => {
+    if (!ring || ring.length < 2) return;
+    const pts = ring.map(([lng, lat]) => latLngTo3D(lat, lng, outlineR));
+    if (pts.length > 0) pts.push(pts[0].clone()); // close ring
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = new THREE.LineBasicMaterial({
+      color: lineColor, linewidth: 1,
+      transparent: true, opacity: 0.9, depthTest: false,
+    });
+    const line = new THREE.Line(geo, mat);
+    line.renderOrder = 1;
+    countryOutlineGroup.add(line);
+  });
+
+  globe.add(countryOutlineGroup);
+}
+
+function drawCountryOutline(countryName) {
+  clearCountryOutline();
+  const iso = COUNTRY_ISO[countryName];
+  if (window._dbg) { window._dbg.outlineState = iso ? ('drawing ' + countryName) : ('NO ISO: ' + countryName); window._dbg.update(); }
+  if (!iso) return;
+
+  getGeoJson(topo => {
+    const rings = extractTopoRings(topo, iso);
+    if (window._dbg) { window._dbg.outlineState = countryName + ' (' + rings.length + ' rings)'; window._dbg.update(); }
+    _buildOutlineFromRings(rings);
+  });
+}
+
+// Parse TopoJSON manually — extract polygon rings for a given ISO A3 code
+function extractTopoRings(topo, iso3) {
+  // world-atlas countries-110m uses numeric ISO codes
+  // We need to find the feature by name or numeric code
+  // The countries object has arcs indexed by numeric id
+  // Try to find via the countries-50m which has NAME_A3 properties
+  // world-atlas/countries-110m.json structure:
+  // { type:'Topology', objects:{ countries:{ type:'GeometryCollection', geometries:[...] } } }
+  // Each geometry has id (numeric ISO) and no name — need to map ISO A3 → numeric
+  
+  const ISO3_TO_NUM = {
+    'AUS':36,'AUT':40,'AZE':31,'BHR':48,'BEL':56,'BRA':76,'CAN':124,
+    'CHL':152,'CHN':156,'HRV':191,'EST':233,'FIN':246,'FRA':250,'DEU':276,
+    'GRC':300,'HUN':348,'ITA':380,'JPN':392,'KEN':404,'MEX':484,'MCO':492,
+    'NLD':528,'POL':616,'PRT':620,'QAT':634,'SAU':682,'SGP':702,'ESP':724,
+    'SWE':752,'ARE':784,'GBR':826,'USA':840,
+  };
+
+  const numId = ISO3_TO_NUM[iso3];
+  if (numId === undefined) return [];
+
+  const countries = topo.objects && topo.objects.countries;
+  if (!countries) return [];
+
+  const geom = countries.geometries.find(g => +g.id === numId);
+  if (!geom) return [];
+
+  return topoArcsToRings(topo, geom);
+}
+
+// Convert TopoJSON arcs to [lng,lat] ring arrays
+function topoArcsToRings(topo, geom) {
+  const scale = topo.transform ? topo.transform.scale : [1, 1];
+  const translate = topo.transform ? topo.transform.translate : [0, 0];
+  const arcs = topo.arcs;
+
+  function decodeArc(arcIdx) {
+    const reversed = arcIdx < 0;
+    const realIdx = reversed ? ~arcIdx : arcIdx;
+    const raw = arcs[realIdx];
+    // Decode delta encoding
+    let x = 0, y = 0;
+    const pts = raw.map(([dx, dy]) => {
+      x += dx; y += dy;
+      return [x * scale[0] + translate[0], y * scale[1] + translate[1]];
+    });
+    return reversed ? pts.reverse() : pts;
+  }
+
+  function ringFromArcIndices(arcIndices) {
+    const pts = [];
+    arcIndices.forEach(idx => {
+      const decoded = decodeArc(idx);
+      // Skip the last point of each arc (it's the first of the next)
+      pts.push(...decoded.slice(0, -1));
+    });
+    return pts;
+  }
+
+  const rings = [];
+
+  if (geom.type === 'Polygon') {
+    geom.arcs.forEach(arcGroup => rings.push(ringFromArcIndices(arcGroup)));
+  } else if (geom.type === 'MultiPolygon') {
+    geom.arcs.forEach(polygon => {
+      polygon.forEach(arcGroup => rings.push(ringFromArcIndices(arcGroup)));
+    });
+  }
+
+  return rings;
+}
+
+function updateCountryOutlineTheme() {
+  if (!countryOutlineGroup) return;
+  const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') !== 'light';
+  const lineColor = isDark ? 0xc8ff00 : 0x2d7a00;
+  countryOutlineGroup.children.forEach(line => {
+    line.material.color.setHex(lineColor);
+  });
+}
 const globeRadius = 1.0;
 const sphereGeo = new THREE.SphereGeometry(globeRadius, 64, 64);
 
@@ -3063,10 +3633,12 @@ document.getElementById('globe-container').appendChild(loadingEl);
 let loadedCount = 0;
 function onTexLoaded() {
   loadedCount++;
+  if (window._dbg) { window._dbg.texLoaded = loadedCount; window._dbg.update(); }
   const pct = (loadedCount / 4) * 100;
   const bar = document.getElementById('load-bar');
   if (bar) bar.style.width = pct + '%';
   if (loadedCount === 4) {
+    if (window._dbg) window._dbg.globeReady = true;
     setTimeout(() => {
       loadingEl.style.transition = 'opacity 0.5s';
       loadingEl.style.opacity = '0';
@@ -3075,10 +3647,42 @@ function onTexLoaded() {
   }
 }
 
-const dayTex   = texLoader.load(EARTH_DAY,   onTexLoaded, undefined, onTexLoaded);
-const bumpTex  = texLoader.load(EARTH_BUMP,  onTexLoaded, undefined, onTexLoaded);
-const specTex  = texLoader.load(EARTH_SPEC,  onTexLoaded, undefined, onTexLoaded);
-const nightTex = texLoader.load(EARTH_NIGHT, onTexLoaded, undefined, onTexLoaded);
+function onTexError(err) {
+  loadedCount++; // still count so loading bar completes
+  if (window._dbg) { window._dbg.texFailed++; window._dbg.texLoaded = loadedCount; window._dbg.errors.push('TEX FAIL: ' + (err?.message || 'unknown')); window._dbg.update(); }
+  // Show debug panel automatically on texture error
+  const p = document.getElementById('debug-panel');
+  if (p) p.style.display = 'flex';
+  const bar = document.getElementById('load-bar');
+  if (bar) { bar.style.width = '100%'; bar.style.background = '#ff4040'; }
+  if (loadedCount >= 4) {
+    setTimeout(() => {
+      if (loadingEl.parentNode) loadingEl.remove();
+    }, 1000);
+  }
+}
+
+const dayTex   = texLoader.load(EARTH_DAY,   onTexLoaded, undefined, onTexError);
+const bumpTex  = texLoader.load(EARTH_BUMP,  onTexLoaded, undefined, onTexError);
+const specTex  = texLoader.load(EARTH_SPEC,  onTexLoaded, undefined, onTexError);
+const nightTex = texLoader.load(EARTH_NIGHT, onTexLoaded, undefined, onTexError);
+
+// Fallback: if textures haven't loaded after 10s, use a simple solid globe
+setTimeout(() => {
+  if (loadedCount < 4 && typeof globe !== 'undefined' && globe) {
+    // Apply a simple teal/blue fallback material so globe is visible
+    globe.material = new THREE.MeshPhongMaterial({
+      color: 0x1a6688,
+      emissive: 0x051022,
+      shininess: 10,
+    });
+    // Add a point light so it looks decent
+    const fallbackLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    fallbackLight.position.set(5, 3, 5);
+    scene.add(fallbackLight);
+    if (window._dbg) { window._dbg.errors.push('FALLBACK MAT applied'); window._dbg.update(); }
+  }
+}, 10000);
 
 // Custom shader material that blends day/night based on sun angle
 const globeMat = new THREE.ShaderMaterial({
@@ -3208,19 +3812,21 @@ cities.forEach((c, i) => {
   const phase = getPhase(c.tz);
   const mat = new THREE.MeshBasicMaterial({ color: phaseColor(phase) });
   const dot = new THREE.Mesh(dotGeo, mat);
-  const pos = latLngTo3D(c.lat, c.lng, globeRadius + 0.012);
+  const pos = latLngTo3D(c.lat, c.lng, globeRadius + 0.025);
   dot.position.copy(pos);
   dot.userData = { cityIndex: i };
+  dot.renderOrder = 3;
   globe.add(dot);
   cityMeshes.push(dot);
 
   // Ring sits at same position, faces outward (lookAt from globe centre)
-  const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false });
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, depthTest: false });
   const ring = new THREE.Mesh(ringGeo, ringMat);
   ring.position.copy(pos);
   // Orient ring to face outward (normal = pos direction)
   ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1), pos.clone().normalize());
   ring.visible = false;
+  ring.renderOrder = 4;
   globe.add(ring);
   ringMeshes.push(ring);
 });
@@ -3525,7 +4131,7 @@ function showTooltip(idx, x, y) {
   document.getElementById('tt-city').textContent = c.city;
   document.getElementById('tt-country').textContent = c.country;
   document.getElementById('tt-badges').innerHTML = seriesBadgesHTML(c.series);
-  document.getElementById('tt-time').textContent = daysUntilRace(c.sessions.race);
+  document.getElementById('tt-time').textContent = daysUntilRace(cityRaceTime(c) || new Date().toISOString());
   document.getElementById('tt-date').textContent = dateFmt[c.tz].format(now);
   document.getElementById('tt-phase').textContent = phaseLabel(phase);
   document.getElementById('tt-offset').textContent = getOffset(c.tz);
@@ -3669,7 +4275,7 @@ function openSessionPanel(idx) {
   document.getElementById('sp-sessions').innerHTML = html;
 
   // Race countdown
-  const raceMs = new Date(c.sessions.race) - Date.now();
+  const raceMs = new Date(cityRaceTime(c) || 0) - Date.now();
   const cdEl = document.getElementById('sp-countdown');
   const cdVal = document.getElementById('sp-countdown-value');
   const primaryS = c.series.includes('f1') ? 'f1' : c.series.includes('fe') ? 'fe' : c.series.includes('wec') ? 'wec' : c.series.includes('wrc') ? 'wrc' : 'indy';
@@ -3735,7 +4341,8 @@ function closeSessionPanel() {
 // ─── SIDEBAR ──────────────────────────────────────────────────────────────────
 const cityListEl = document.getElementById('city-list');
 cities.forEach((c, i) => {
-  const raceDate = new Date(c.sessions.race);
+  const _sess = c.sessions || c.feSessions || {};
+  const raceDate = new Date(_sess.race || Date.now());
   const item = document.createElement('div');
   item.className = 'city-item';
   item.id = `ci-${i}`;
@@ -3748,7 +4355,7 @@ cities.forEach((c, i) => {
     </div>
     <div class="series-badges">${seriesBadgesHTML(c.series)}</div>
     <div class="ci-time" id="cit-${i}">--:--</div>
-    <div class="ci-date" id="cid-${i}" data-race-date="${c.sessions.race}"></div>
+    <div class="ci-date" id="cid-${i}" data-race-date="${cityRaceTime(c) || ''}"></div>
   `;
   item.addEventListener('click', () => {
     highlightSidebar(i);
@@ -3783,6 +4390,11 @@ function setSelectedCity(idx) {
   pulseT = 0;
   if (idx >= 0 && ringMeshes[idx]) {
     ringMeshes[idx].visible = true;
+    // Draw country border outline
+    const country = cities[idx] && cities[idx].country;
+    if (country) drawCountryOutline(country);
+  } else {
+    clearCountryOutline();
   }
 }
 
@@ -3863,6 +4475,7 @@ new ResizeObserver(onResize).observe(document.getElementById('canvas-wrapper'));
 const BASE_CAM_Z = 3.2; // initial camera distance — dots calibrated at this zoom
 function animate() {
   requestAnimationFrame(animate);
+  if (window._dbg) window._dbg.tickFps();
 
   if (animTarget) {
     globe.rotation.x += (animTarget.x - globe.rotation.x) * 0.06;
@@ -3939,8 +4552,9 @@ const HDR_BLOCKS = {
 // ─── DEBUG ────────────────────────────────────────────────────────────────────
 // Show ALL currently-active blocks (respects which sub-series are standalone)
 function hdrShowAll() {
-  // Show only enabled series blocks — delegate to hdrShowSet which handles show/hide for all 8 keys
-  hdrShowSet(getActiveHdrSeries());
+  // Show only enabled series — capped at MAX_CARDS (4) at a time
+  const series = getActiveHdrSeries().slice(0, 4);
+  hdrShowSet(series);
 }
 
 // Show ONE series, hide the others
@@ -4069,9 +4683,7 @@ function hdrShowSet(keys) {
     const divEl = document.getElementById(divMap[k]);
     if (divEl) divEl.style.display = show ? '' : 'none';
   });
-  // Always hide the hint divider
-  const hintDiv = document.getElementById('hdr-hint-div');
-  if (hintDiv) hintDiv.style.display = 'none';
+  // hdr-hint-div removed — hint is now in #hdr-right fixed group
   // If indy is shown, show its preceding divider (already handled), but not hint-div
   if (keys.includes('f1')) updateF1Label();
 }
@@ -4092,24 +4704,24 @@ function checkHeaderFit() {
 
   // Desktop: greedy — try showing all, then drop one at a time until it fits
   const allSeries = getActiveHdrSeries(); // ordered list of all active cards
-  
-  // Try showing all
-  hdrShowAll();
-  void hdr.offsetWidth;
-  if (hdr.scrollWidth <= hdr.clientWidth + 4) return; // all fit!
+  const MAX_CARDS = 4; // never show more than 4 race cards at once
 
-  // Try progressively fewer cards from the end, keeping the most important ones
-  for (let count = allSeries.length - 1; count >= 2; count--) {
-    // Try showing first 'count' series
-    // But rotate through all groups of 'count' every 20s
-    break; // use rotation approach for 2+ but not all
+  // Try showing up to MAX_CARDS first
+  const cappedSeries = allSeries.slice(0, MAX_CARDS);
+  hdrShowSet(cappedSeries);
+  void hdr.offsetWidth;
+  if (hdr.scrollWidth <= hdr.clientWidth + 4) {
+    // Fits — but rotate if there are more than MAX_CARDS total
+    if (allSeries.length > MAX_CARDS) {
+      window._hdrMaxFit = MAX_CARDS;
+      startHeaderRotationGroups(allSeries, MAX_CARDS);
+    }
+    return;
   }
 
-  // Try showing just 2: try each adjacent pair
-  // Find the largest N where N consecutive cards fit, then rotate through groups of N
+  // Find the largest N (≤ MAX_CARDS) where N cards fit, then rotate
   let maxFit = 1;
-  for (let n = allSeries.length; n >= 2; n--) {
-    // Try showing the first n cards
+  for (let n = MAX_CARDS; n >= 2; n--) {
     hdrShowSet(allSeries.slice(0, n));
     void hdr.offsetWidth;
     if (hdr.scrollWidth <= hdr.clientWidth + 4) {
@@ -4118,12 +4730,7 @@ function checkHeaderFit() {
     }
   }
 
-  if (maxFit >= allSeries.length) {
-    hdrShowAll();
-    return; // all fit
-  }
-
-  // maxFit cards fit at a time — rotate through them in groups
+  // maxFit cards fit at a time — rotate through all series in groups
   hdrShowSet(allSeries.slice(0, maxFit)); // show first group immediately
   window._hdrMaxFit = maxFit;
   startHeaderRotationGroups(allSeries, maxFit);
@@ -4151,7 +4758,7 @@ function getNextOfSub(key) {
     if (key === 'f2' && c.f2Sessions) return new Date(c.f2Sessions.feature || c.f2Sessions.race || c.sessions.race);
     if (key === 'f3' && c.f3Sessions) return new Date(c.f3Sessions.feature || c.f3Sessions.race || c.sessions.race);
     if (key === 'f1a' && c.f1aSessions) return new Date(c.f1aSessions.race2 || c.f1aSessions.race1 || c.sessions.race);
-    return new Date(c.sessions.race);
+    return new Date(cityRaceTime(c) || 0);
   };
   const sorted = [...venues].sort((a, b) => getDate(a) - getDate(b));
   return sorted.find(c => getDate(c).getTime() > now) || sorted[sorted.length - 1];
@@ -4161,7 +4768,7 @@ function getSubRaceDate(city, key) {
   if (key === 'f2' && city.f2Sessions) return new Date(city.f2Sessions.feature || city.f2Sessions.race || city.sessions.race);
   if (key === 'f3' && city.f3Sessions) return new Date(city.f3Sessions.feature || city.f3Sessions.race || city.sessions.race);
   if (key === 'f1a' && city.f1aSessions) return new Date(city.f1aSessions.race2 || city.f1aSessions.race1 || city.sessions.race);
-  return new Date(city.sessions.race);
+  return new Date(cityRaceTime(city) || 0);
 }
 
 function updateF1Label() {
@@ -4236,7 +4843,7 @@ function tick() {
     if (!nr) return;
     document.getElementById(nameId).textContent = nr.region;
     document.getElementById(locId).textContent  = `${nr.city} · ${localiseCountry(nr.country)}`;
-    const ms = new Date(nr.sessions.race) - now;
+    const ms = new Date(cityRaceTime(nr) || 0) - now;
     const el = document.getElementById(cdId);
     if (ms > 0) {
       el.textContent = formatCountdown(ms, isMobile && isMobile());
@@ -4251,19 +4858,19 @@ function tick() {
       cityMeshes[i].material.color.setHex(phaseColor(phase));
     }
     const st = document.getElementById(`cit-${i}`);
-    if (st) st.textContent = daysUntilRace(c.sessions.race);
+    if (st) { const _rt = cityRaceTime(c); if (_rt) st.textContent = daysUntilRace(_rt); }
   });
 
   // Tooltip days until race
   if (activeCity >= 0) {
     const el = document.getElementById('tt-time');
-    if (el) el.textContent = daysUntilRace(cities[activeCity].sessions.race);
+    if (el) { const _rt = cityRaceTime(cities[activeCity]); if (_rt) el.textContent = daysUntilRace(_rt); }
   }
 
   // Session panel countdown
   if (activePanelCity >= 0) {
     const c = cities[activePanelCity];
-    const raceMs = new Date(c.sessions.race) - now;
+    const raceMs = new Date(cityRaceTime(c) || 0) - now;
     const cdVal = document.getElementById('sp-countdown-value');
     const cdLabel = document.querySelector('.sp-countdown-label');
     if (cdVal && raceMs > 0) {
@@ -4356,6 +4963,9 @@ function applySeriesPrefs() {
 function buildSeriesPane() {
   const grid = document.getElementById('series-pref-grid');
   if (!grid) return;
+  buildThemeToggle();
+  buildDisplayToggles();
+  buildThemeToggle();
   grid.innerHTML = '';
   ALL_SERIES.forEach(key => {
     const enabled = isSeriesEnabled(key);
@@ -4394,8 +5004,68 @@ function buildSeriesPane() {
   }
 }
 
+
 // Apply preferences on page load
 try { applySeriesPrefs(); } catch(e) { console.error('applySeriesPrefs error:', e); }
+
+// ─── DISPLAY PREFERENCES (ads + news ticker) ───────────────────────────────────
+const DISPLAY_PREFS_KEY = 'gridpulse_display_prefs';
+const DISPLAY_DEFAULTS  = { ads: true, news: true };
+
+function loadDisplayPrefs() {
+  try {
+    const raw = localStorage.getItem(DISPLAY_PREFS_KEY);
+    if (!raw) return { ...DISPLAY_DEFAULTS };
+    return { ...DISPLAY_DEFAULTS, ...JSON.parse(raw) };
+  } catch(e) { return { ...DISPLAY_DEFAULTS }; }
+}
+
+function saveDisplayPrefs(prefs) {
+  try { localStorage.setItem(DISPLAY_PREFS_KEY, JSON.stringify(prefs)); } catch(e) {}
+}
+
+let displayPrefs = loadDisplayPrefs();
+
+function applyDisplayPrefs() {
+  // ── Ads ────────────────────────────────────────────────────────
+  const showAds = displayPrefs.ads;
+  ['ad-skyscraper', 'ad-above-globe', 'mobile-ad'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = showAds ? '' : 'none';
+  });
+
+  // ── News ticker ────────────────────────────────────────────────
+  const showNews = displayPrefs.news;
+  const newsToggle = document.getElementById('news-toggle');
+  if (newsToggle) newsToggle.style.display = showNews ? '' : 'none';
+}
+
+function buildDisplayToggles() {
+  ['ads', 'news'].forEach(key => {
+    const sw = document.querySelector(`.settings-toggle-switch[data-pref="${key}"]`);
+    if (!sw) return;
+    const row = sw.closest('.settings-toggle-row');
+    const isOn = displayPrefs[key];
+    sw.classList.toggle('active', isOn);
+    const handler = () => {
+      displayPrefs[key] = !displayPrefs[key];
+      saveDisplayPrefs(displayPrefs);
+      applyDisplayPrefs();
+      buildDisplayToggles(); // re-render toggle state
+    };
+    // Attach once via cloneNode trick to avoid duplicate listeners
+    const newRow = row.cloneNode(true);
+    row.parentNode.replaceChild(newRow, row);
+    newRow.addEventListener('click', handler);
+    // Re-sync active class after clone
+    const newSw = newRow.querySelector(`.settings-toggle-switch[data-pref="${key}"]`);
+    if (newSw) newSw.classList.toggle('active', isOn);
+  });
+}
+
+// Apply on page load
+applyDisplayPrefs();
+
 
 
 // ─── STARTUP: select next F1 race, no auto-rotation ───────────────────────────
@@ -4417,7 +5087,7 @@ try { applySeriesPrefs(); } catch(e) { console.error('applySeriesPrefs error:', 
 // All F1 cities sorted chronologically by race date
 const f1Tour = cities
   .filter(c => c.series.includes('f1'))
-  .sort((a, b) => new Date(a.sessions.race) - new Date(b.sessions.race));
+  .sort((a, b) => new Date(cityRaceTime(a)||0) - new Date(cityRaceTime(b)||0));
 
 // Track user interaction — any mouse/touch/wheel resets idle timer
 let tourActive   = false;
@@ -4613,12 +5283,13 @@ const CORS_PROXIES = [
 
 function timeAgo(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
-  const m = Math.floor(diff / 60000);
-  if (m < 1)  return 'just now';
-  if (m < 60) return `${m}m ago`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h ago`;
-  return `${Math.floor(h / 24)}d ago`;
+  const mins = Math.floor(diff / 60000);
+  const tr = (key, n) => t(key).replace('{n}', n);
+  if (mins < 1)  return t('just_now');
+  if (mins < 60) return tr('min_ago', mins);
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return tr('hour_ago', hrs);
+  return tr('day_ago', Math.floor(hrs / 24));
 }
 
 function stripHtml(str) {
@@ -4994,17 +5665,99 @@ function initInfoPanel() {
   });
 }
 
+
+// ─── STARTUP ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Apply saved theme
+  applyTheme(_theme);
+
+  // Apply translations
+  applyTranslations();
+
+  // Wire theme buttons
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      applyTheme(btn.dataset.themeVal || btn.dataset['theme-val'] || 'dark');
+    });
+  });
+
+  // Wire language buttons
+  document.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      _lang = btn.dataset.lang;
+      try { localStorage.setItem('gridpulse_lang', _lang); } catch(e) {}
+      applyTranslations();
+      // Update active state
+      document.querySelectorAll('[data-lang]').forEach(b => b.classList.toggle('active', b.dataset.lang === _lang));
+      // Re-render dynamic content
+      if (typeof initHeader === 'function') initHeader();
+      if (typeof tick === 'function') tick();
+    });
+    btn.classList.toggle('active', btn.dataset.lang === _lang);
+  });
+
+  // Apply series filter dots on globe
+  if (typeof applyFilter === 'function') applyFilter(typeof activeFilter !== 'undefined' ? activeFilter : 'all');
+
+  // Load display prefs
+  if (typeof loadDisplayPrefs === 'function') {
+    displayPrefs = loadDisplayPrefs();
+    if (typeof applyDisplayPrefs === 'function') applyDisplayPrefs();
+    if (typeof buildDisplayToggles === 'function') buildDisplayToggles();
+  }
+
+  // Load series prefs
+  if (typeof loadSeriesPrefs === 'function') {
+    loadSeriesPrefs();
+    if (typeof applySeriesPrefs === 'function') applySeriesPrefs();
+  }
+
+  // Init header
+  if (typeof initHeader === 'function') initHeader();
+
+  // Start tick
+  if (typeof tick === 'function') {
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  // Init info panel
+  if (typeof initInfoPanel === 'function') initInfoPanel();
+
+  // Build news ticker
+  if (typeof buildTicker === 'function') buildTicker();
+
+  // Build dropdown (mobile news)
+  if (typeof buildDropdown === 'function') buildDropdown();
+
+  // Start header rotation
+  if (typeof startHeaderRotation === 'function') {
+    setTimeout(() => startHeaderRotation(), 500);
+  }
+
+  // Set initial filter from URL hash if present
+  const hash = window.location.hash.slice(1);
+  if (hash && typeof setActiveFilter === 'function') {
+    const validFilters = ['all','f1','f2','f3','f1a','fe','indy','wec','wrc'];
+    if (validFilters.includes(hash)) setActiveFilter(hash);
+  }
+
+  // Mark header as initialised (removes any init animation lock)
+  const hdr = document.querySelector('header');
+  if (hdr) setTimeout(() => hdr.classList.remove('hdr-init'), 100);
+});
 </script>
 
 <!-- INFO PANEL -->
 <div id="info-overlay">
   <div id="info-panel">
     <div id="info-panel-header">
-      <span id="info-panel-title">GridPulse &middot; Info</span>
+      <span id="info-panel-title">GridPulse &middot; Information</span>
       <button id="info-close" data-i18n-title="close">&#10005;</button>
     </div>
     <div id="info-tabs">
-      <button class="info-tab" data-tab="series" data-i18n="info_series">Series</button>
+      <button class="info-tab" data-tab="series" data-i18n="settings_tab">Settings</button>
       <button class="info-tab active" data-tab="about" data-i18n="info_about">About</button>
       <button class="info-tab" data-tab="contact" data-i18n="info_contact">Contact</button>
       <button class="info-tab" data-tab="terms" data-i18n="info_terms">Terms of Use</button>
@@ -5012,12 +5765,50 @@ function initInfoPanel() {
     <div id="info-content">
 
       <div class="info-pane" id="info-pane-series">
-        <h2 data-i18n="info_series_h">Series <em>Settings</em></h2>
-        <p data-i18n="info_series_desc" style="font-size:0.6rem;color:var(--muted);margin-bottom:0.5rem">Choose which racing series are shown on the globe, calendar, and header.</p>
+        <h2 data-i18n="settings_tab">Grid<em>Pulse</em> Settings</h2>
+        <!-- THEME SECTION -->
+        <h3 class="settings-section-title" data-i18n="settings_theme_section">Theme</h3>
+        <div class="theme-toggle-row" id="theme-toggle-row">
+          <button class="theme-btn active" id="theme-dark" data-theme-val="dark">
+            <span class="theme-btn-icon">🌙</span>
+            <span data-i18n="settings_theme_dark">Dark</span>
+          </button>
+          <button class="theme-btn" id="theme-light" data-theme-val="light">
+            <span class="theme-btn-icon">☀️</span>
+            <span data-i18n="settings_theme_light">Light</span>
+          </button>
+        </div>
+
+        <!-- DISPLAY SECTION -->
+        <h3 class="settings-section-title" data-i18n="settings_display">Display</h3>
+        <div class="settings-toggle-list" id="display-toggles">
+          <div class="settings-toggle-row" id="toggle-ads">
+            <div class="settings-toggle-info">
+              <span class="settings-toggle-label" data-i18n="settings_ads">Show Adverts</span>
+              <span class="settings-toggle-desc" data-i18n="settings_ads_desc">Banner and skyscraper ad slots</span>
+            </div>
+            <div class="settings-toggle-switch active" data-pref="ads">
+              <div class="settings-toggle-knob"></div>
+            </div>
+          </div>
+          <div class="settings-toggle-row" id="toggle-news">
+            <div class="settings-toggle-info">
+              <span class="settings-toggle-label" data-i18n="settings_news_ticker">Show News Ticker</span>
+              <span class="settings-toggle-desc" data-i18n="settings_news_ticker_desc">Live motorsport news bar at the top</span>
+            </div>
+            <div class="settings-toggle-switch active" data-pref="news">
+              <div class="settings-toggle-knob"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SERIES SECTION -->
+        <h3 class="settings-section-title" data-i18n="settings_series">Racing Series</h3>
+        <p class="settings-section-desc" data-i18n="info_series_desc">Choose which series appear on the globe, calendar, and header.</p>
         <div class="series-pref-grid" id="series-pref-grid">
           <!-- Populated by JS -->
         </div>
-        <p class="series-pref-note" data-i18n="info_series_note">Your selection is saved in your browser and restored on every visit.</p>
+        <p class="series-pref-note" data-i18n="info_series_note">Saved in your browser and restored on every visit.</p>
         <button id="series-reset-btn" data-i18n="info_series_reset">Reset to all series</button>
       </div>
 
@@ -5119,5 +5910,26 @@ function initInfoPanel() {
   </div>
 </div>
 <script>initInfoPanel();</script>
+
+<!-- Debug Panel -->
+<div id="debug-panel" style="
+  position:fixed; bottom:0; left:0; right:0; z-index:9999;
+  background:rgba(0,0,10,0.92); border-top:1px solid rgba(200,255,0,0.3);
+  font-family:'DM Mono',monospace; font-size:0.55rem; letter-spacing:0.05em;
+  color:rgba(200,255,0,0.85); padding:6px 12px;
+  gap:16px; align-items:center; flex-wrap:wrap;
+  display:flex;
+">
+  <span style="color:rgba(200,255,0,0.5);letter-spacing:0.15em;text-transform:uppercase;font-size:0.48rem">DEBUG</span>
+  <span id="dbg-three">THREE: —</span>
+  <span id="dbg-tex">TEX: —</span>
+  <span id="dbg-geo">GEO: —</span>
+  <span id="dbg-fps">FPS: —</span>
+  <span id="dbg-globe">GLOBE: —</span>
+  <span id="dbg-outline">OUTLINE: —</span>
+  <span id="dbg-errors" style="color:#ff6060"></span>
+  <span style="margin-left:auto;pointer-events:auto;cursor:pointer;color:rgba(200,255,0,0.4)" onclick="document.getElementById('debug-panel').style.display='none'">✕</span>
+</div>
+
 </body>
 </html>
