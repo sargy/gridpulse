@@ -48,7 +48,7 @@ class RaceApiIntegrationTest {
         race.setCity("Melbourne");
         race.setCountry("Australia");
         race.setRegion("Australian GP");
-        race.setRound(1);
+        race.setRound("1");
         race.setSeries(List.of("f1", "f2", "f3"));
         race.setTimezone("Australia/Melbourne");
         race.setLat(-37.85);

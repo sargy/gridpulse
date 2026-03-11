@@ -301,7 +301,15 @@ body {
 .series-toggle-check.active { background: var(--series-col, var(--accent)); color: #000; border-color: var(--series-col, var(--accent)); }
 
 /* ── Badge ── */
-.badge { display: inline-block; }
+.badge {
+  display: inline-block;
+  font-size: 0.5rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
 /* ── Responsive ── */
 @media (max-width: 768px) {

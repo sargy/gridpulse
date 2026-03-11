@@ -11,7 +11,8 @@ interface SessionEntry {
   series: string;
 }
 
-function collectSessions(race: ReturnType<typeof useRaces>['selectedRace'], t: (k: string, d?: string) => string): SessionEntry[] {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function collectSessions(race: ReturnType<typeof useRaces>['selectedRace'], t: any): SessionEntry[] {
   if (!race) return [];
   const entries: SessionEntry[] = [];
 
@@ -93,7 +94,7 @@ export function SessionPanel() {
         {[...grouped.entries()].map(([day, sessions]) => (
           <div key={day}>
             <div className="sp-day-heading">{day}</div>
-            {sessions.map((s) => {
+            {sessions.map((s: SessionEntry) => {
               const isRace = s.key.endsWith('-race') || s.key.endsWith('-feature');
               return (
                 <div key={s.key} className={`sp-session-row ${isRace ? 'is-race' : ''}`}>

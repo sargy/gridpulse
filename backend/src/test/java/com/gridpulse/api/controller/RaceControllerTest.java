@@ -5,7 +5,7 @@ import com.gridpulse.api.service.RaceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.bean.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -23,7 +23,7 @@ class RaceControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private RaceService raceService;
 
     private Race createTestRace(String id, String city, List<String> series) {
@@ -32,7 +32,7 @@ class RaceControllerTest {
         race.setCity(city);
         race.setCountry("Australia");
         race.setRegion("Australian GP");
-        race.setRound(1);
+        race.setRound("1");
         race.setSeries(series);
         race.setTimezone("Australia/Melbourne");
         race.setLat(-37.85);

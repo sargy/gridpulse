@@ -13,7 +13,7 @@ public class Race {
     private String city;
     private String country;
     private String region;
-    private int round;
+    private String round;
     private List<String> series;
     private String timezone;
     private double lat;
@@ -41,8 +41,8 @@ public class Race {
     public String getRegion() { return region; }
     public void setRegion(String region) { this.region = region; }
 
-    public int getRound() { return round; }
-    public void setRound(int round) { this.round = round; }
+    public String getRound() { return round; }
+    public void setRound(String round) { this.round = round; }
 
     public List<String> getSeries() { return series; }
     public void setSeries(List<String> series) { this.series = series; }
