@@ -3082,6 +3082,12 @@ function applyTheme(theme) {
   if (window._starsObj) window._starsObj.visible = (theme !== 'light');
 }
 
+function buildThemeToggle() {
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.themeVal === _theme);
+  });
+}
+
 // ── Utility ───────────────────────────────────────────────────────────────────
 function isMobile() {
   return window.innerWidth < 768;
@@ -4121,6 +4127,19 @@ function applyFilter() {
 const tooltip = document.getElementById('tooltip');
 let activeCity = -1;
 
+function phaseLabel(phase) {
+  return phase.charAt(0).toUpperCase() + phase.slice(1);
+}
+
+function getOffset(tz) {
+  try {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'shortOffset' }).formatToParts(now);
+    const offsetPart = parts.find(p => p.type === 'timeZoneName');
+    return offsetPart ? offsetPart.value : '';
+  } catch(e) { return ''; }
+}
+
 function showTooltip(idx, x, y) {
   if (activeFilter !== 'all' && !cities[idx].series.includes(activeFilter)) return;
   activeCity = idx;
@@ -4132,7 +4151,7 @@ function showTooltip(idx, x, y) {
   document.getElementById('tt-country').textContent = c.country;
   document.getElementById('tt-badges').innerHTML = seriesBadgesHTML(c.series);
   document.getElementById('tt-time').textContent = daysUntilRace(cityRaceTime(c) || new Date().toISOString());
-  document.getElementById('tt-date').textContent = dateFmt[c.tz].format(now);
+  document.getElementById('tt-date').textContent = new Intl.DateTimeFormat(uiLocale(), { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', hour12:false, timeZone: c.tz }).format(now);
   document.getElementById('tt-phase').textContent = phaseLabel(phase);
   document.getElementById('tt-offset').textContent = getOffset(c.tz);
   document.getElementById('tt-phase-dot').className = `phase-dot ${phase}`;
@@ -5726,10 +5745,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (typeof initInfoPanel === 'function') initInfoPanel();
 
   // Build news ticker
-  if (typeof buildTicker === 'function') buildTicker();
+  if (typeof buildTicker === 'function') buildTicker(getFilteredNews());
 
   // Build dropdown (mobile news)
-  if (typeof buildDropdown === 'function') buildDropdown();
+  if (typeof buildDropdown === 'function') buildDropdown(getFilteredNews());
 
   // Start header rotation
   if (typeof startHeaderRotation === 'function') {
