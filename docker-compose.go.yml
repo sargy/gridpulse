@@ -1,0 +1,5 @@
+services:
+  backend:
+    build: ./backend-go
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/gridpulse

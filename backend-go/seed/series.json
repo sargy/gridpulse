@@ -1,0 +1,50 @@
+[
+  {
+    "id": "f1",
+    "label": "Formula 1",
+    "color": "#ff6060",
+    "sessionTypes": ["fp1", "fp2", "fp3", "sq", "sprint", "quali", "race"]
+  },
+  {
+    "id": "f2",
+    "label": "Formula 2",
+    "color": "#60d4ff",
+    "sessionTypes": ["fp", "quali", "sprint", "feature"]
+  },
+  {
+    "id": "f3",
+    "label": "Formula 3",
+    "color": "#60ffb0",
+    "sessionTypes": ["fp", "quali", "sprint", "feature"]
+  },
+  {
+    "id": "f1a",
+    "label": "F1 Academy",
+    "color": "#ffb060",
+    "sessionTypes": ["quali", "race1", "race2"]
+  },
+  {
+    "id": "fe",
+    "label": "Formula E",
+    "color": "#bb80ff",
+    "sessionTypes": ["fp", "quali", "race", "race2"]
+  },
+  {
+    "id": "indy",
+    "label": "IndyCar",
+    "color": "#ffe040",
+    "sessionTypes": ["fp", "quali", "race"]
+  },
+  {
+    "id": "wec",
+    "label": "WEC",
+    "color": "#00e8cc",
+    "sessionTypes": ["race"]
+  },
+  {
+    "id": "wrc",
+    "label": "WRC",
+    "color": "#ff6644",
+    "sessionTypes": ["ps", "day1"]
+  }
+]
