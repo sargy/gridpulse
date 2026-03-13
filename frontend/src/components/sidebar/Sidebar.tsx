@@ -3,10 +3,12 @@ import { useRaces } from '../../context/RaceContext';
 import { Badge } from '../common/Badge';
 import { FilterBar } from './FilterBar';
 import { daysUntilRace } from '../../utils/time';
+import { langToLocale } from '../../utils/locale';
 
 export function Sidebar() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { filteredRaces, selectedRace, selectRace } = useRaces();
+  const locale = langToLocale(i18n.language);
 
   return (
     <aside className="sidebar">
@@ -18,7 +20,7 @@ export function Sidebar() {
       <div className="city-list">
         {filteredRaces.map((race) => {
           const raceTime = race.sessions?.race || race.feSessions?.race || race.indySessions?.race;
-          const daysText = raceTime ? daysUntilRace(raceTime) : '';
+          const daysText = raceTime ? daysUntilRace(raceTime, t) : '';
           const isActive = selectedRace?.id === race.id;
 
           return (
@@ -35,7 +37,7 @@ export function Sidebar() {
                 <span className="ci-round">R{race.round}</span>
                 <span className="ci-location">{race.country}</span>
                 <span className="ci-date">
-                  {raceTime ? new Date(raceTime).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : ''}
+                  {raceTime ? new Date(raceTime).toLocaleDateString(locale, { day: 'numeric', month: 'short' }) : ''}
                 </span>
               </div>
               <div className="ci-badges">

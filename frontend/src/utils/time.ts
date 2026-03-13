@@ -42,13 +42,17 @@ export function formatCountdown(ms: number): string | null {
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
-export function daysUntilRace(utcStr: string): string {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function daysUntilRace(utcStr: string, t?: any): string {
   const race = new Date(utcStr);
   const now = new Date();
   const diff = race.getTime() - now.getTime();
-  if (diff <= 0) return 'Done';
+  if (diff <= 0) return t ? t('race_done_short', 'Done') : 'Done';
   const days = Math.ceil(diff / 86400000);
-  return `${days} ${days === 1 ? 'day' : 'days'}`;
+  const unit = t
+    ? (days === 1 ? t('day_singular', 'day') : t('day_plural', 'days'))
+    : (days === 1 ? 'day' : 'days');
+  return `${days} ${unit}`;
 }
 
 export function timeAgo(dateStr: string): string {

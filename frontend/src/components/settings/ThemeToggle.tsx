@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../context/ThemeContext';
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <div className="theme-toggle-row">
@@ -9,13 +11,13 @@ export function ThemeToggle() {
         className={`theme-btn ${theme === 'dark' ? 'active' : ''}`}
         onClick={() => theme !== 'dark' && toggleTheme()}
       >
-        Dark
+        {t('settings_theme_dark', 'Dark')}
       </button>
       <button
         className={`theme-btn ${theme === 'light' ? 'active' : ''}`}
         onClick={() => theme !== 'light' && toggleTheme()}
       >
-        Light
+        {t('settings_theme_light', 'Light')}
       </button>
     </div>
   );

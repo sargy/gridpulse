@@ -3,8 +3,10 @@ import {
   useContext,
   useState,
   useCallback,
+  useEffect,
   type ReactNode,
 } from 'react';
+import i18n from '../i18n';
 
 interface SettingsContextType {
   enabledSeries: Set<string>;
@@ -82,10 +84,16 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
   const setLanguage = useCallback((lang: string) => {
     setLang(lang);
+    i18n.changeLanguage(lang);
     try {
       localStorage.setItem('gridpulse_lang', lang);
     } catch {}
   }, []);
+
+  // Sync i18n language on mount with saved/detected language
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <SettingsContext.Provider

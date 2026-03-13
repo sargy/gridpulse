@@ -76,10 +76,10 @@ public class NewsService {
             }
         }
 
-        // Sort newest first, limit to 20
+        // Sort newest first, limit to 40
         return allItems.stream()
                 .sorted(Comparator.comparing(NewsItem::getDate).reversed())
-                .limit(20)
+                .limit(40)
                 .collect(Collectors.toList());
     }
 }

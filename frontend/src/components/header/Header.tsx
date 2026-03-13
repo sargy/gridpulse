@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRaces } from '../../context/RaceContext';
+import { useSettings } from '../../context/SettingsContext';
 import { CountdownTimer } from './CountdownTimer';
 import { SERIES_COLORS, type SeriesKey } from '../../types';
 import type { Race } from '../../types';
@@ -41,34 +43,38 @@ function getRaceTime(race: Race, seriesKey: string): string | undefined {
   return sessionMap?.race || sessionMap?.feature || sessionMap?.race1 || Object.values(sessionMap || {}).pop();
 }
 
-const HEADER_SERIES: { key: SeriesKey; label: string }[] = [
-  { key: 'f1', label: 'Next F1' },
-  { key: 'f2', label: 'Next F2' },
-  { key: 'f3', label: 'Next F3' },
-  { key: 'fe', label: 'Next Formula E' },
-  { key: 'indy', label: 'Next IndyCar' },
+const HEADER_SERIES_KEYS: { key: SeriesKey; tKey: string }[] = [
+  { key: 'f1', tKey: 'next_f1' },
+  { key: 'f2', tKey: 'next_f2' },
+  { key: 'f3', tKey: 'next_f3' },
+  { key: 'fe', tKey: 'next_fe' },
+  { key: 'indy', tKey: 'next_indy' },
 ];
 
 export function Header() {
+  const { t } = useTranslation();
   const { races } = useRaces();
+  const { enabledSeries } = useSettings();
 
   const nextRaces = useMemo(() =>
-    HEADER_SERIES.map(({ key, label }) => {
-      const race = getNextRaceForSeries(races, key);
-      const time = race ? getRaceTime(race, key) : undefined;
-      return { key, label, race, time };
-    }).filter(({ race }) => race !== null),
-    [races]
+    HEADER_SERIES_KEYS
+      .filter(({ key }) => enabledSeries.has(key))
+      .map(({ key, tKey }) => {
+        const race = getNextRaceForSeries(races, key);
+        const time = race ? getRaceTime(race, key) : undefined;
+        return { key, tKey, race, time };
+      }).filter(({ race }) => race !== null),
+    [races, enabledSeries]
   );
 
   return (
     <header className="header">
       <div className="header-logo">GridPulse</div>
       <div className="header-races">
-        {nextRaces.map(({ key, label, race, time }) => (
+        {nextRaces.map(({ key, tKey, race, time }) => (
           <CountdownTimer
             key={key}
-            label={label}
+            label={t(tKey)}
             location={`${race!.region} · ${race!.country}`}
             targetUtc={time!}
             accentColor={SERIES_COLORS[key]}

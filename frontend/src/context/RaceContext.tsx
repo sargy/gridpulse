@@ -4,10 +4,12 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   type ReactNode,
 } from 'react';
 import type { Race, SeriesConfig } from '../types';
 import { api } from '../api/client';
+import { useSettings } from './SettingsContext';
 
 interface RaceContextType {
   races: Race[];
@@ -37,6 +39,7 @@ export function RaceProvider({ children }: { children: ReactNode }) {
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
   const [activeFilter, setActiveFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const { enabledSeries } = useSettings();
 
   useEffect(() => {
     async function loadData() {
@@ -60,10 +63,19 @@ export function RaceProvider({ children }: { children: ReactNode }) {
     setSelectedRace(race);
   }, []);
 
-  const filteredRaces =
-    activeFilter === 'all'
-      ? races
-      : races.filter((r) => r.series.includes(activeFilter));
+  // Filter races by both the sidebar activeFilter AND the settings enabledSeries.
+  // A race is included if it has at least one series that is enabled in settings.
+  // Then the sidebar activeFilter narrows further (or shows 'all' enabled).
+  const filteredRaces = useMemo(() => {
+    // First, filter to only races that have at least one enabled series
+    const enabledRaces = races.filter((r) =>
+      r.series.some((s) => enabledSeries.has(s))
+    );
+
+    // Then apply the sidebar filter
+    if (activeFilter === 'all') return enabledRaces;
+    return enabledRaces.filter((r) => r.series.includes(activeFilter));
+  }, [races, enabledSeries, activeFilter]);
 
   return (
     <RaceContext.Provider

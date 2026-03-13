@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useRaces } from '../../context/RaceContext';
 import { useCountdown } from '../../hooks/useCountdown';
 import { Badge } from '../common/Badge';
+import { langToLocale } from '../../utils/locale';
 
 interface SessionEntry {
   key: string;
@@ -53,10 +54,10 @@ function collectSessions(race: ReturnType<typeof useRaces>['selectedRace'], t: a
   return entries.sort((a, b) => a.time.getTime() - b.time.getTime());
 }
 
-function groupByDay(sessions: SessionEntry[]): Map<string, SessionEntry[]> {
+function groupByDay(sessions: SessionEntry[], locale: string): Map<string, SessionEntry[]> {
   const groups = new Map<string, SessionEntry[]>();
   for (const s of sessions) {
-    const dayKey = s.time.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
+    const dayKey = s.time.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'short' });
     if (!groups.has(dayKey)) groups.set(dayKey, []);
     groups.get(dayKey)!.push(s);
   }
@@ -64,15 +65,16 @@ function groupByDay(sessions: SessionEntry[]): Map<string, SessionEntry[]> {
 }
 
 export function SessionPanel() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = langToLocale(i18n.language);
   const { selectedRace, selectRace } = useRaces();
   const raceTime = selectedRace?.sessions?.race || selectedRace?.feSessions?.race;
   const countdown = useCountdown(raceTime);
 
   const grouped = useMemo(() => {
     if (!selectedRace) return new Map();
-    return groupByDay(collectSessions(selectedRace, t));
-  }, [selectedRace, t]);
+    return groupByDay(collectSessions(selectedRace, t), locale);
+  }, [selectedRace, t, locale]);
 
   if (!selectedRace) return null;
 
@@ -80,7 +82,7 @@ export function SessionPanel() {
     <div className="session-panel open">
       <div className="sp-header">
         <div>
-          <div className="sp-round">Round {selectedRace.round}</div>
+          <div className="sp-round">{t('round', 'Round')} {selectedRace.round}</div>
           <div className="sp-race-name">{selectedRace.region}</div>
           <div className="sp-race-location">{selectedRace.city} · {selectedRace.country}</div>
           <div className="sp-badges">
@@ -101,7 +103,7 @@ export function SessionPanel() {
                   <Badge series={s.series} />
                   <span className={`sp-session-label ${isRace ? 'is-race' : ''}`}>{s.label}</span>
                   <span className="sp-session-time">
-                    {s.time.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false })}
+                    {s.time.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false })}
                   </span>
                 </div>
               );
@@ -112,7 +114,7 @@ export function SessionPanel() {
 
       {countdown && (
         <div className="sp-countdown">
-          <div className="sp-countdown-label">Race starts in</div>
+          <div className="sp-countdown-label">{t('starts_in', 'Starts in')}</div>
           <div className="sp-countdown-value">{countdown}</div>
         </div>
       )}

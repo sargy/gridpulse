@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useRaces } from '../../context/RaceContext';
+import { useSettings } from '../../context/SettingsContext';
 import { SERIES_COLORS, type SeriesKey } from '../../types';
 
 const ALL_SERIES: SeriesKey[] = ['f1', 'f2', 'f3', 'f1a', 'fe', 'indy', 'wec', 'wrc'];
@@ -7,6 +8,9 @@ const ALL_SERIES: SeriesKey[] = ['f1', 'f2', 'f3', 'f1a', 'fe', 'indy', 'wec', '
 export function FilterBar() {
   const { t } = useTranslation();
   const { activeFilter, setActiveFilter } = useRaces();
+  const { enabledSeries } = useSettings();
+
+  const visibleSeries = ALL_SERIES.filter((key) => enabledSeries.has(key));
 
   return (
     <div className="filter-bar">
@@ -16,7 +20,7 @@ export function FilterBar() {
       >
         {t('all', 'All')}
       </button>
-      {ALL_SERIES.map((key) => (
+      {visibleSeries.map((key) => (
         <button
           key={key}
           className={`filter-btn ${activeFilter === key ? 'active' : ''}`}

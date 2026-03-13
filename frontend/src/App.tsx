@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Header } from './components/header/Header';
 import { Sidebar } from './components/sidebar/Sidebar';
 import { GlobeCanvas } from './components/globe/GlobeCanvas';
+import { TourButton } from './components/globe/TourButton';
 import { SessionPanel } from './components/session/SessionPanel';
 import { NewsTicker } from './components/news/NewsTicker';
 import { InfoPanel } from './components/settings/InfoPanel';
@@ -9,6 +10,15 @@ import './App.css';
 
 function App() {
   const [infoPanelOpen, setInfoPanelOpen] = useState(false);
+  const [touring, setTouring] = useState(false);
+
+  const handleTourChange = useCallback((value: boolean) => {
+    setTouring(value);
+  }, []);
+
+  const handleTourToggle = useCallback(() => {
+    setTouring((prev) => !prev);
+  }, []);
 
   return (
     <div className="app" data-theme="dark">
@@ -17,7 +27,8 @@ function App() {
       <div className="main-layout">
         <Sidebar />
         <div className="globe-wrapper">
-          <GlobeCanvas />
+          <GlobeCanvas touring={touring} onTourChange={handleTourChange} />
+          <TourButton touring={touring} onToggle={handleTourToggle} />
         </div>
         <SessionPanel />
       </div>

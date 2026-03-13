@@ -6,11 +6,10 @@ import { useFrame } from '@react-three/fiber';
 export function Earth() {
   const meshRef = useRef<THREE.Mesh>(null);
 
-  // Use publicly available earth textures
-  const [dayMap, nightMap, bumpMap, specMap] = useTexture([
+  // Use publicly available earth textures (day, night, specular)
+  const [dayMap, nightMap, specMap] = useTexture([
     'https://unpkg.com/three-globe@2.31.1/example/img/earth-blue-marble.jpg',
     'https://unpkg.com/three-globe@2.31.1/example/img/earth-night.jpg',
-    'https://unpkg.com/three-globe@2.31.1/example/img/earth-topology.png',
     'https://unpkg.com/three-globe@2.31.1/example/img/earth-water.png',
   ]);
 
@@ -40,7 +39,6 @@ export function Earth() {
         uniforms={{
           dayTexture: { value: dayMap },
           nightTexture: { value: nightMap },
-          bumpTexture: { value: bumpMap },
           specTexture: { value: specMap },
           sunDir: { value: new THREE.Vector3(1, 0, 0) },
         }}
@@ -58,18 +56,27 @@ export function Earth() {
         fragmentShader={`
           uniform sampler2D dayTexture;
           uniform sampler2D nightTexture;
+          uniform sampler2D specTexture;
           uniform vec3 sunDir;
           varying vec2 vUv;
           varying vec3 vNormal;
+          varying vec3 vPosition;
 
           void main() {
             vec3 dayColor = texture2D(dayTexture, vUv).rgb;
             vec3 nightColor = texture2D(nightTexture, vUv).rgb;
+            float specMask = texture2D(specTexture, vUv).r;
 
             float cosAngle = dot(vNormal, sunDir);
             float blend = smoothstep(-0.15, 0.15, cosAngle);
 
             vec3 color = mix(nightColor, dayColor, blend);
+
+            // Specular highlight on water (oceans)
+            vec3 viewDir = normalize(-vPosition);
+            vec3 halfDir = normalize(sunDir + viewDir);
+            float spec = pow(max(dot(vNormal, halfDir), 0.0), 40.0);
+            color += vec3(0.4) * spec * specMask * blend;
 
             // Limb darkening
             float limb = 1.0 - pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 0.8);
