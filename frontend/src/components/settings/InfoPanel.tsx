@@ -36,24 +36,28 @@ export function InfoPanel({ open, onClose }: InfoPanelProps) {
   if (!open) return null;
 
   return (
-    <div className="info-panel open">
-      <div className="info-panel-header">
-        <div className="info-tabs">
-          {(['settings', 'about', 'contact', 'terms'] as Tab[]).map((tab) => (
-            <button
-              key={tab}
-              className={`info-tab ${activeTab === tab ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab === 'settings' ? t('settings_tab', 'Settings') :
-               tab === 'about' ? t('info_about', 'About') :
-               tab === 'contact' ? t('info_contact', 'Contact') :
-               t('info_terms', 'Terms')}
-            </button>
-          ))}
+    <div className="info-overlay" onClick={onClose}>
+      <div className="info-panel open" onClick={(e) => e.stopPropagation()}>
+        <div className="info-panel-title-row">
+          <span className="info-panel-title">GridPulse · <span className="info-panel-title-accent">{t('info_information', 'Information')}</span></span>
+          <button className="info-close" onClick={onClose}>{'\u2715'}</button>
         </div>
-        <button className="info-close" onClick={onClose}>{'\u2715'}</button>
-      </div>
+        <div className="info-panel-header">
+          <div className="info-tabs">
+            {(['settings', 'about', 'contact', 'terms'] as Tab[]).map((tab) => (
+              <button
+                key={tab}
+                className={`info-tab ${activeTab === tab ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab === 'settings' ? t('settings_tab', 'Settings') :
+                 tab === 'about' ? t('info_about', 'About') :
+                 tab === 'contact' ? t('info_contact', 'Contact') :
+                 t('info_terms', 'Terms of Use')}
+              </button>
+            ))}
+          </div>
+        </div>
 
       <div className="info-content">
         {/* ── Settings Tab ── */}
@@ -84,17 +88,17 @@ export function InfoPanel({ open, onClose }: InfoPanelProps) {
         {/* ── About Tab ── */}
         {activeTab === 'about' && (
           <div className="info-pane">
-            <h2>GridPulse</h2>
-            <p>{t('info_intro1', 'GridPulse is a live motorsport calendar and race tracker built for fans who want to follow the full racing season.')}</p>
-            <p>{t('info_intro2', 'Spin the globe, explore circuits, and see exactly what is racing where and when.')}</p>
+            <h2><span className="gp-grid">Grid</span><span className="gp-pulse">Pulse</span></h2>
+            <p>{t('info_intro1', 'GridPulse is a live motorsport calendar and race tracker built for fans who want to follow the full racing season \u2013 across every series, on a single globe.')}</p>
+            <p>{t('info_intro2', 'Spin the globe, explore circuits, and see exactly what is racing where and when. Every round is plotted on an interactive 3D map with real-time countdowns to the next session.')}</p>
 
             <h3>{t('info_h_covered', 'What is covered')}</h3>
             <ul className="info-list">
-              <li>{t('info_li_f1', 'Formula 1')}</li>
-              <li>{t('info_li_f2f3', 'Formula 2 & Formula 3')}</li>
-              <li>{t('info_li_f1a', 'F1 Academy')}</li>
-              <li>{t('info_li_fe', 'Formula E')}</li>
-              <li>{t('info_li_indy', 'IndyCar')}</li>
+              <li>{t('info_li_f1', 'Formula 1 \u2013 full season calendar with practice, qualifying and race sessions')}</li>
+              <li>{t('info_li_f2f3', 'Formula 2 & Formula 3 \u2013 sprint and feature race sessions')}</li>
+              <li>{t('info_li_f1a', 'F1 Academy \u2013 the all-female development series')}</li>
+              <li>{t('info_li_fe', 'Formula E \u2013 electric street racing E-Prix calendar')}</li>
+              <li>{t('info_li_indy', 'IndyCar \u2013 oval and road course championship calendar')}</li>
             </ul>
 
             <h3>{t('info_h_how', 'How to use it')}</h3>
@@ -102,14 +106,14 @@ export function InfoPanel({ open, onClose }: InfoPanelProps) {
               <li>{t('info_how_1', 'Drag the globe to rotate, scroll or pinch to zoom')}</li>
               <li>{t('info_how_2', 'Click any race dot to open the full session schedule')}</li>
               <li>{t('info_how_3', 'Use the series filter to focus on a single championship')}</li>
-              <li>{t('info_how_4', 'Press play to start the automatic race tour')}</li>
+              <li>{t('info_how_4', 'Press \u25b6 to start the automatic race tour')}</li>
               <li>{t('info_how_5', 'The header rotates through next-up races across all active series')}</li>
             </ul>
 
             <h3>{t('info_h_data', 'Data & updates')}</h3>
-            <p>{t('info_data_p', 'Session times are sourced from official series calendars and displayed in your local time zone.')}</p>
+            <p>{t('info_data_p', 'Session times are sourced from official series calendars and displayed in your local time zone. News feeds are pulled live from Autosport and The Race.')}</p>
 
-            <p className="info-disclaimer">{t('info_disclaimer', 'GridPulse is an independent fan project and is not affiliated with any racing series, team or driver.')}</p>
+            <p className="info-disclaimer">{t('info_disclaimer', 'GridPulse is an independent fan project and is not affiliated with Formula One Management, Formula E Operations, IndyCar or any team or driver.')}</p>
           </div>
         )}
 
@@ -173,6 +177,7 @@ export function InfoPanel({ open, onClose }: InfoPanelProps) {
             ))}
           </div>
         )}
+      </div>
       </div>
     </div>
   );

@@ -4,11 +4,12 @@ import { useCountdown } from '../../hooks/useCountdown';
 interface CountdownTimerProps {
   targetUtc: string;
   label: string;
+  raceName: string;
   location: string;
   accentColor?: string;
 }
 
-export function CountdownTimer({ targetUtc, label, location, accentColor = 'var(--accent)' }: CountdownTimerProps) {
+export function CountdownTimer({ targetUtc, label, raceName, location, accentColor = 'var(--accent)' }: CountdownTimerProps) {
   const { t } = useTranslation();
   const countdown = useCountdown(targetUtc);
 
@@ -16,11 +17,16 @@ export function CountdownTimer({ targetUtc, label, location, accentColor = 'var(
 
   return (
     <div className="hdr-race-block">
-      <div className="next-race-label">{label}</div>
-      <div className="next-race-name">{location}</div>
-      <div className="countdown-label">{t('starts_in', 'Starts in')}</div>
-      <div className="countdown-value" style={{ color: accentColor }}>
-        {countdown}
+      <div className="hdr-race-info">
+        <div className="hdr-series-label" style={{ color: accentColor }}>{label}</div>
+        <div className="hdr-race-name">{raceName}</div>
+        <div className="hdr-race-location">{location}</div>
+      </div>
+      <div className="hdr-countdown">
+        <div className="hdr-starts-label">{t('starts_in', 'Starts in')}</div>
+        <div className="hdr-countdown-value" style={{ color: accentColor }}>
+          {countdown}
+        </div>
       </div>
     </div>
   );

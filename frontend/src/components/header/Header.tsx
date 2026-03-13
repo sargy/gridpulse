@@ -47,8 +47,11 @@ const HEADER_SERIES_KEYS: { key: SeriesKey; tKey: string }[] = [
   { key: 'f1', tKey: 'next_f1' },
   { key: 'f2', tKey: 'next_f2' },
   { key: 'f3', tKey: 'next_f3' },
+  { key: 'f1a', tKey: 'next_f1a' },
   { key: 'fe', tKey: 'next_fe' },
   { key: 'indy', tKey: 'next_indy' },
+  { key: 'wec', tKey: 'next_wec' },
+  { key: 'wrc', tKey: 'next_wrc' },
 ];
 
 export function Header() {
@@ -75,7 +78,8 @@ export function Header() {
           <CountdownTimer
             key={key}
             label={t(tKey)}
-            location={`${race!.region} · ${race!.country}`}
+            raceName={race!.region}
+            location={`${race!.city} · ${race!.country}`}
             targetUtc={time!}
             accentColor={SERIES_COLORS[key]}
           />
