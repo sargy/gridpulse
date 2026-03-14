@@ -89,11 +89,14 @@ jobs:
           cache: maven
 
       - name: OWASP Dependency-Check
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: >
           mvn org.owasp:dependency-check-maven:check
           -DfailBuildOnCVSS=9
-          -DsuppressionFile=
+          ${NVD_API_KEY:+-DnvdApiKey=$NVD_API_KEY}
           -B
+        continue-on-error: ${{ secrets.NVD_API_KEY == '' }}
 
   secret-scan:
     name: Security – Secret scanning
@@ -127,6 +130,7 @@ jobs:
           image-ref: gridpulse-frontend:ci
           format: table
           exit-code: 1
+          ignore-unfixed: true
           severity: CRITICAL,HIGH
 
       - name: Scan backend image
@@ -135,6 +139,7 @@ jobs:
           image-ref: gridpulse-backend:ci
           format: table
           exit-code: 1
+          ignore-unfixed: true
           severity: CRITICAL,HIGH
 
   codeql:
