@@ -25,12 +25,12 @@ function App() {
       <Header />
       <NewsTicker />
       <div className="main-layout">
-        <Sidebar />
+        <SessionPanel />
         <div className="globe-wrapper">
           <GlobeCanvas touring={touring} onTourChange={handleTourChange} />
           <TourButton touring={touring} onToggle={handleTourToggle} />
         </div>
-        <SessionPanel />
+        <Sidebar />
       </div>
       <button className="info-btn" onClick={() => setInfoPanelOpen(true)}>ⓘ</button>
       <InfoPanel open={infoPanelOpen} onClose={() => setInfoPanelOpen(false)} />
