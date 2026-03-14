@@ -1,3 +1,4 @@
+# GridPulse API configuration
 spring:
   application:
     name: gridpulse-api
