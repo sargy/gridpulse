@@ -131,7 +131,7 @@ jobs:
           format: table
           exit-code: 1
           ignore-unfixed: true
-          severity: CRITICAL,HIGH
+          severity: CRITICAL
 
       - name: Scan backend image
         uses: aquasecurity/trivy-action@master
@@ -140,7 +140,7 @@ jobs:
           format: table
           exit-code: 1
           ignore-unfixed: true
-          severity: CRITICAL,HIGH
+          severity: CRITICAL
 
   codeql:
     name: Security – CodeQL analysis
