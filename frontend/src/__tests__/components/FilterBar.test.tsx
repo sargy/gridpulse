@@ -3,14 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { FilterBar } from '../../components/sidebar/FilterBar';
 import { RaceProvider } from '../../context/RaceContext';
 
-// Mock react-i18next
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string, fallback?: string) => fallback || key,
-    i18n: { language: 'en', changeLanguage: vi.fn() },
-  }),
-}));
-
 // Mock API
 vi.mock('../../api/client', () => ({
   api: {
