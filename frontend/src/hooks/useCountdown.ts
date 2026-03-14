@@ -1,24 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore, useCallback, useRef, useEffect } from 'react';
 import { formatCountdown } from '../utils/time';
 
 export function useCountdown(targetUtc: string | undefined) {
-  const [display, setDisplay] = useState<string | null>(null);
+  const displayRef = useRef<string | null>(null);
+  const listenersRef = useRef(new Set<() => void>());
+
+  const subscribe = useCallback((cb: () => void) => {
+    listenersRef.current.add(cb);
+    return () => { listenersRef.current.delete(cb); };
+  }, []);
+
+  const getSnapshot = useCallback(() => displayRef.current, []);
 
   useEffect(() => {
     if (!targetUtc) {
-      setDisplay(null);
+      displayRef.current = null;
+      listenersRef.current.forEach((cb) => cb());
       return;
     }
 
-    function update() {
+    function tick() {
       const ms = new Date(targetUtc!).getTime() - Date.now();
-      setDisplay(formatCountdown(ms));
+      const next = formatCountdown(ms);
+      if (next !== displayRef.current) {
+        displayRef.current = next;
+        listenersRef.current.forEach((cb) => cb());
+      }
     }
 
-    update();
-    const interval = setInterval(update, 1000);
+    tick();
+    const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, [targetUtc]);
 
-  return display;
+  return useSyncExternalStore(subscribe, getSnapshot);
 }

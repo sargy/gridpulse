@@ -16,7 +16,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       const saved = localStorage.getItem('gridpulse_theme');
       if (saved === 'light' || saved === 'dark') return saved;
-    } catch {}
+    } catch { /* ignore storage errors */ }
     return window.matchMedia?.('(prefers-color-scheme: light)').matches
       ? 'light'
       : 'dark';
@@ -26,7 +26,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.documentElement.setAttribute('data-theme', theme);
     try {
       localStorage.setItem('gridpulse_theme', theme);
-    } catch {}
+    } catch { /* ignore storage errors */ }
   }, [theme]);
 
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
@@ -38,4 +38,5 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => useContext(ThemeContext);

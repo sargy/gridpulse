@@ -27,7 +27,7 @@ function loadSeriesPrefs(): Set<string> {
       const arr = JSON.parse(saved);
       if (Array.isArray(arr) && arr.length > 0) return new Set(arr);
     }
-  } catch {}
+  } catch { /* ignore storage errors */ }
   return new Set(ALL_SERIES);
 }
 
@@ -35,7 +35,7 @@ function loadLanguage(): string {
   try {
     const saved = localStorage.getItem('gridpulse_lang');
     if (saved) return saved;
-  } catch {}
+  } catch { /* ignore storage errors */ }
   const nav = navigator.languages || [navigator.language || 'en'];
   for (const l of nav) {
     const code = l.slice(0, 2).toLowerCase();
@@ -70,7 +70,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       }
       try {
         localStorage.setItem('gridpulse_series_prefs', JSON.stringify([...next]));
-      } catch {}
+      } catch { /* ignore storage errors */ }
       return next;
     });
   }, []);
@@ -87,7 +87,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     i18n.changeLanguage(lang);
     try {
       localStorage.setItem('gridpulse_lang', lang);
-    } catch {}
+    } catch { /* ignore storage errors */ }
   }, []);
 
   // Sync i18n language on mount with saved/detected language
@@ -112,4 +112,5 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSettings = () => useContext(SettingsContext);

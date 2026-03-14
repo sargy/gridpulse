@@ -37,7 +37,7 @@ export function CityMarkers() {
     });
   });
 
-  const handleClick = useCallback((_event: THREE.Event) => {
+  const handleClick = useCallback(() => {
     if (!groupRef.current) return;
     raycaster.setFromCamera(pointer, camera);
     const intersects = raycaster.intersectObjects(groupRef.current.children);
