@@ -143,11 +143,47 @@ railway domain
 # Creates: https://backend-production-XXXX.up.railway.app (optional — for direct API access)
 ```
 
-### 6. Trigger deployment
+### 6. Enable "Wait for CI"
 
-Deployments happen automatically when:
-- Code is pushed to the connected branch
-- Environment variables are changed
+This ensures Railway only deploys after all GitHub Actions CI checks pass. If any job fails, Railway skips the deployment.
+
+```bash
+RAILWAY_TOKEN=$(python3 -c "import json; d=json.load(open('$HOME/.railway/config.json')); print(d['user']['token'])")
+
+# Get deployment trigger IDs
+curl -s -X POST https://backboard.railway.app/graphql/v2 \
+  -H "Authorization: Bearer $RAILWAY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "{ service(id: \"<SERVICE_ID>\") { repoTriggers { edges { node { id checkSuites } } } } }"
+  }'
+
+# Enable checkSuites on each trigger
+curl -s -X POST https://backboard.railway.app/graphql/v2 \
+  -H "Authorization: Bearer $RAILWAY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "mutation { deploymentTriggerUpdate(id: \"<TRIGGER_ID>\", input: { checkSuites: true }) { id checkSuites } }"
+  }'
+```
+
+| Service  | Trigger ID | checkSuites |
+|----------|-----------|-------------|
+| Backend  | `6cf43f42-62da-4a9a-943a-17dbc212a315` | `true` |
+| Frontend | `d83d09ab-a567-4496-90fb-48229d6dd83f` | `true` |
+
+**Prerequisite:** The [Railway GitHub App](https://github.com/apps/railway-app) must be installed on the repo for check suite detection to work.
+
+### 7. Trigger deployment
+
+The deploy flow is:
+
+```
+git push → GitHub Actions CI (8 jobs) → all pass → Railway auto-deploys
+                                       → any fail → Railway skips deploy
+```
+
+Deployments also trigger when environment variables are changed.
 
 Manual redeploy:
 ```bash
