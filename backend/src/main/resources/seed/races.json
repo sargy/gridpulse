@@ -5,11 +5,7 @@
     "country": "Australia",
     "region": "Australian GP",
     "round": 1,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "series": ["f1", "f2", "f3"],
     "timezone": "Australia/Melbourne",
     "lat": -37.84,
     "lng": 144.97,
@@ -39,10 +35,7 @@
     "country": "China",
     "region": "Chinese GP",
     "round": 2,
-    "series": [
-      "f1",
-      "f1a"
-    ],
+    "series": ["f1", "f1a"],
     "timezone": "Asia/Shanghai",
     "lat": 31.34,
     "lng": 121.22,
@@ -65,9 +58,7 @@
     "country": "Japan",
     "region": "Japanese GP",
     "round": 3,
-    "series": [
-      "f1"
-    ],
+    "series": ["f1"],
     "timezone": "Asia/Tokyo",
     "lat": 34.84,
     "lng": 136.54,
@@ -85,11 +76,7 @@
     "country": "Bahrain",
     "region": "Bahrain GP",
     "round": 4,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "series": ["f1", "f2", "f3"],
     "timezone": "Asia/Bahrain",
     "lat": 26.03,
     "lng": 50.51,
@@ -120,12 +107,7 @@
     "country": "Saudi Arabia",
     "region": "Saudi Arabian GP",
     "round": 5,
-    "series": [
-      "f1",
-      "f2",
-      "f3",
-      "f1a"
-    ],
+    "series": ["f1", "f2", "f1a"],
     "timezone": "Asia/Riyadh",
     "lat": 21.54,
     "lng": 39.17,
@@ -142,12 +124,6 @@
       "sprint": "2026-04-18T13:00Z",
       "feature": "2026-04-19T13:30Z"
     },
-    "f3Sessions": {
-      "fp": "2026-04-17T10:45Z",
-      "quali": "2026-04-17T15:00Z",
-      "sprint": "2026-04-18T11:15Z",
-      "feature": "2026-04-18T23:45Z"
-    },
     "cancelled": true,
     "f1aSessions": {
       "quali": "2026-04-17T10:00Z",
@@ -161,10 +137,7 @@
     "country": "USA",
     "region": "Miami GP",
     "round": 6,
-    "series": [
-      "f1",
-      "f1a"
-    ],
+    "series": ["f1", "f1a"],
     "timezone": "America/New_York",
     "lat": 25.95,
     "lng": -80.24,
@@ -182,140 +155,21 @@
     }
   },
   {
-    "id": "autodromo-enzo-e-dino-ferrari",
-    "city": "Autodromo Enzo e Dino Ferrari",
-    "country": "Italy",
-    "region": "Emilia Romagna GP",
-    "round": 7,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
-    "timezone": "Europe/Rome",
-    "lat": 44.34,
-    "lng": 11.71,
-    "sessions": {
-      "fp1": "2026-05-15T11:30Z",
-      "fp2": "2026-05-15T15:00Z",
-      "fp3": "2026-05-16T10:30Z",
-      "quali": "2026-05-16T14:00Z",
-      "race": "2026-05-17T13:00Z"
-    },
-    "f2Sessions": {
-      "fp": "2026-05-15T10:00Z",
-      "quali": "2026-05-15T13:30Z",
-      "sprint": "2026-05-16T10:00Z",
-      "feature": "2026-05-17T09:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-05-15T08:45Z",
-      "quali": "2026-05-15T12:30Z",
-      "sprint": "2026-05-16T08:30Z",
-      "feature": "2026-05-16T22:45Z"
-    }
-  },
-  {
-    "id": "circuit-de-monaco",
-    "city": "Circuit de Monaco",
-    "country": "Monaco",
-    "region": "Monaco GP",
-    "round": 8,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
-    "timezone": "Europe/Monaco",
-    "lat": 43.74,
-    "lng": 7.43,
-    "sessions": {
-      "fp1": "2026-05-22T11:30Z",
-      "fp2": "2026-05-22T15:00Z",
-      "fp3": "2026-05-23T10:30Z",
-      "quali": "2026-05-23T14:00Z",
-      "race": "2026-05-24T13:00Z"
-    },
-    "f2Sessions": {
-      "fp": "2026-05-22T10:00Z",
-      "quali": "2026-05-22T13:30Z",
-      "sprint": "2026-05-23T10:00Z",
-      "feature": "2026-05-24T09:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-05-22T08:45Z",
-      "quali": "2026-05-22T12:30Z",
-      "sprint": "2026-05-23T08:30Z",
-      "feature": "2026-05-23T21:45Z"
-    }
-  },
-  {
-    "id": "circuit-de-barcelona-catalunya",
-    "city": "Circuit de Barcelona-Catalunya",
-    "country": "Spain",
-    "region": "Spanish GP",
-    "round": 9,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
-    "timezone": "Europe/Madrid",
-    "lat": 41.57,
-    "lng": 2.26,
-    "sessions": {
-      "fp1": "2026-05-29T11:30Z",
-      "fp2": "2026-05-29T15:00Z",
-      "fp3": "2026-05-30T10:30Z",
-      "quali": "2026-05-30T14:00Z",
-      "race": "2026-05-31T13:00Z"
-    },
-    "f2Sessions": {
-      "fp": "2026-05-29T10:00Z",
-      "quali": "2026-05-29T13:30Z",
-      "sprint": "2026-05-30T10:00Z",
-      "feature": "2026-05-31T09:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-05-29T08:45Z",
-      "quali": "2026-05-29T12:30Z",
-      "sprint": "2026-05-30T08:30Z",
-      "feature": "2026-05-30T21:45Z"
-    }
-  },
-  {
     "id": "circuit-gilles-villeneuve",
     "city": "Circuit Gilles-Villeneuve",
     "country": "Canada",
     "region": "Canadian GP",
-    "round": 10,
-    "series": [
-      "f1",
-      "f2",
-      "f3",
-      "f1a"
-    ],
+    "round": 7,
+    "series": ["f1", "f1a"],
     "timezone": "America/Toronto",
     "lat": 45.5,
     "lng": -73.52,
     "sessions": {
-      "fp1": "2026-06-12T17:30Z",
-      "fp2": "2026-06-12T21:00Z",
-      "fp3": "2026-06-13T16:30Z",
-      "quali": "2026-06-13T20:00Z",
-      "race": "2026-06-14T18:00Z"
-    },
-    "f2Sessions": {
-      "fp": "2026-06-12T16:00Z",
-      "quali": "2026-06-12T20:00Z",
-      "sprint": "2026-06-13T16:00Z",
-      "feature": "2026-06-14T14:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-06-12T15:00Z",
-      "quali": "2026-06-12T19:00Z",
-      "sprint": "2026-06-13T14:30Z",
-      "feature": "2026-06-13T22:45Z"
+      "fp1": "2026-05-22T16:30Z",
+      "sq": "2026-05-22T20:30Z",
+      "sprint": "2026-05-23T16:00Z",
+      "quali": "2026-05-23T20:00Z",
+      "race": "2026-05-24T20:00Z"
     },
     "f1aSessions": {
       "quali": "2026-05-22T15:00Z",
@@ -324,23 +178,79 @@
     }
   },
   {
+    "id": "circuit-de-monaco",
+    "city": "Circuit de Monaco",
+    "country": "Monaco",
+    "region": "Monaco GP",
+    "round": 8,
+    "series": ["f1", "f2", "f3"],
+    "timezone": "Europe/Monaco",
+    "lat": 43.74,
+    "lng": 7.43,
+    "sessions": {
+      "fp1": "2026-06-05T11:30Z",
+      "fp2": "2026-06-05T15:00Z",
+      "fp3": "2026-06-06T10:30Z",
+      "quali": "2026-06-06T14:00Z",
+      "race": "2026-06-07T13:00Z"
+    },
+    "f2Sessions": {
+      "fp": "2026-06-05T10:00Z",
+      "quali": "2026-06-05T13:30Z",
+      "sprint": "2026-06-06T10:00Z",
+      "feature": "2026-06-07T09:30Z"
+    },
+    "f3Sessions": {
+      "fp": "2026-06-05T08:45Z",
+      "quali": "2026-06-05T12:30Z",
+      "sprint": "2026-06-06T08:30Z",
+      "feature": "2026-06-06T21:45Z"
+    }
+  },
+  {
+    "id": "circuit-de-barcelona-catalunya",
+    "city": "Circuit de Barcelona-Catalunya",
+    "country": "Spain",
+    "region": "Spanish GP",
+    "round": 9,
+    "series": ["f1", "f2", "f3"],
+    "timezone": "Europe/Madrid",
+    "lat": 41.57,
+    "lng": 2.26,
+    "sessions": {
+      "fp1": "2026-06-12T11:30Z",
+      "fp2": "2026-06-12T15:00Z",
+      "fp3": "2026-06-13T10:30Z",
+      "quali": "2026-06-13T14:00Z",
+      "race": "2026-06-14T13:00Z"
+    },
+    "f2Sessions": {
+      "fp": "2026-06-12T10:00Z",
+      "quali": "2026-06-12T13:30Z",
+      "sprint": "2026-06-13T10:00Z",
+      "feature": "2026-06-14T09:30Z"
+    },
+    "f3Sessions": {
+      "fp": "2026-06-12T08:45Z",
+      "quali": "2026-06-12T12:30Z",
+      "sprint": "2026-06-13T08:30Z",
+      "feature": "2026-06-13T21:45Z"
+    }
+  },
+  {
     "id": "red-bull-ring",
     "city": "Red Bull Ring",
     "country": "Austria",
     "region": "Austrian GP",
-    "round": 11,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "round": 10,
+    "series": ["f1", "f2", "f3"],
     "timezone": "Europe/Vienna",
     "lat": 47.22,
     "lng": 14.76,
     "sessions": {
-      "fp1": "2026-06-26T10:30Z",
-      "sq": "2026-06-26T14:30Z",
-      "sprint": "2026-06-27T10:00Z",
+      "fp1": "2026-06-26T11:30Z",
+      "fp2": "2026-06-26T15:00Z",
+      "fp3": "2026-06-27T10:30Z",
       "quali": "2026-06-27T14:00Z",
       "race": "2026-06-28T13:00Z"
     },
@@ -362,21 +272,16 @@
     "city": "Silverstone Circuit",
     "country": "United Kingdom",
     "region": "British GP",
-    "round": 12,
-    "series": [
-      "f1",
-      "f2",
-      "f3",
-      "f1a"
-    ],
+    "round": 11,
+    "series": ["f1", "f2", "f3", "f1a"],
     "timezone": "Europe/London",
     "lat": 52.07,
     "lng": -1.02,
     "sessions": {
       "fp1": "2026-07-03T11:30Z",
-      "fp2": "2026-07-03T15:00Z",
-      "fp3": "2026-07-04T10:30Z",
-      "quali": "2026-07-04T14:00Z",
+      "sq": "2026-07-03T15:30Z",
+      "sprint": "2026-07-04T11:00Z",
+      "quali": "2026-07-04T15:00Z",
       "race": "2026-07-05T14:00Z"
     },
     "f2Sessions": {
@@ -402,33 +307,29 @@
     "city": "Circuit de Spa-Francorchamps",
     "country": "Belgium",
     "region": "Belgian GP",
-    "round": 13,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "round": 12,
+    "series": ["f1", "f2", "f3"],
     "timezone": "Europe/Brussels",
     "lat": 50.44,
     "lng": 5.97,
     "sessions": {
-      "fp1": "2026-07-24T11:30Z",
-      "sq": "2026-07-24T15:30Z",
-      "sprint": "2026-07-25T11:00Z",
-      "quali": "2026-07-25T15:00Z",
-      "race": "2026-07-26T13:00Z"
+      "fp1": "2026-07-17T11:30Z",
+      "fp2": "2026-07-17T15:00Z",
+      "fp3": "2026-07-18T10:30Z",
+      "quali": "2026-07-18T14:00Z",
+      "race": "2026-07-19T13:00Z"
     },
     "f2Sessions": {
-      "fp": "2026-07-24T10:00Z",
-      "quali": "2026-07-24T14:00Z",
-      "sprint": "2026-07-25T10:00Z",
-      "feature": "2026-07-26T09:30Z"
+      "fp": "2026-07-17T10:00Z",
+      "quali": "2026-07-17T14:00Z",
+      "sprint": "2026-07-18T10:00Z",
+      "feature": "2026-07-19T09:30Z"
     },
     "f3Sessions": {
-      "fp": "2026-07-24T09:00Z",
-      "quali": "2026-07-24T12:30Z",
-      "sprint": "2026-07-25T08:30Z",
-      "feature": "2026-07-25T20:45Z"
+      "fp": "2026-07-17T09:00Z",
+      "quali": "2026-07-17T12:30Z",
+      "sprint": "2026-07-18T08:30Z",
+      "feature": "2026-07-18T20:45Z"
     }
   },
   {
@@ -436,33 +337,29 @@
     "city": "Hungaroring",
     "country": "Hungary",
     "region": "Hungarian GP",
-    "round": 14,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "round": 13,
+    "series": ["f1", "f2", "f3"],
     "timezone": "Europe/Budapest",
     "lat": 47.58,
     "lng": 19.25,
     "sessions": {
-      "fp1": "2026-07-31T11:30Z",
-      "fp2": "2026-07-31T15:00Z",
-      "fp3": "2026-08-01T10:30Z",
-      "quali": "2026-08-01T14:00Z",
-      "race": "2026-08-02T13:00Z"
+      "fp1": "2026-07-24T11:30Z",
+      "fp2": "2026-07-24T15:00Z",
+      "fp3": "2026-07-25T10:30Z",
+      "quali": "2026-07-25T14:00Z",
+      "race": "2026-07-26T13:00Z"
     },
     "f2Sessions": {
-      "fp": "2026-07-31T10:00Z",
-      "quali": "2026-07-31T13:30Z",
-      "sprint": "2026-08-01T10:00Z",
-      "feature": "2026-08-02T09:30Z"
+      "fp": "2026-07-24T10:00Z",
+      "quali": "2026-07-24T13:30Z",
+      "sprint": "2026-07-25T10:00Z",
+      "feature": "2026-07-26T09:30Z"
     },
     "f3Sessions": {
-      "fp": "2026-07-31T08:45Z",
-      "quali": "2026-07-31T12:30Z",
-      "sprint": "2026-08-01T08:30Z",
-      "feature": "2026-08-01T21:45Z"
+      "fp": "2026-07-24T08:45Z",
+      "quali": "2026-07-24T12:30Z",
+      "sprint": "2026-07-25T08:30Z",
+      "feature": "2026-07-25T21:45Z"
     }
   },
   {
@@ -470,20 +367,17 @@
     "city": "Circuit Zandvoort",
     "country": "Netherlands",
     "region": "Dutch GP",
-    "round": 15,
-    "series": [
-      "f1",
-      "f1a"
-    ],
+    "round": 14,
+    "series": ["f1", "f1a"],
     "timezone": "Europe/Amsterdam",
     "lat": 52.39,
     "lng": 4.54,
     "sessions": {
-      "fp1": "2026-08-28T10:30Z",
-      "fp2": "2026-08-28T14:00Z",
-      "fp3": "2026-08-29T09:30Z",
-      "quali": "2026-08-29T13:00Z",
-      "race": "2026-08-30T13:00Z"
+      "fp1": "2026-08-21T10:30Z",
+      "sq": "2026-08-21T14:30Z",
+      "sprint": "2026-08-22T10:00Z",
+      "quali": "2026-08-22T14:00Z",
+      "race": "2026-08-23T13:00Z"
     },
     "f1aSessions": {
       "quali": "2026-08-21T10:00Z",
@@ -496,12 +390,8 @@
     "city": "Autodromo Nazionale Monza",
     "country": "Italy",
     "region": "Italian GP",
-    "round": 16,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "round": 15,
+    "series": ["f1", "f2", "f3"],
     "timezone": "Europe/Rome",
     "lat": 45.62,
     "lng": 9.28,
@@ -526,37 +416,57 @@
     }
   },
   {
+    "id": "madrid-ifema-circuit",
+    "city": "IFEMA Circuit",
+    "country": "Spain",
+    "region": "Madrid GP",
+    "round": 16,
+    "series": ["f1", "f2", "f3"],
+    "timezone": "Europe/Madrid",
+    "lat": 40.47,
+    "lng": -3.62,
+    "sessions": {
+      "fp1": "2026-09-11T11:30Z",
+      "fp2": "2026-09-11T15:00Z",
+      "fp3": "2026-09-12T10:30Z",
+      "quali": "2026-09-12T14:00Z",
+      "race": "2026-09-13T13:00Z"
+    },
+    "f2Sessions": {
+      "fp": "2026-09-11T10:00Z",
+      "quali": "2026-09-11T13:30Z",
+      "sprint": "2026-09-12T10:00Z",
+      "feature": "2026-09-13T09:30Z"
+    },
+    "f3Sessions": {
+      "fp": "2026-09-11T08:45Z",
+      "quali": "2026-09-11T12:30Z",
+      "sprint": "2026-09-12T08:30Z",
+      "feature": "2026-09-12T21:45Z"
+    }
+  },
+  {
     "id": "baku-city-circuit",
     "city": "Baku City Circuit",
     "country": "Azerbaijan",
     "region": "Azerbaijan GP",
     "round": 17,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "series": ["f1", "f2"],
     "timezone": "Asia/Baku",
     "lat": 40.37,
     "lng": 49.85,
     "sessions": {
-      "fp1": "2026-09-18T09:30Z",
-      "fp2": "2026-09-18T13:00Z",
-      "fp3": "2026-09-19T08:30Z",
-      "quali": "2026-09-19T12:00Z",
-      "race": "2026-09-20T11:00Z"
+      "fp1": "2026-09-24T08:30Z",
+      "fp2": "2026-09-24T12:00Z",
+      "fp3": "2026-09-25T08:30Z",
+      "quali": "2026-09-25T12:00Z",
+      "race": "2026-09-26T11:00Z"
     },
     "f2Sessions": {
-      "fp": "2026-09-18T08:00Z",
-      "quali": "2026-09-18T11:30Z",
-      "sprint": "2026-09-19T08:00Z",
-      "feature": "2026-09-20T07:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-09-18T07:00Z",
-      "quali": "2026-09-18T10:30Z",
-      "sprint": "2026-09-19T06:30Z",
-      "feature": "2026-09-19T19:45Z"
+      "fp": "2026-09-24T07:00Z",
+      "quali": "2026-09-24T10:30Z",
+      "sprint": "2026-09-25T07:00Z",
+      "feature": "2026-09-26T07:30Z"
     }
   },
   {
@@ -565,18 +475,16 @@
     "country": "Singapore",
     "region": "Singapore GP",
     "round": 18,
-    "series": [
-      "f1"
-    ],
+    "series": ["f1"],
     "timezone": "Asia/Singapore",
     "lat": 1.29,
     "lng": 103.86,
     "sessions": {
-      "fp1": "2026-10-02T09:30Z",
-      "fp2": "2026-10-02T13:00Z",
-      "fp3": "2026-10-03T09:30Z",
-      "quali": "2026-10-03T13:00Z",
-      "race": "2026-10-04T12:00Z"
+      "fp1": "2026-10-09T08:30Z",
+      "sq": "2026-10-09T12:30Z",
+      "sprint": "2026-10-10T09:00Z",
+      "quali": "2026-10-10T13:00Z",
+      "race": "2026-10-11T12:00Z"
     }
   },
   {
@@ -585,24 +493,21 @@
     "country": "USA",
     "region": "United States GP",
     "round": 19,
-    "series": [
-      "f1",
-      "f1a"
-    ],
+    "series": ["f1", "f1a"],
     "timezone": "America/Chicago",
     "lat": 30.13,
     "lng": -97.64,
     "sessions": {
-      "fp1": "2026-10-16T17:30Z",
-      "sq": "2026-10-16T21:30Z",
-      "sprint": "2026-10-17T17:00Z",
-      "quali": "2026-10-17T21:00Z",
-      "race": "2026-10-18T19:00Z"
+      "fp1": "2026-10-23T17:30Z",
+      "fp2": "2026-10-23T21:00Z",
+      "fp3": "2026-10-24T17:30Z",
+      "quali": "2026-10-24T21:00Z",
+      "race": "2026-10-25T20:00Z"
     },
     "f1aSessions": {
-      "quali": "2026-10-16T23:00Z",
-      "race1": "2026-10-17T15:00Z",
-      "race2": "2026-10-18T15:00Z"
+      "quali": "2026-10-23T23:00Z",
+      "race1": "2026-10-24T15:00Z",
+      "race2": "2026-10-25T15:00Z"
     }
   },
   {
@@ -611,32 +516,16 @@
     "country": "Mexico",
     "region": "Mexico City GP",
     "round": 20,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "series": ["f1"],
     "timezone": "America/Mexico_City",
     "lat": 19.4,
     "lng": -99.09,
     "sessions": {
-      "fp1": "2026-10-23T18:30Z",
-      "fp2": "2026-10-23T22:00Z",
-      "fp3": "2026-10-24T17:30Z",
-      "quali": "2026-10-24T21:00Z",
-      "race": "2026-10-25T20:00Z"
-    },
-    "f2Sessions": {
-      "fp": "2026-10-23T17:00Z",
-      "quali": "2026-10-23T20:30Z",
-      "sprint": "2026-10-24T17:00Z",
-      "feature": "2026-10-25T16:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-10-23T16:00Z",
-      "quali": "2026-10-23T19:30Z",
-      "sprint": "2026-10-24T15:30Z",
-      "feature": "2026-10-24T23:45Z"
+      "fp1": "2026-10-30T18:30Z",
+      "fp2": "2026-10-30T22:00Z",
+      "fp3": "2026-10-31T17:30Z",
+      "quali": "2026-10-31T21:00Z",
+      "race": "2026-11-01T20:00Z"
     }
   },
   {
@@ -645,32 +534,16 @@
     "country": "Brazil",
     "region": "S\u00e3o Paulo GP",
     "round": 21,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "series": ["f1"],
     "timezone": "America/Sao_Paulo",
     "lat": -23.7,
     "lng": -46.7,
     "sessions": {
-      "fp1": "2026-10-30T14:30Z",
-      "sq": "2026-10-30T18:30Z",
-      "sprint": "2026-10-31T14:00Z",
-      "quali": "2026-10-31T18:00Z",
-      "race": "2026-11-01T17:00Z"
-    },
-    "f2Sessions": {
-      "fp": "2026-10-30T13:00Z",
-      "quali": "2026-10-30T16:30Z",
-      "sprint": "2026-10-31T13:30Z",
-      "feature": "2026-11-01T13:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-10-30T12:00Z",
-      "quali": "2026-10-30T15:30Z",
-      "sprint": "2026-10-31T12:00Z",
-      "feature": "2026-10-31T21:45Z"
+      "fp1": "2026-11-06T15:30Z",
+      "fp2": "2026-11-06T19:00Z",
+      "fp3": "2026-11-07T14:30Z",
+      "quali": "2026-11-07T18:00Z",
+      "race": "2026-11-08T17:00Z"
     }
   },
   {
@@ -679,22 +552,19 @@
     "country": "USA",
     "region": "Las Vegas GP",
     "round": 22,
-    "series": [
-      "f1",
-      "f1a"
-    ],
+    "series": ["f1", "f1a"],
     "timezone": "America/Los_Angeles",
     "lat": 36.11,
     "lng": -115.17,
     "sessions": {
-      "fp1": "2026-11-20T04:30Z",
-      "sq": "2026-11-20T08:30Z",
-      "sprint": "2026-11-21T04:00Z",
-      "quali": "2026-11-21T08:00Z",
-      "race": "2026-11-22T06:00Z"
+      "fp1": "2026-11-20T00:30Z",
+      "fp2": "2026-11-20T04:00Z",
+      "fp3": "2026-11-21T00:30Z",
+      "quali": "2026-11-21T04:00Z",
+      "race": "2026-11-22T04:00Z"
     },
     "f1aSessions": {
-      "quali": "2026-11-20T10:00Z",
+      "quali": "2026-11-20T06:00Z",
       "race1": "2026-11-21T02:00Z",
       "race2": "2026-11-22T02:00Z"
     }
@@ -705,32 +575,22 @@
     "country": "Qatar",
     "region": "Qatar GP",
     "round": 23,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "series": ["f1", "f2"],
     "timezone": "Asia/Qatar",
     "lat": 25.49,
     "lng": 51.45,
     "sessions": {
-      "fp1": "2026-11-27T12:30Z",
-      "sq": "2026-11-27T16:30Z",
-      "sprint": "2026-11-28T12:00Z",
-      "quali": "2026-11-28T16:00Z",
-      "race": "2026-11-29T15:00Z"
+      "fp1": "2026-11-27T13:30Z",
+      "fp2": "2026-11-27T17:00Z",
+      "fp3": "2026-11-28T14:30Z",
+      "quali": "2026-11-28T18:00Z",
+      "race": "2026-11-29T16:00Z"
     },
     "f2Sessions": {
       "fp": "2026-11-27T11:00Z",
       "quali": "2026-11-27T14:30Z",
       "sprint": "2026-11-28T11:30Z",
       "feature": "2026-11-29T11:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-11-27T10:00Z",
-      "quali": "2026-11-27T13:30Z",
-      "sprint": "2026-11-28T10:00Z",
-      "feature": "2026-11-28T19:45Z"
     }
   },
   {
@@ -739,11 +599,7 @@
     "country": "UAE",
     "region": "Abu Dhabi GP",
     "round": 24,
-    "series": [
-      "f1",
-      "f2",
-      "f3"
-    ],
+    "series": ["f1", "f2"],
     "timezone": "Asia/Dubai",
     "lat": 24.47,
     "lng": 54.6,
@@ -759,12 +615,6 @@
       "quali": "2026-12-04T11:30Z",
       "sprint": "2026-12-05T08:30Z",
       "feature": "2026-12-06T09:30Z"
-    },
-    "f3Sessions": {
-      "fp": "2026-12-04T07:00Z",
-      "quali": "2026-12-04T10:30Z",
-      "sprint": "2026-12-05T07:00Z",
-      "feature": "2026-12-05T20:45Z"
     }
   },
   {
@@ -773,9 +623,7 @@
     "country": "Saudi Arabia",
     "region": "Diriyah E-Prix",
     "round": "FE-1",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Asia/Riyadh",
     "lat": 24.73,
     "lng": 46.57,
@@ -793,9 +641,7 @@
     "country": "Brazil",
     "region": "S\u00e3o Paulo E-Prix",
     "round": "FE-2",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "America/Sao_Paulo",
     "lat": -23.55,
     "lng": -46.63,
@@ -812,9 +658,7 @@
     "country": "Japan",
     "region": "Tokyo E-Prix",
     "round": "FE-3",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Asia/Tokyo",
     "lat": 35.67,
     "lng": 139.77,
@@ -831,9 +675,7 @@
     "country": "Monaco",
     "region": "Monaco E-Prix",
     "round": "FE-4",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Europe/Monaco",
     "lat": 43.74,
     "lng": 7.43,
@@ -850,9 +692,7 @@
     "country": "Germany",
     "region": "Berlin E-Prix",
     "round": "FE-5",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Europe/Berlin",
     "lat": 52.47,
     "lng": 13.4,
@@ -870,9 +710,7 @@
     "country": "Indonesia",
     "region": "Jakarta E-Prix",
     "round": "FE-6",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Asia/Jakarta",
     "lat": -6.21,
     "lng": 106.85,
@@ -889,9 +727,7 @@
     "country": "USA",
     "region": "Portland E-Prix",
     "round": "FE-7",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "America/Los_Angeles",
     "lat": 45.6,
     "lng": -122.69,
@@ -908,9 +744,7 @@
     "country": "United Kingdom",
     "region": "London E-Prix",
     "round": "FE-8",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Europe/London",
     "lat": 51.51,
     "lng": 0.03,
@@ -928,9 +762,7 @@
     "country": "South Korea",
     "region": "Seoul E-Prix",
     "round": "FE-9",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Asia/Seoul",
     "lat": 37.52,
     "lng": 126.98,
@@ -947,9 +779,7 @@
     "country": "China",
     "region": "Shanghai E-Prix",
     "round": "FE-10",
-    "series": [
-      "fe"
-    ],
+    "series": ["fe"],
     "timezone": "Asia/Shanghai",
     "lat": 31.23,
     "lng": 121.47,
@@ -966,9 +796,7 @@
     "country": "USA",
     "region": "Firestone Grand Prix of St. Pete",
     "round": "IC-1",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/New_York",
     "lat": 27.77,
     "lng": -82.64,
@@ -982,9 +810,7 @@
     "country": "USA",
     "region": "PPG 375 at Texas",
     "round": "IC-2",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Chicago",
     "lat": 33.04,
     "lng": -97.28,
@@ -998,9 +824,7 @@
     "country": "USA",
     "region": "Children's of Alabama Indy Grand Prix",
     "round": "IC-3",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Chicago",
     "lat": 33.57,
     "lng": -86.62,
@@ -1014,9 +838,7 @@
     "country": "USA",
     "region": "Indianapolis 500",
     "round": "IC-4",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Indiana/Indianapolis",
     "lat": 39.79,
     "lng": -86.24,
@@ -1030,9 +852,7 @@
     "country": "USA",
     "region": "Chevrolet Detroit Grand Prix",
     "round": "IC-5",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Detroit",
     "lat": 42.33,
     "lng": -83.05,
@@ -1046,9 +866,7 @@
     "country": "USA",
     "region": "XPEL Grand Prix",
     "round": "IC-6",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Chicago",
     "lat": 43.8,
     "lng": -87.99,
@@ -1062,9 +880,7 @@
     "country": "USA",
     "region": "Honda Indy 200 at Mid-Ohio",
     "round": "IC-7",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/New_York",
     "lat": 40.69,
     "lng": -82.64,
@@ -1078,9 +894,7 @@
     "country": "USA",
     "region": "HyVee Homefront 250",
     "round": "IC-8",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Chicago",
     "lat": 41.66,
     "lng": -93.06,
@@ -1095,9 +909,7 @@
     "country": "Canada",
     "region": "Honda Indy Toronto",
     "round": "IC-9",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Toronto",
     "lat": 43.64,
     "lng": -79.42,
@@ -1111,9 +923,7 @@
     "country": "USA",
     "region": "Big Machine Music City Grand Prix",
     "round": "IC-10",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Chicago",
     "lat": 36.17,
     "lng": -86.26,
@@ -1127,9 +937,7 @@
     "country": "USA",
     "region": "Gallagher Grand Prix",
     "round": "IC-11",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Indiana/Indianapolis",
     "lat": 39.79,
     "lng": -86.23,
@@ -1143,9 +951,7 @@
     "country": "USA",
     "region": "Bommarito Automotive Group 500",
     "round": "IC-12",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Chicago",
     "lat": 38.64,
     "lng": -90.16,
@@ -1159,9 +965,7 @@
     "country": "USA",
     "region": "Grand Prix of Portland",
     "round": "IC-13",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Los_Angeles",
     "lat": 45.6,
     "lng": -122.69,
@@ -1175,9 +979,7 @@
     "country": "USA",
     "region": "Firestone Grand Prix of Monterey",
     "round": "IC-14",
-    "series": [
-      "indy"
-    ],
+    "series": ["indy"],
     "timezone": "America/Los_Angeles",
     "lat": 36.58,
     "lng": -121.75,
@@ -1191,9 +993,7 @@
     "country": "Qatar",
     "region": "Qatar 1812km",
     "round": "WEC-1",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "Asia/Qatar",
     "lat": 25.49,
     "lng": 51.45,
@@ -1208,9 +1008,7 @@
     "country": "USA",
     "region": "Sebring 1000 Miles",
     "round": "WEC-2",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "America/New_York",
     "lat": 27.45,
     "lng": -81.35,
@@ -1224,9 +1022,7 @@
     "country": "Portugal",
     "region": "Portim\u00e3o 6 Hours",
     "round": "WEC-3",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "Europe/Lisbon",
     "lat": 37.23,
     "lng": -8.63,
@@ -1240,9 +1036,7 @@
     "country": "Belgium",
     "region": "Spa 6 Hours",
     "round": "WEC-4",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "Europe/Brussels",
     "lat": 50.44,
     "lng": 5.97,
@@ -1256,9 +1050,7 @@
     "country": "France",
     "region": "Le Mans 24 Hours",
     "round": "WEC-5",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "Europe/Paris",
     "lat": 47.95,
     "lng": 0.21,
@@ -1272,9 +1064,7 @@
     "country": "Italy",
     "region": "Monza 6 Hours",
     "round": "WEC-6",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "Europe/Rome",
     "lat": 45.62,
     "lng": 9.29,
@@ -1288,9 +1078,7 @@
     "country": "Brazil",
     "region": "S\u00e3o Paulo 6 Hours",
     "round": "WEC-7",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "America/Sao_Paulo",
     "lat": -23.71,
     "lng": -46.7,
@@ -1304,9 +1092,7 @@
     "country": "Bahrain",
     "region": "Bahrain 8 Hours",
     "round": "WEC-8",
-    "series": [
-      "wec"
-    ],
+    "series": ["wec"],
     "timezone": "Asia/Bahrain",
     "lat": 26.03,
     "lng": 50.52,
@@ -1320,9 +1106,7 @@
     "country": "Monaco",
     "region": "Rally Monte Carlo",
     "round": "WRC-1",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Monaco",
     "lat": 43.74,
     "lng": 7.43,
@@ -1336,9 +1120,7 @@
     "country": "Sweden",
     "region": "Rally Sweden",
     "round": "WRC-2",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Stockholm",
     "lat": 63.82,
     "lng": 20.26,
@@ -1352,9 +1134,7 @@
     "country": "Kenya",
     "region": "Safari Rally Kenya",
     "round": "WRC-3",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Africa/Nairobi",
     "lat": -1.29,
     "lng": 36.82,
@@ -1368,9 +1148,7 @@
     "country": "Croatia",
     "region": "Rally Croatia",
     "round": "WRC-4",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Zagreb",
     "lat": 45.81,
     "lng": 15.98,
@@ -1384,9 +1162,7 @@
     "country": "Portugal",
     "region": "Rally de Portugal",
     "round": "WRC-5",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Lisbon",
     "lat": 41.18,
     "lng": -8.69,
@@ -1400,9 +1176,7 @@
     "country": "Italy",
     "region": "Rally Italia Sardegna",
     "round": "WRC-6",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Rome",
     "lat": 40.56,
     "lng": 8.32,
@@ -1416,9 +1190,7 @@
     "country": "Poland",
     "region": "Rally Poland",
     "round": "WRC-7",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Warsaw",
     "lat": 53.79,
     "lng": 21.57,
@@ -1432,9 +1204,7 @@
     "country": "Estonia",
     "region": "Rally Estonia",
     "round": "WRC-8",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Tallinn",
     "lat": 58.37,
     "lng": 26.73,
@@ -1448,9 +1218,7 @@
     "country": "Finland",
     "region": "Rally Finland",
     "round": "WRC-9",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Helsinki",
     "lat": 62.24,
     "lng": 25.75,
@@ -1464,9 +1232,7 @@
     "country": "Greece",
     "region": "Acropolis Rally Greece",
     "round": "WRC-10",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Athens",
     "lat": 38.9,
     "lng": 22.43,
@@ -1480,9 +1246,7 @@
     "country": "Chile",
     "region": "Rally Chile Bio B\u00edo",
     "round": "WRC-11",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "America/Santiago",
     "lat": -36.82,
     "lng": -73.04,
@@ -1496,9 +1260,7 @@
     "country": "Japan",
     "region": "Rally Japan",
     "round": "WRC-12",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Asia/Tokyo",
     "lat": 35.08,
     "lng": 137.16,
@@ -1512,9 +1274,7 @@
     "country": "Germany",
     "region": "Rally Central Europe",
     "round": "WRC-13",
-    "series": [
-      "wrc"
-    ],
+    "series": ["wrc"],
     "timezone": "Europe/Berlin",
     "lat": 48.57,
     "lng": 13.45,
