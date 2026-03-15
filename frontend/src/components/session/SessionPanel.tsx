@@ -92,6 +92,10 @@ export function SessionPanel() {
         <button className="sp-close" onClick={() => selectRace(null)}>✕</button>
       </div>
 
+      {selectedRace.cancelled && (
+        <div className="sp-cancelled-banner">{t('race_cancelled', 'CANCELLED')}</div>
+      )}
+
       <div className="sp-sessions">
         {[...grouped.entries()].map(([day, sessions]) => (
           <div key={day}>

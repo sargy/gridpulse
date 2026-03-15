@@ -26,6 +26,7 @@ public class Race {
     private Map<String, String> indySessions;
     private Map<String, String> wecSessions;
     private Map<String, String> wrcSessions;
+    private boolean cancelled;
 
     public Race() {}
 
@@ -79,4 +80,7 @@ public class Race {
 
     public Map<String, String> getWrcSessions() { return wrcSessions; }
     public void setWrcSessions(Map<String, String> wrcSessions) { this.wrcSessions = wrcSessions; }
+
+    public boolean isCancelled() { return cancelled; }
+    public void setCancelled(boolean cancelled) { this.cancelled = cancelled; }
 }

@@ -16,6 +16,7 @@ export interface Race {
   indySessions?: Record<string, string>;
   wecSessions?: Record<string, string>;
   wrcSessions?: Record<string, string>;
+  cancelled?: boolean;
 }
 
 export interface SeriesConfig {

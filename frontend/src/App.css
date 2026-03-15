@@ -259,6 +259,11 @@ body {
 .ci-bottom { display: flex; gap: 8px; font-size: 0.6rem; color: var(--muted); margin-top: 2px; }
 .ci-badges { display: flex; gap: 4px; margin-top: 4px; }
 
+/* ── Cancelled races ── */
+.city-item.cancelled { opacity: 0.5; }
+.city-item.cancelled .ci-name { text-decoration: line-through; }
+.ci-cancelled { color: #ff4444 !important; font-weight: 600; letter-spacing: 0.03em; }
+
 /* ── Globe ── */
 .globe-wrapper {
   flex: 1;
@@ -352,6 +357,19 @@ body {
 }
 .sp-countdown-label { font-size: 0.55rem; color: var(--muted); text-transform: uppercase; }
 .sp-countdown-value { font-size: 1.1rem; font-weight: 500; color: var(--accent); margin-top: 2px; }
+
+.sp-cancelled-banner {
+  margin: 12px;
+  padding: 10px;
+  background: rgba(255,68,68,0.1);
+  border: 1px solid rgba(255,68,68,0.3);
+  border-radius: 6px;
+  text-align: center;
+  color: #ff4444;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
 
 /* ── Info Panel ── */
 .info-btn {

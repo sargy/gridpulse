@@ -111,7 +111,8 @@
       "quali": "2026-04-10T11:30Z",
       "sprint": "2026-04-11T08:30Z",
       "feature": "2026-04-12T07:30Z"
-    }
+    },
+    "cancelled": true
   },
   {
     "id": "jeddah-corniche-circuit",
@@ -122,7 +123,8 @@
     "series": [
       "f1",
       "f2",
-      "f3"
+      "f3",
+      "f1a"
     ],
     "timezone": "Asia/Riyadh",
     "lat": 21.54,
@@ -145,6 +147,12 @@
       "quali": "2026-04-17T15:00Z",
       "sprint": "2026-04-18T11:15Z",
       "feature": "2026-04-18T23:45Z"
+    },
+    "cancelled": true,
+    "f1aSessions": {
+      "quali": "2026-04-17T10:00Z",
+      "race1": "2026-04-18T10:00Z",
+      "race2": "2026-04-19T10:00Z"
     }
   },
   {
@@ -284,7 +292,8 @@
     "series": [
       "f1",
       "f2",
-      "f3"
+      "f3",
+      "f1a"
     ],
     "timezone": "America/Toronto",
     "lat": 45.5,
@@ -307,6 +316,11 @@
       "quali": "2026-06-12T19:00Z",
       "sprint": "2026-06-13T14:30Z",
       "feature": "2026-06-13T22:45Z"
+    },
+    "f1aSessions": {
+      "quali": "2026-05-22T15:00Z",
+      "race1": "2026-05-23T15:00Z",
+      "race2": "2026-05-24T14:00Z"
     }
   },
   {
@@ -352,7 +366,8 @@
     "series": [
       "f1",
       "f2",
-      "f3"
+      "f3",
+      "f1a"
     ],
     "timezone": "Europe/London",
     "lat": 52.07,
@@ -375,6 +390,11 @@
       "quali": "2026-07-03T12:30Z",
       "sprint": "2026-07-04T08:30Z",
       "feature": "2026-07-04T22:45Z"
+    },
+    "f1aSessions": {
+      "quali": "2026-07-03T10:00Z",
+      "race1": "2026-07-04T10:00Z",
+      "race2": "2026-07-05T09:30Z"
     }
   },
   {
@@ -452,7 +472,8 @@
     "region": "Dutch GP",
     "round": 15,
     "series": [
-      "f1"
+      "f1",
+      "f1a"
     ],
     "timezone": "Europe/Amsterdam",
     "lat": 52.39,
@@ -463,6 +484,11 @@
       "fp3": "2026-08-29T09:30Z",
       "quali": "2026-08-29T13:00Z",
       "race": "2026-08-30T13:00Z"
+    },
+    "f1aSessions": {
+      "quali": "2026-08-21T10:00Z",
+      "race1": "2026-08-22T10:00Z",
+      "race2": "2026-08-23T09:30Z"
     }
   },
   {
@@ -617,7 +643,7 @@
     "id": "autodromo-jose-carlos-pace",
     "city": "Autodromo Jose Carlos Pace",
     "country": "Brazil",
-    "region": "São Paulo GP",
+    "region": "S\u00e3o Paulo GP",
     "round": 21,
     "series": [
       "f1",
@@ -763,9 +789,9 @@
   },
   {
     "id": "s-o-paulo",
-    "city": "São Paulo",
+    "city": "S\u00e3o Paulo",
     "country": "Brazil",
-    "region": "São Paulo E-Prix",
+    "region": "S\u00e3o Paulo E-Prix",
     "round": "FE-2",
     "series": [
       "fe"
@@ -1173,7 +1199,8 @@
     "lng": 51.45,
     "sessions": {
       "race": "2026-01-24T13:00Z"
-    }
+    },
+    "cancelled": true
   },
   {
     "id": "sebring-international-raceway",
@@ -1195,7 +1222,7 @@
     "id": "algarve-international-circuit",
     "city": "Algarve International Circuit",
     "country": "Portugal",
-    "region": "Portimão 6 Hours",
+    "region": "Portim\u00e3o 6 Hours",
     "round": "WEC-3",
     "series": [
       "wec"
@@ -1259,7 +1286,7 @@
     "id": "interlagos-wec",
     "city": "Interlagos WEC",
     "country": "Brazil",
-    "region": "São Paulo 6 Hours",
+    "region": "S\u00e3o Paulo 6 Hours",
     "round": "WEC-7",
     "series": [
       "wec"
@@ -1305,7 +1332,7 @@
   },
   {
     "id": "ume",
-    "city": "Umeå",
+    "city": "Ume\u00e5",
     "country": "Sweden",
     "region": "Rally Sweden",
     "round": "WRC-2",
@@ -1385,7 +1412,7 @@
   },
   {
     "id": "miko-ajki",
-    "city": "Mikołajki",
+    "city": "Miko\u0142ajki",
     "country": "Poland",
     "region": "Rally Poland",
     "round": "WRC-7",
@@ -1417,7 +1444,7 @@
   },
   {
     "id": "jyv-skyl",
-    "city": "Jyväskylä",
+    "city": "Jyv\u00e4skyl\u00e4",
     "country": "Finland",
     "region": "Rally Finland",
     "round": "WRC-9",
@@ -1449,9 +1476,9 @@
   },
   {
     "id": "concepci-n",
-    "city": "Concepción",
+    "city": "Concepci\u00f3n",
     "country": "Chile",
-    "region": "Rally Chile Bio Bío",
+    "region": "Rally Chile Bio B\u00edo",
     "round": "WRC-11",
     "series": [
       "wrc"
