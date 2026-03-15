@@ -10,7 +10,7 @@ function getNextRaceForSeries(races: Race[], seriesKey: string): Race | null {
   const now = Date.now();
   return (
     races
-      .filter((r) => r.series.includes(seriesKey))
+      .filter((r) => r.series.includes(seriesKey) && !r.cancelled)
       .map((r) => {
         // Find the race session time for the primary series
         const sessionMap = seriesKey === 'f1' ? r.sessions

@@ -20,18 +20,18 @@ export function Sidebar() {
       <div className="city-list">
         {filteredRaces.map((race) => {
           const raceTime = race.sessions?.race || race.feSessions?.race || race.indySessions?.race;
-          const daysText = raceTime ? daysUntilRace(raceTime, t) : '';
+          const daysText = race.cancelled ? t('race_cancelled', 'CANCELLED') : (raceTime ? daysUntilRace(raceTime, t) : '');
           const isActive = selectedRace?.id === race.id;
 
           return (
             <div
               key={race.id}
-              className={`city-item ${isActive ? 'active' : ''}`}
+              className={`city-item ${isActive ? 'active' : ''} ${race.cancelled ? 'cancelled' : ''}`}
               onClick={() => selectRace(race)}
             >
               <div className="ci-top">
                 <span className="ci-name">{race.region}</span>
-                <span className="ci-time">{daysText}</span>
+                <span className={`ci-time ${race.cancelled ? 'ci-cancelled' : ''}`}>{daysText}</span>
               </div>
               <div className="ci-bottom">
                 <span className="ci-round">R{race.round}</span>
