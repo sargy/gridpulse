@@ -13,6 +13,12 @@ spring:
 server:
   port: 8080
 
+springdoc:
+  api-docs:
+    path: /api/openapi
+  swagger-ui:
+    path: /api/docs
+
 logging:
   level:
     com.gridpulse: DEBUG
