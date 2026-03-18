@@ -1,0 +1,328 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "GridPulse API",
+        "description": "REST API for GridPulse motorsport calendar \u2014 provides race schedules, series info, news, and translations for F1, F2, F3, F1 Academy, Formula E, IndyCar, WEC, and WRC.",
+        "contact": {
+            "name": "GridPulse",
+            "url": "https://gridpulse.csargy.co.uk"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "Current server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Translations",
+            "description": "Internationalization strings"
+        },
+        {
+            "name": "Series",
+            "description": "Racing series metadata"
+        },
+        {
+            "name": "News",
+            "description": "Motorsport news from RSS feeds"
+        },
+        {
+            "name": "Races",
+            "description": "Race schedule and event information"
+        }
+    ],
+    "paths": {
+        "/api/translations/{lang}": {
+            "get": {
+                "tags": [
+                    "Translations"
+                ],
+                "summary": "Get translations",
+                "description": "Returns all i18n key-value pairs for the given language code",
+                "operationId": "getTranslations",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "path",
+                        "description": "Language code (e.g. en, fr, es, de, pl, ja, ko)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/series": {
+            "get": {
+                "tags": [
+                    "Series"
+                ],
+                "summary": "Get all series",
+                "description": "Returns all racing series with their display labels, colors, and session types",
+                "operationId": "getAllSeries",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Series"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/races": {
+            "get": {
+                "tags": [
+                    "Races"
+                ],
+                "summary": "Get all races",
+                "description": "Returns all races in the calendar, optionally filtered by series",
+                "operationId": "getRaces",
+                "parameters": [
+                    {
+                        "name": "series",
+                        "in": "query",
+                        "description": "Filter by series key (e.g. f1, f2, f3, fe, indy, wec, wrc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Race"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/races/{id}": {
+            "get": {
+                "tags": [
+                    "Races"
+                ],
+                "summary": "Get race by ID",
+                "description": "Returns a single race by its MongoDB document ID",
+                "operationId": "getRaceById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Race document ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Race"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/news": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get news",
+                "description": "Returns latest motorsport news aggregated from RSS feeds",
+                "operationId": "getNews",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NewsItem"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Series": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "sessionTypes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "Race": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "round": {
+                        "type": "string"
+                    },
+                    "series": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "timezone": {
+                        "type": "string"
+                    },
+                    "lat": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "lng": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "sessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "f2Sessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "f3Sessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "f1aSessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "feSessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "indySessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "wecSessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "wrcSessions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "cancelled": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "NewsItem": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "badge": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
